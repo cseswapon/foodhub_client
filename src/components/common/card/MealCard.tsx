@@ -2,8 +2,10 @@ import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Link from "next/link";
 
 interface Meal {
+  id: string;
   name: string;
   description: string;
   price: string;
@@ -12,7 +14,7 @@ interface Meal {
 
 export function MealCard({ meal }: { meal: Meal }) {
   return (
-    <Card className="group bg-[#1f2120] border-white/5 overflow-hidden transition-all hover:border-[#a3a380]/50 hover:cursor-pointer py-0 gap-0">
+    <Card className="group bg-[#1f2120] border-white/5 overflow-hidden transition-all hover:border-[#a3a380]/50 hover:cursor-default py-0 gap-0">
       <div className="relative">
         <Image src="/no-image.png" alt={meal.name} width={500} height={500} />
         <Badge className="absolute top-3 right-3 bg-[#a3a380] text-[#1f2120] hover:bg-[#a3a380]">
@@ -20,13 +22,18 @@ export function MealCard({ meal }: { meal: Meal }) {
         </Badge>
       </div>
 
-      <CardContent className="p-4 space-y-2">
-        <h3 className="text-xl font-bold text-white line-clamp-1">
-          {meal.name}
-        </h3>
-        <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
-          {meal.description}
-        </p>
+      <CardContent className="p-4">
+        <Link
+          href={`/meal/${meal.id}`}
+          className="group/meal-link block space-y-2 outline-none"
+        >
+          <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover/meal-link:text-[#a3a380] line-clamp-1">
+            {meal.name}
+          </h3>
+          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed transition-opacity group-hover/meal-link:opacity-80">
+            {meal.description}
+          </p>
+        </Link>
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
