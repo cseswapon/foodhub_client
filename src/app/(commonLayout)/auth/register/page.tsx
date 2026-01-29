@@ -1,5 +1,10 @@
 import { RegisterForm } from "@/components/module/auth/RegisterForm";
 
+export const metadata = {
+  title: "Register | Food Hub",
+  description: "Register to your account",
+};
+
 export default function RegisterPage() {
   return (
     <>

@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import {
@@ -66,7 +65,7 @@ const Header = ({
     title: "Food Hub",
   },
   menu = [
-    { title: "Home", url: "#" },
+    { title: "Home", url: "/" },
     {
       title: "Products",
       url: "/",
@@ -85,8 +84,8 @@ const Header = ({
     },
   ],
   auth = {
-    login: { title: "Login", url: "/" },
-    signup: { title: "Sign up", url: "/" },
+    login: { title: "Login", url: "/auth/login" },
+    signup: { title: "Sign up", url: "/auth/register" },
   },
   className,
 }: Navbar1Props) => {
@@ -190,12 +189,12 @@ const Header = ({
 const renderMenuItem = (item: MenuItem) => {
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
+      <Link
         href={item.url}
         className="group inline-flex h-10 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors text-white hover:bg-white/20 hover:text-white focus:bg-white/20 focus:text-white focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-active:bg-white/10 data-active:text-white"
       >
         {item.title}
-      </NavigationMenuLink>
+      </Link>
     </NavigationMenuItem>
   );
 };

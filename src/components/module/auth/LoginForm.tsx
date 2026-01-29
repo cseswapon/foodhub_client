@@ -117,12 +117,12 @@ export function LoginForm({
                   <Field>
                     <div className="flex items-center justify-between">
                       <FieldLabel className="font-medium">Password</FieldLabel>
-                      <a
-                        href="#"
+                      <Link
+                        href="/auth/login"
                         className="text-xs text-primary hover:underline"
                       >
                         Forgot password?
-                      </a>
+                      </Link>
                     </div>
                     <div className="relative">
                       <Input
@@ -204,6 +204,17 @@ export function LoginForm({
           </CardFooter>
         </form>
       </Card>
+      <p className="px-8 text-center text-xs text-muted-foreground leading-relaxed">
+        By clicking register, you agree to our{" "}
+        <Link href="/terms" className="underline hover:text-primary">
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="underline hover:text-primary">
+          Privacy Policy
+        </Link>
+        .
+      </p>
     </div>
   );
 }

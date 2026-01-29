@@ -1,5 +1,10 @@
 import { LoginForm } from "@/components/module/auth/LoginForm";
 
+export const metadata = {
+  title: "Login",
+  description: "Login to your account",
+};
+
 export default async function LoginPage() {
   return (
     <>
