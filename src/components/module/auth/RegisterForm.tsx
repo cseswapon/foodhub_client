@@ -31,10 +31,10 @@ export function RegisterForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const formSchema = z.object({
-    name: z.string().min(2, "Name kompokkhe 2 character hote hobe"),
-    email: z.string().email("Valid email address din"),
-    password: z.string().min(6, "Password atleast 6 character hote hobe"),
-    phone: z.string().min(11, "Phone number-ti thik noy"),
+    name: z.string().min(2, "Name minimum 2 character"),
+    email: z.string().email("Valid email address"),
+    password: z.string().min(6, "Password at last 6 character"),
+    phone: z.string().min(11, "Phone number minimum 11 character"),
   });
 
   const form = useForm({

@@ -31,8 +31,8 @@ export function LoginForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const formSchema = z.object({
-    email: z.string().email("Proshashito email address din"),
-    password: z.string().min(6, "Password atleast 6 character hote hobe"),
+    email: z.string().email("Valid email address"),
+    password: z.string().min(6, "Password at last 6 character"),
   });
 
   const form = useForm({
