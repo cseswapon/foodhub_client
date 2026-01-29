@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Header } from "@/components/shared/header/Header";
+import { Footer } from "@/components/shared/footer/Footer";
 
 const PoppinsSans = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -28,7 +30,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header className="bg-black/50 py-7 backdrop-blur-md" />
           {children}
+          <Footer />
           <Toaster richColors />
         </ThemeProvider>
       </body>
