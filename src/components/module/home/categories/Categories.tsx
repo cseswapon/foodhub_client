@@ -22,7 +22,7 @@ const CATEGORIES_DATA = [
 export default function Category() {
   return (
     <>
-      <div className="bg-[#1f2120] py-10">
+      <div className="bg-[#1f2120] py-24">
         <div className="flex items-center justify-center gap-2  px-4 py-2 rounded-full">
           <span className="h-1 w-1 rounded-full bg-[#a3a380]" />
           <span className="text-xs font-semibold uppercase tracking-widest text-[#a3a380]">

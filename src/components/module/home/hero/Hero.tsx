@@ -84,6 +84,7 @@ const Hero = () => {
         <div className="relative hidden lg:block h-150">
           <div className="absolute right-0 top-1/2 -translate-y-1/2 h-125 w-125 overflow-hidden rounded-full border-8 border-white/5 shadow-2xl ">
             <Image
+              draggable={false}
               src="/hero-bg.jpg"
               alt="Restaurant Interior"
               fill
@@ -93,6 +94,7 @@ const Hero = () => {
 
           <div className="absolute -right-10 top-10 h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-xl z-20 transition-transform duration-500 hover:scale-110">
             <Image
+              draggable={false}
               src="/hero-img-2.jpg"
               alt="Special Dish"
               fill
@@ -102,6 +104,7 @@ const Hero = () => {
 
           <div className="absolute bottom-10 left-40 h-44 w-44 overflow-hidden rounded-full border-4 border-white shadow-xl z-20">
             <Image
+              draggable={false}
               src="/hero-img-3.jpg"
               alt="Special Burger"
               fill

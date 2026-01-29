@@ -18,13 +18,14 @@ const stats = [
 
 export default function FeatureSection() {
   return (
-    <section className="bg-[#0c0d0c] text-white py-16 lg:py-24 overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="bg-[#0c0d0c] text-white py-24 px-4  overflow-hidden">
+      <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left Side: Chef Image & Floating Card */}
           <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start">
             <div className="relative w-70 h-95 md:w-120 md:h-145">
               <Image
+                draggable={false}
                 src="/chef.png"
                 alt="Chef"
                 fill
@@ -44,6 +45,7 @@ export default function FeatureSection() {
                       className="h-8 w-8 rounded-full border-2 border-[#a3a380] overflow-hidden bg-gray-300"
                     >
                       <Image
+                        draggable={false}
                         src={`/chef.png`}
                         alt="user"
                         width={32}
@@ -68,7 +70,7 @@ export default function FeatureSection() {
                   Our Ingredients
                 </span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black leading-[1.1] tracking-tighter uppercase">
+              <h2 className="text-3xl md:text-6xl font-black leading-[1.1] tracking-tighter uppercase">
                 Crafting Dishes With <br />
                 <span className="text-[#a3a380]">Freshest Flavors</span>
               </h2>
@@ -104,14 +106,14 @@ export default function FeatureSection() {
         </div>
 
         {/* Bottom Stats Grid */}
-        <div className="mt-24 pt-12 border-t border-white/5 grid grid-cols-2 lg:grid-cols-4  gap-y-12 gap-x-6">
+        <div className="md:mt-24 mt-10 pt-12 border-t border-white/5 grid grid-cols-1 lg:grid-cols-4  gap-y-12 gap-x-6">
           {stats.map((stat) => (
-            <div key={stat.id} className="flex items-center justify-center gap-4 group">
+            <div key={stat.id} className="flex md:flex-row flex-col items-center justify-center gap-4 group">
               <div className="h-14 w-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#a3a380]/50 group-hover:bg-[#a3a380]/5 transition-all duration-500">
                 <stat.icon className="size-6 text-[#a3a380]" />
               </div>
               <div className="space-y-0.5">
-                <h4 className="text-3xl md:text-4xl font-black tracking-tighter">
+                <h4 className="text-3xl md:text-4xl text-center lg:text-start font-black tracking-tighter">
                   {stat.value}
                 </h4>
                 <p className="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-[0.15em]">
