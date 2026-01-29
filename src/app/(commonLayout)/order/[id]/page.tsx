@@ -47,7 +47,7 @@ export default async function OrderDetailsPage({
   const currentStepIndex = steps.indexOf(order.status);
 
   return (
-    <main className="min-h-screen bg-[#0c0d0c] text-white py-12 md:py-24">
+    <main className="min-h-screen bg-[#0c0d0c] text-white pt-30 pb-15">
       <div className="container mx-auto px-4 ">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">

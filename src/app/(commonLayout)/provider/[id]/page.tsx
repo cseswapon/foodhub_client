@@ -43,7 +43,7 @@ export default async function ProviderDetailsPage({
   const provider = await getProviderDetails(id);
 
   return (
-     <section className="bg-[#0c0d0c] ">
+    <section className="bg-[#0c0d0c] pt-20 pb-15">
       {/* 1. Hero / Header Section */}
       <section className="relative h-[50vh] md:h-[40vh] bg-[#1f2120] flex items-end pb-12 overflow-hidden border-b border-white/5">
         {/* Abstract Background pattern */}
@@ -109,7 +109,7 @@ export default async function ProviderDetailsPage({
                 Browse our <span className="text-[#a3a380]">Collection</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-8 border border-dashed border-white/10 rounded-3xl flex flex-col items-center justify-center text-center space-y-3 opacity-50">
+                <div className="p-8 border border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center text-center space-y-3 opacity-50">
                   <HiOutlineGlobeAlt className="size-8 text-[#a3a380]" />
                   <p className="text-xs uppercase tracking-widest text-gray-500">
                     Menu items loading...
@@ -121,7 +121,7 @@ export default async function ProviderDetailsPage({
 
           {/* Right Side: Contact & Owner Info Card */}
           <div className="lg:col-span-5">
-            <Card className="bg-[#1f2120] border-white/5 rounded-[40px] p-10 sticky top-24 shadow-2xl">
+            <Card className="bg-[#1f2120] border-white/5 rounded-lg p-10 sticky top-24 shadow-2xl">
               <CardContent className="p-0 space-y-10">
                 {/* User / Owner Info */}
                 <div className="flex items-center gap-6">

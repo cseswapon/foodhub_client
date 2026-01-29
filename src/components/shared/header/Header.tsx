@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, User, ShoppingBag, LogOut, UserCircle } from "lucide-react";
 import { FaBowlFood } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +21,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
+
+// Shadcn Dropdown Menu Imports
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 interface MenuItem {
   title: string;
@@ -40,6 +51,10 @@ export function Header({ className }: NavbarProps) {
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  // --- Static Login Variable ---
+  const isLoggedIn = true; // এটাকে true/false করে টেস্ট করতে পারেন
+  // -----------------------------
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,13 +76,12 @@ export function Header({ className }: NavbarProps) {
   const menu: MenuItem[] = [
     { title: "Home", url: "/" },
     { title: "Meal", url: "/meal" },
-    // { title: "Provider", url: "/provider" },
   ];
 
   return (
     <section
       className={cn(
-        "fixed top-0 left-0 w-full z-50 py-5! transition-transform duration-300",
+        "fixed top-0 left-0 w-full z-50 py-5 transition-transform duration-300",
         showHeader ? "translate-y-0" : "-translate-y-full",
         isHome ? "bg-black/50 backdrop-blur-md" : "bg-[#0a0a0a]",
         className,
@@ -105,13 +119,74 @@ export function Header({ className }: NavbarProps) {
             </NavigationMenuList>
           </NavigationMenu>
 
-          <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <Link href="/auth/login">Login</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link href="/auth/register">Sign up</Link>
-            </Button>
+          <div className="flex items-center gap-4">
+            {isLoggedIn ? (
+              /* Profile Dropdown when Logged In */
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="relative h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 p-0 overflow-hidden border border-white/10"
+                  >
+                    <UserCircle className="h-6 w-6 text-[#a3a380]" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-56 bg-[#1f2120] border-white/10 text-white mt-2"
+                  align="end"
+                >
+                  <DropdownMenuLabel className="font-black uppercase text-[10px] tracking-widest text-[#a3a380]">
+                    My Account
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-white/5" />
+                  <DropdownMenuItem
+                    asChild
+                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
+                  >
+                    <Link
+                      href="/profile"
+                      className="flex items-center gap-2 w-full"
+                    >
+                      <User size={16} /> Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    asChild
+                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
+                  >
+                    <Link
+                      href="/order"
+                      className="flex items-center gap-2 w-full"
+                    >
+                      <ShoppingBag size={16} /> My Orders
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/5" />
+                  <DropdownMenuItem className="text-red-500 focus:bg-red-500/10 focus:text-red-500 cursor-pointer">
+                    <LogOut size={16} className="mr-2" /> Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              /* Auth Buttons when Logged Out */
+              <div className="flex gap-2">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="text-white border-white/20 hover:bg-white/10"
+                >
+                  <Link href="/auth/login">Login</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-bold"
+                >
+                  <Link href="/auth/register">Sign up</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </nav>
 
@@ -129,16 +204,16 @@ export function Header({ className }: NavbarProps) {
               </Button>
             </SheetTrigger>
 
-            <SheetContent className="bg-secondary">
+            <SheetContent className="bg-[#1f2120] border-l-white/10 text-white">
               <SheetHeader>
                 <SheetTitle>
                   <Link href="/" className="flex items-center gap-2">
-                    <FaBowlFood size={30} />
+                    <FaBowlFood size={30} className="text-[#a3a380]" />
                   </Link>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="mt-6 flex flex-col gap-4">
+              <div className="mt-6 flex flex-col gap-4 p-5">
                 <Accordion type="single" collapsible>
                   {menu.map((item) => {
                     const isActive = pathname === item.url;
@@ -153,7 +228,7 @@ export function Header({ className }: NavbarProps) {
                           href={item.url}
                           className={cn(
                             "block py-2 text-lg font-semibold",
-                            isActive ? "text-primary" : "text-foreground",
+                            isActive ? "text-[#a3a380]" : "text-white",
                           )}
                         >
                           {item.title}
@@ -163,13 +238,47 @@ export function Header({ className }: NavbarProps) {
                   })}
                 </Accordion>
 
-                <div className="flex flex-col gap-3 pt-4">
-                  <Button asChild variant="outline">
-                    <Link href="/auth/login">Login</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link href="/auth/register">Sign up</Link>
-                  </Button>
+                <Separator className="bg-white/5 my-2" />
+
+                <div className="flex flex-col gap-3">
+                  {isLoggedIn ? (
+                    <>
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                      >
+                        <User size={20} /> Profile
+                      </Link>
+                      <Link
+                        href="/order"
+                        className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                      >
+                        <ShoppingBag size={20} /> My Orders
+                      </Link>
+                      <Button
+                        variant="default"
+                        className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
+                      >
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="border-white/10 text-white hover:bg-white/5"
+                      >
+                        <Link href="/auth/login">Login</Link>
+                      </Button>
+                      <Button
+                        asChild
+                        className="bg-[#a3a380] text-[#1f2120] hover:bg-[#8e8e6f] font-bold"
+                      >
+                        <Link href="/auth/register">Sign up</Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>

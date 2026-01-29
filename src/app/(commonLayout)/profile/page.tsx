@@ -33,14 +33,14 @@ export default async function ProfilePage() {
   const profile = await getProfileData();
 
   return (
-    <main className="min-h-screen bg-[#0c0d0c] text-white py-12 md:py-30">
+    <main className="min-h-screen bg-[#0c0d0c] text-white  pt-30 pb-15">
       <div className="container mx-auto px-4 md:px-0">
         {/* Profile Header Card */}
         <section className="relative mb-12">
           <Card className="bg-[#1f2120] border-white/5 rounded-lg overflow-hidden shadow-2xl">
             <div className="h-32 bg-linear-to-r from-[#a3a380]/20 to-transparent" />
             <CardContent className="px-8 pb-10 -mt-16">
-              <div className="flex flex-col md:flex-row items-end gap-6">
+              <div className="flex flex-col md:flex-row md:items-end items-center gap-6">
                 {/* Avatar Placeholder */}
                 <div className="h-32 w-32 rounded-[30px] bg-[#a3a380] border-8 border-[#1f2120] flex items-center justify-center text-[#1f2120] text-5xl font-black shadow-xl">
                   {profile.name.charAt(0)}

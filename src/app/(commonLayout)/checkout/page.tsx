@@ -20,7 +20,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   return (
-    <main className="bg-[#0c0d0c] md:py-[5%] py-[25%] px-4 min-h-screen text-white">
+    <main className="bg-[#0c0d0c] pt-30 pb-15 px-4 min-h-screen text-white">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="mb-12">

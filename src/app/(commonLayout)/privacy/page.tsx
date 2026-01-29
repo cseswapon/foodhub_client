@@ -21,7 +21,7 @@ export default function PrivacyPage() {
   const lastUpdated = "January 28, 2026";
 
   return (
-    <main className="min-h-screen bg-[#0c0d0c] text-white py-12 px-4 pt-30">
+    <main className="min-h-screen bg-[#0c0d0c] text-white pt-30 pb-15 px-4">
       <div className="container mx-auto">
         {/* Header Section */}
         <div className="text-center mb-20 space-y-4">

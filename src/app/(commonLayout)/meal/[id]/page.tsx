@@ -55,7 +55,7 @@ export default async function MealDetails({
   const meal = await getSingleMeal(id);
 
   return (
-    <div className="bg-[#0c0d0c] md:py-[5%] py-[25%] px-4 min-h-screen">
+    <div className="bg-[#0c0d0c] pt-30 pb-15 px-4 min-h-screen">
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left Side: Product Image */}

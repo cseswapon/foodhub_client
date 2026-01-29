@@ -16,7 +16,7 @@ import Link from "next/link";
 
 export default function UpdateProfile() {
   return (
-    <main className="min-h-screen bg-[#0c0d0c] text-white py-12 md:py-30">
+    <main className="min-h-screen bg-[#0c0d0c] text-white pt-30 pb-15">
       <div className="container mx-auto px-4 md:px-0">
         {/* Back Link & Header */}
         <div className="mb-10 space-y-4">
