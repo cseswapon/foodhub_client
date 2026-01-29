@@ -1,4 +1,5 @@
-import CustomCursor from "@/components/shared/Cursor/CustomCursor";
+import Cart from "@/components/shared/cart/Cart";
+import CustomCursor from "@/components/shared/cursor/CustomCursor";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export default function CommonLayout({
 }>) {
   return (
     <>
-      <CustomCursor />
+      {/* <CustomCursor /> */}
+      <div className="fixed bottom-10 right-10 z-100">
+        <Cart />
+      </div>
       {children}
     </>
   );
