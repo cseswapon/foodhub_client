@@ -30,7 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header className="bg-black/50 py-7 backdrop-blur-md" />
+          <Header className="bg-black/50 py-7 backdrop-blur-md fixed z-99 top-0 w-full" />
           {children}
           <Footer />
           <Toaster richColors />
