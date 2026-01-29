@@ -1,5 +1,5 @@
-import Cart from "@/components/shared/cart/Cart";
-import CustomCursor from "@/components/shared/cursor/CustomCursor";
+import Cart from "@/components/common/cart/Cart";
+import CustomCursor from "@/components/common/cursor/CustomCursor";
 import { Footer } from "@/components/shared/footer/Footer";
 import { Header } from "@/components/shared/header/Header";
 
