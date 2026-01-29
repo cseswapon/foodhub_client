@@ -4,7 +4,7 @@
   "description": "Food Hub is a modern food delivery and marketplace platform where customers can discover restaurants and order fresh food.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#010101",
   "theme_color": "#0f172a",
   "orientation": "portrait",
   "icons": [
