@@ -13,23 +13,29 @@ const PoppinsSans = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://foodhub-client-eight.vercel.app/"),
+  metadataBase: new URL("https://foodhub-client-eight.vercel.app"),
   title: {
     default: "Food Hub",
     template: "%s | Food Hub",
   },
   description:
-    "Your app short and clear description goes here. This will show in link previews.",
-  applicationName: "Foudhub",
-  keywords: ["nextjs", "react", "web app", "your app name"],
+    "Food Hub is a modern food delivery and marketplace platform where customers can discover restaurants, order fresh food, and enjoy fast, reliable service.",
+  applicationName: "Food Hub",
+  keywords: [
+    "food delivery",
+    "online food order",
+    "restaurants",
+    "food hub",
+    "nextjs",
+  ],
   authors: [{ name: "Swapon Saha" }],
   creator: "Swapon Saha",
   publisher: "Swapon Saha",
 
   icons: {
-    icon: "/logo-1.svg",
-    shortcut: "/logo-1.svg",
-    apple: "/logo-1.svg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 
   manifest: "/site.webmanifest",
@@ -37,26 +43,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://foodhub-client-eight.vercel.app/",
-    title: "Your App Name",
+    url: "https://foodhub-client-eight.vercel.app",
+    title: "Food Hub",
     description:
-      "Your app short and clear description goes here. This will show in social media.",
-    siteName: "Your App Name",
+      "Discover restaurants, order fresh food, and enjoy fast delivery with Food Hub.",
+    siteName: "Food Hub",
     images: [
       {
-        url: "/logo-1.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Your App Name Preview",
+        alt: "Food Hub – Online Food Delivery Platform",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Your App Name",
-    description: "Your app short and clear description goes here.",
-    images: ["/logo-1.svg"],
+    title: "Food Hub",
+    description:
+      "Discover restaurants, order fresh food, and enjoy fast delivery with Food Hub.",
+    images: ["/og-image.png"],
   },
 
   robots: {
@@ -66,7 +73,6 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       "max-image-preview": "large",
-      "max-snippet": -1,
     },
   },
 };
