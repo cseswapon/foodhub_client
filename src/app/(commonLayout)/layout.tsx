@@ -1,3 +1,4 @@
+import CustomCursor from "@/components/shared/Cursor/CustomCursor";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,5 +11,10 @@ export default function CommonLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return (
+    <>
+      <CustomCursor />
+      {children}
+    </>
+  );
 }
