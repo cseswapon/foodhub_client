@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { FaBowlFood } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
 interface MenuItem {
   title: string;
@@ -89,8 +90,16 @@ const Header = ({
   },
   className,
 }: Navbar1Props) => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   return (
-    <section className={cn("py-4 px-4", className)}>
+    <section
+      className={cn(
+        "py-4 px-4",
+        isHome ? "bg-black/50" : "bg-[#0a0a0a]",
+        className,
+      )}
+    >
       <div className="container mx-auto">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
@@ -128,7 +137,10 @@ const Header = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href={logo.url} className="flex items-center gap-2 text-white">
+            <Link
+              href={logo.url}
+              className="flex items-center gap-2 text-white"
+            >
               <FaBowlFood size={35} />
               <span className="text-lg font-bold tracking-tighter">
                 {logo.title}
@@ -137,7 +149,7 @@ const Header = ({
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="default">
-                  <Menu  className="size-6 text-white" />
+                  <Menu className="size-6 text-white" />
                 </Button>
               </SheetTrigger>
               <SheetContent className="overflow-y-auto bg-secondary">

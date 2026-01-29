@@ -19,17 +19,17 @@ const Footer = ({ className }: FooterProps) => {
         className,
       )}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto text-center md:text-start">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand Section */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col md:items-start items-center justify-center md:justify-start gap-4">
             <Link href="/" className="flex items-center gap-2">
               <FaBowlFood size={35} className="text-white" />
               <span className="text-xl font-bold tracking-tighter">
                 Food Hub
               </span>
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 md:text-sm text-xs leading-relaxed">
               Experience the best culinary delights with Spicyhunt. We bring
               fresh ingredients and amazing taste to your table.
             </p>
@@ -86,15 +86,15 @@ const Footer = ({ className }: FooterProps) => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="flex flex-col gap-4 text-gray-400 text-sm">
-              <li className="flex items-start gap-3">
+              <li className="flex md:items-start items-center justify-center md:justify-start gap-3">
                 <MapPin size={18} className="text-white/50 shrink-0" />
                 <span>Road 23-1A Dhaka, Bangladesh</span>
               </li>
-              <li className="flex items-center gap-3">
+              <li className="flex gap-3 items-center justify-center md:justify-start">
                 <Phone size={18} className="text-white/50 shrink-0" />
                 <span>+88 017 1234 5678</span>
               </li>
-              <li className="flex items-center gap-3">
+              <li className="flex items-center justify-center md:justify-start gap-3">
                 <Mail size={18} className="text-white/50 shrink-0" />
                 <span>cseswaponsaha@gmail.com</span>
               </li>
@@ -107,7 +107,7 @@ const Footer = ({ className }: FooterProps) => {
             <p className="text-gray-400 text-sm mb-4">
               Subscribe to get latest updates and offers.
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col md:items-start items-center  justify-center md:justify-start gap-2">
               <button className="bg-[#a3a380] hover:bg-[#8e8e6d] text-black py-2 px-4 rounded transition-colors w-fit text-sm">
                 Reserve Now
               </button>
