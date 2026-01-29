@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("cod");
@@ -123,7 +124,7 @@ export default function CheckoutPage() {
                   />
                 </Label>
 
-               {/*  <Label
+                {/*  <Label
                   htmlFor="online"
                   className={cn(
                     "flex items-center justify-between p-6 rounded-2xl border cursor-pointer transition-all opacity-50",
@@ -203,9 +204,11 @@ export default function CheckoutPage() {
                   </p>
                 </div>
 
-                <Button className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-16 rounded-lg shadow-xl transition-all active:scale-95 text-lg">
-                  Place Order Now
-                </Button>
+                <Link href="/order">
+                  <Button className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-16 rounded-lg shadow-xl transition-all active:scale-95 text-lg cursor-pointer">
+                    Place Order Now
+                  </Button>
+                </Link>
 
                 <div className="flex items-center justify-center gap-2 text-gray-600 text-[10px] uppercase font-bold tracking-widest pt-2">
                   <HiOutlineShieldCheck size={14} className="text-green-500" />
