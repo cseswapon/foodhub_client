@@ -87,7 +87,7 @@ const Hero = () => {
               src="/hero-bg.jpg"
               alt="Restaurant Interior"
               fill
-              className="object-cover animate-float-zoom"
+              className="object-cover"
             />
           </div>
 
@@ -96,7 +96,7 @@ const Hero = () => {
               src="/hero-img-2.jpg"
               alt="Special Dish"
               fill
-              className="object-cover"
+              className="object-cover animate-float-zoom"
             />
           </div>
 
