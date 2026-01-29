@@ -10,7 +10,6 @@ export default async function LoginPage() {
     <main className="min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] px-4 py-12">
       <div className="w-full max-w-md">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-[#a3a380]/5 rounded-full blur-[120px]" />
           <div className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-[#a3a380]/5 rounded-full blur-[120px]" />
         </div>
         <div className="flex flex-col items-center mb-8">

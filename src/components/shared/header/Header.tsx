@@ -20,10 +20,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionItem,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionItem } from "@/components/ui/accordion";
 
 interface MenuItem {
   title: string;
@@ -64,7 +61,7 @@ export function Header({ className }: NavbarProps) {
   const menu: MenuItem[] = [
     { title: "Home", url: "/" },
     { title: "Meal", url: "/meal" },
-    { title: "Provider", url: "/provider" },
+    // { title: "Provider", url: "/provider" },
   ];
 
   return (

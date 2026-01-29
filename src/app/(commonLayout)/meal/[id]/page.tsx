@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 // Dummy fetching function (আপনার API logic এখানে বসবে)
 async function getSingleMeal(id: string) {
@@ -16,15 +17,31 @@ async function getSingleMeal(id: string) {
 
   return {
     id: "5e0af171-f951-48b3-b02c-2770d6fb0dfb",
+    provider_id: "1ea33618-d7c7-4ac2-8ef9-aa0915bcacd4",
+    category_id: "bc56b6a0-4127-47f2-b533-0f96526f5522",
     name: "Chicken Biryani",
-    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
+    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
     price: "500",
     dietary_type: "non_veg",
-    category: { name: "fats & oils" },
+    is_available: true,
+    created_at: "2026-01-28T12:42:03.605Z",
+    updated_at: "2026-01-28T12:42:03.605Z",
+    category: {
+      id: "bc56b6a0-4127-47f2-b533-0f96526f5522",
+      name: "fats & oils",
+      created_at: "2026-01-28T12:40:59.137Z",
+      updated_at: "2026-01-28T12:40:59.137Z",
+    },
     provider: {
+      id: "1ea33618-d7c7-4ac2-8ef9-aa0915bcacd4",
+      user_id: "eebCTSpTw7lnWacx6hmwvzOszvD9gQ80",
       restaurant_name: "Pizza Point - 9",
+      description: "ফ্রেশ পিজ্জা ও বার্গার পাওয়া যায়",
       address: "গুলশান ১, ঢাকা",
-      description: "ফ্রেশ পিজ্জা ও বার্গার পাওয়া যায়",
+      is_open: true,
+      fb_link: "https://facebook.com/pizzapointbd",
+      created_at: "2026-01-28T12:41:10.289Z",
+      updated_at: "2026-01-28T12:41:10.289Z",
     },
   };
 }
@@ -95,23 +112,43 @@ export default async function MealDetails({
                   <h3 className="text-[#a3a380] text-xs font-black uppercase tracking-widest">
                     Prepared By
                   </h3>
-                  <Badge
-                    variant="outline"
-                    className="text-green-500 border-green-500/30 text-[10px] uppercase"
-                  >
-                    Open Now
-                  </Badge>
+                  {meal.provider.is_open ? (
+                    <Badge
+                      variant="outline"
+                      className="text-green-500 border-green-500/30 text-[10px] uppercase font-bold"
+                    >
+                      Open Now
+                    </Badge>
+                  ) : (
+                    <Badge
+                      variant="outline"
+                      className="text-red-500 border-red-500/30 text-[10px] uppercase font-bold"
+                    >
+                      Closed
+                    </Badge>
+                  )}
                 </div>
+
                 <div>
-                  <h2 className="text-xl font-bold text-white mb-1">
-                    {meal.provider.restaurant_name}
-                  </h2>
-                  <p className="text-gray-500 text-sm flex items-center gap-2">
+                  {/* Provider Link with custom group name */}
+                  <Link
+                    href={`/provider/${meal.provider_id}`}
+                    className="group/provider block w-fit"
+                  >
+                    <h2 className="text-xl font-bold text-white mb-1 transition-colors duration-300 group-hover/provider:text-[#a3a380]">
+                      {meal.provider.restaurant_name}
+                    </h2>
+                    {/* Sub-line effect */}
+                    <div className="h-px w-0 bg-[#a3a380] transition-all duration-300 group-hover/provider:w-full" />
+                  </Link>
+
+                  <p className="text-gray-500 text-sm flex items-center gap-2 mt-2">
                     <HiOutlineLocationMarker className="text-[#a3a380]" />
                     {meal.provider.address}
                   </p>
                 </div>
-                <p className="text-xs text-gray-400 italic">
+
+                <p className="text-xs text-gray-400 italic leading-relaxed border-l-2 border-[#a3a380]/30 pl-3">
                   &quot;{meal.provider.description}&quot;
                 </p>
               </CardContent>
