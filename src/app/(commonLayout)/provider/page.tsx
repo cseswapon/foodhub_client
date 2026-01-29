@@ -1,7 +1,9 @@
 export default function Provider() {
   return (
     <>
-      <h1>Provider</h1>
+      <div className="container w-full mx-auto py-[5%] px-4 text-justify">
+        <h1>Provider </h1>
+      </div>
     </>
   );
 }

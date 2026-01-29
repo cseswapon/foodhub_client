@@ -76,7 +76,7 @@ export function Header({ className }: NavbarProps) {
         className,
       )}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto md:px-0 px-4">
         {/* Desktop */}
         <nav className="hidden lg:flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white">

@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Loader2, Eye, EyeOff } from "lucide-react"; // Icons add kora hoyeche
+import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 
 export function LoginForm({
@@ -46,9 +46,7 @@ export function LoginForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
       try {
-        // API call simulation
         await new Promise((resolve) => setTimeout(resolve, 1500));
-
         console.log("LOGIN DATA:", value);
         toast.success("Login successful!", { id: toastId });
         form.reset();
@@ -63,7 +61,7 @@ export function LoginForm({
       className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)}
       {...props}
     >
-      <Card className="shadow border-muted-foreground/10">
+      <Card className="bg-[#1f2120] border-white/5 shadow-2xl overflow-hidden">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -71,40 +69,44 @@ export function LoginForm({
             form.handleSubmit();
           }}
         >
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold tracking-tight">
-              Welcome back
+          <CardHeader className="space-y-2 text-center pt-8">
+            <CardTitle className="text-3xl font-black tracking-tighter text-white uppercase">
+              Welcome <span className="text-[#a3a380]">Back</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-400">
               Enter your credentials to access your account
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="grid mt-7">
-            <FieldGroup className="gap-1">
+          <CardContent className="grid mt-4 px-8">
+            <FieldGroup className="gap-5">
               {/* Email Field */}
               <form.Field
                 name="email"
                 children={(field) => (
-                  <Field>
-                    <FieldLabel className="font-medium">
+                  <Field className="space-y-2 gap-1">
+                    <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
                       Email Address
                     </FieldLabel>
-                    <Input
-                      id={field.name}
-                      type="email"
-                      placeholder="name@example.com"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className={cn(
-                        field.state.meta.errors.length > 0 &&
-                          "border-destructive",
-                      )}
-                    />
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
+                      <Input
+                        id={field.name}
+                        type="email"
+                        placeholder="name@example.com"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className={cn(
+                          "bg-[#0c0d0c] border-white/10 text-white pl-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
+                          field.state.meta.errors.length > 0 &&
+                            "border-destructive",
+                        )}
+                      />
+                    </div>
                     <FieldError
                       errors={field.state.meta.errors}
-                      className="text-xs text-destructive mt-1"
+                      className="text-[10px] text-destructive italic mt-1"
                     />
                   </Field>
                 )}
@@ -114,17 +116,20 @@ export function LoginForm({
               <form.Field
                 name="password"
                 children={(field) => (
-                  <Field>
+                  <Field className="space-y-1 gap-0">
                     <div className="flex items-center justify-between">
-                      <FieldLabel className="font-medium">Password</FieldLabel>
+                      <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
+                        Password
+                      </FieldLabel>
                       <Link
-                        href="/auth/login"
-                        className="text-xs text-primary hover:underline"
+                        href="/auth/forgot"
+                        className="text-[10px] text-gray-500 hover:text-[#a3a380] transition-colors uppercase tracking-tighter"
                       >
                         Forgot password?
                       </Link>
                     </div>
                     <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
                       <Input
                         id={field.name}
                         type={showPassword ? "text" : "password"}
@@ -133,6 +138,7 @@ export function LoginForm({
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className={cn(
+                          "bg-[#0c0d0c] border-white/10 text-white pl-10 pr-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
                           field.state.meta.errors.length > 0 &&
                             "border-destructive",
                         )}
@@ -140,7 +146,7 @@ export function LoginForm({
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
                       >
                         {showPassword ? (
                           <EyeOff size={16} />
@@ -151,7 +157,7 @@ export function LoginForm({
                     </div>
                     <FieldError
                       errors={field.state.meta.errors}
-                      className="text-xs text-destructive mt-1"
+                      className="text-[10px] text-destructive italic mt-1"
                     />
                   </Field>
                 )}
@@ -159,58 +165,43 @@ export function LoginForm({
             </FieldGroup>
           </CardContent>
 
-          <CardFooter className="flex flex-col gap-4 mt-3">
+          <CardFooter className="flex flex-col gap-6 p-8">
             <form.Subscribe
               selector={(state) => [state.canSubmit, state.isSubmitting]}
               children={([canSubmit, isSubmitting]) => (
                 <Button
-                  className="w-full font-semibold mt-3"
+                  className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-12 transition-all active:scale-95 shadow-lg"
                   type="submit"
                   disabled={!canSubmit || isSubmitting}
                 >
                   {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Please wait
-                    </>
+                    <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     "Login to Account"
                   )}
                 </Button>
               )}
             />
-            <p className="text-center text-sm text-muted-foreground">
-              Already have an account?{" "}
+            <p className="text-center text-xs text-gray-400">
+              Don&apos;t have an account?{" "}
               <Link
                 href="/auth/register"
-                className="text-primary font-bold hover:underline underline-offset-4"
+                className="text-[#a3a380] font-bold hover:underline underline-offset-4"
               >
-                Register
+                Register Now
               </Link>
             </p>
-
-            {/*   <div className="relative w-full">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase text-muted-foreground">
-                <span className="bg-background px-2">Or continue with</span>
-              </div>
-            </div>
-
-            <Button variant="outline" type="button" className="w-full">
-              Sign in with Google
-            </Button> */}
           </CardFooter>
         </form>
       </Card>
-      <p className="px-8 text-center text-xs text-muted-foreground leading-relaxed">
-        By clicking register, you agree to our{" "}
-        <Link href="/terms" className="underline hover:text-primary">
+
+      <p className="px-8 text-center text-[10px] text-gray-600 leading-relaxed uppercase tracking-tighter">
+        By clicking login, you agree to our{" "}
+        <Link href="/terms" className="underline hover:text-[#a3a380]">
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link href="/privacy" className="underline hover:text-primary">
+        <Link href="/privacy" className="underline hover:text-[#a3a380]">
           Privacy Policy
         </Link>
         .

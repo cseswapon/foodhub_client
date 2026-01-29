@@ -1,0 +1,40 @@
+import Image from "next/image";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+
+interface Meal {
+  name: string;
+  description: string;
+  price: string;
+  dietary_type: string;
+}
+
+export function MealCard({ meal }: { meal: Meal }) {
+  return (
+    <Card className="group bg-[#1f2120] border-white/5 overflow-hidden transition-all hover:border-[#a3a380]/50 hover:cursor-pointer py-0 gap-0">
+      <div className="relative">
+        <Image src="/no-image.png" alt={meal.name} width={500} height={500} />
+        <Badge className="absolute top-3 right-3 bg-[#a3a380] text-[#1f2120] hover:bg-[#a3a380]">
+          {meal.dietary_type === "non_veg" ? "Non-Veg" : "Veg"}
+        </Badge>
+      </div>
+
+      <CardContent className="p-4 space-y-2">
+        <h3 className="text-xl font-bold text-white line-clamp-1">
+          {meal.name}
+        </h3>
+        <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
+          {meal.description}
+        </p>
+      </CardContent>
+
+      <CardFooter className="p-4 pt-0 flex items-center justify-between">
+        <span className="text-xl font-black text-[#a3a380]">৳{meal.price}</span>
+        <button className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#a3a380] hover:text-[#1f2120] transition-colors">
+          <HiOutlineShoppingBag className="cursor-pointer" size={20} />
+        </button>
+      </CardFooter>
+    </Card>
+  );
+}

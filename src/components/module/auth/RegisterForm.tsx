@@ -50,7 +50,7 @@ export function RegisterForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Creating your account...");
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         console.log("REGISTER DATA:", value);
         toast.success("Account created successfully!", { id: toastId });
         form.reset();
@@ -65,7 +65,7 @@ export function RegisterForm({
       className={cn("flex flex-col gap-6 w-full max-w-2xl mx-auto", className)}
       {...props}
     >
-      <Card className="border-muted-foreground/15 shadow">
+      <Card className="bg-[#1f2120] border-white/5 shadow-2xl overflow-hidden md:mt-0 mt-[20%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -73,86 +73,92 @@ export function RegisterForm({
             form.handleSubmit();
           }}
         >
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold tracking-tight">
-              Create an account
+          <CardHeader className="space-y-2 text-center md:pt-8 pb-5">
+            <CardTitle className="text-3xl font-black tracking-tighter text-white uppercase">
+              Join <span className="text-[#a3a380]">Us</span>
             </CardTitle>
-            <CardDescription>
-              Join us today! Enter your details to get started.
+            <CardDescription className="text-gray-400">
+              Create your account to start your culinary journey
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="grid mt-7">
-            <FieldGroup className="gap-1">
+          <CardContent className="mt-4 px-8">
+            <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Name */}
-              <form.Field name="name">
-                {(field) => (
-                  <Field className="space-y-0 gap-1 mb-2">
-                    <FieldLabel className="text-sm font-semibold">
-                      Full Name
-                    </FieldLabel>
-                    <div className="relative">
-                      <User
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                        size={16}
+              <div className="md:col-span-2">
+                <form.Field name="name">
+                  {(field) => (
+                    <Field className="space-y-2 gap-1">
+                      <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
+                        Full Name
+                      </FieldLabel>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
+                        <Input
+                          className={cn(
+                            "bg-[#0c0d0c] border-white/10 text-white pl-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
+                            field.state.meta.errors.length > 0 &&
+                              "border-destructive",
+                          )}
+                          placeholder="John Doe"
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                        />
+                      </div>
+                      <FieldError
+                        errors={field.state.meta.errors}
+                        className="text-[10px] text-destructive italic"
                       />
-                      <Input
-                        className="pl-10"
-                        placeholder="John Doe"
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
+                    </Field>
+                  )}
+                </form.Field>
+              </div>
+              <div className="md:col-span-2">
+                {/* Phone */}
+                <form.Field name="phone">
+                  {(field) => (
+                    <Field className="space-y-2 gap-1">
+                      <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
+                        Phone Number
+                      </FieldLabel>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
+                        <Input
+                          className={cn(
+                            "bg-[#0c0d0c] border-white/10 text-white pl-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
+                            field.state.meta.errors.length > 0 &&
+                              "border-destructive",
+                          )}
+                          placeholder="017XXXXXXXX"
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                        />
+                      </div>
+                      <FieldError
+                        errors={field.state.meta.errors}
+                        className="text-[10px] text-destructive italic"
                       />
-                    </div>
-                    <FieldError
-                      errors={field.state.meta.errors}
-                      className="text-[10px] text-destructive"
-                    />
-                  </Field>
-                )}
-              </form.Field>
-
-              {/* Phone */}
-              <form.Field name="phone">
-                {(field) => (
-                  <Field className="space-y-0 gap-1 mb-2">
-                    <FieldLabel className="text-sm font-semibold">
-                      Phone Number
-                    </FieldLabel>
-                    <div className="relative">
-                      <Phone
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                        size={16}
-                      />
-                      <Input
-                        className="pl-10"
-                        placeholder="017XXXXXXXX"
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </div>
-                    <FieldError
-                      errors={field.state.meta.errors}
-                      className="text-[10px] text-destructive"
-                    />
-                  </Field>
-                )}
-              </form.Field>
+                    </Field>
+                  )}
+                </form.Field>
+              </div>
 
               {/* Email - Full Width */}
               <div className="md:col-span-2">
                 <form.Field name="email">
                   {(field) => (
-                    <Field className="space-y-0 gap-1 mb-2">
-                      <FieldLabel className="text-sm font-semibold">
-                        Email
+                    <Field className="space-y-2 gap-1">
+                      <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
+                        Email Address
                       </FieldLabel>
                       <div className="relative">
-                        <Mail
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                          size={16}
-                        />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
                         <Input
-                          className="pl-10"
+                          className={cn(
+                            "bg-[#0c0d0c] border-white/10 text-white pl-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
+                            field.state.meta.errors.length > 0 &&
+                              "border-destructive",
+                          )}
                           type="email"
                           placeholder="name@example.com"
                           value={field.state.value}
@@ -161,7 +167,7 @@ export function RegisterForm({
                       </div>
                       <FieldError
                         errors={field.state.meta.errors}
-                        className="text-[10px] text-destructive"
+                        className="text-[10px] text-destructive italic"
                       />
                     </Field>
                   )}
@@ -169,20 +175,21 @@ export function RegisterForm({
               </div>
 
               {/* Password - Full Width */}
-              <div className="space-y-0 gap-1 mb-2">
+              <div className="md:col-span-2">
                 <form.Field name="password">
                   {(field) => (
-                    <Field className="space-y-0 gap-1 mb-2">
-                      <FieldLabel className="text-sm font-semibold">
-                        Password
+                    <Field className="space-y-2 gap-1">
+                      <FieldLabel className="text-xs font-bold uppercase tracking-widest mb-0 pb-0 text-[#a3a380]">
+                        Create Password
                       </FieldLabel>
                       <div className="relative">
-                        <Lock
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                          size={16}
-                        />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-4" />
                         <Input
-                          className="pl-10"
+                          className={cn(
+                            "bg-[#0c0d0c] border-white/10 text-white pl-10 pr-10 focus-visible:ring-[#a3a380] placeholder:text-gray-600",
+                            field.state.meta.errors.length > 0 &&
+                              "border-destructive",
+                          )}
                           type={showPassword ? "text" : "password"}
                           placeholder="••••••••"
                           value={field.state.value}
@@ -191,7 +198,7 @@ export function RegisterForm({
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
                         >
                           {showPassword ? (
                             <EyeOff size={16} />
@@ -202,7 +209,7 @@ export function RegisterForm({
                       </div>
                       <FieldError
                         errors={field.state.meta.errors}
-                        className="text-[10px] text-destructive"
+                        className="text-[10px] text-destructive italic"
                       />
                     </Field>
                   )}
@@ -211,46 +218,43 @@ export function RegisterForm({
             </FieldGroup>
           </CardContent>
 
-          <CardFooter className="flex flex-col gap-4">
+          <CardFooter className="flex flex-col gap-6 p-8">
             <form.Subscribe
               selector={(state) => [state.canSubmit, state.isSubmitting]}
               children={([canSubmit, isSubmitting]) => (
                 <Button
                   type="submit"
-                  className="w-full h-11 text-base font-bold transition-all"
+                  className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-12 mt-1 transition-all active:scale-95 shadow-lg"
                   disabled={!canSubmit || isSubmitting}
                 >
                   {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Creating Account...
-                    </>
+                    <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
-                    "Register Now"
+                    "Create Account"
                   )}
                 </Button>
               )}
             />
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center text-xs text-gray-400">
               Already have an account?{" "}
               <Link
                 href="/auth/login"
-                className="text-primary font-bold hover:underline underline-offset-4"
+                className="text-[#a3a380] font-bold hover:underline underline-offset-4"
               >
-                Login
+                Login Instead
               </Link>
             </p>
           </CardFooter>
         </form>
       </Card>
 
-      <p className="px-8 text-center text-xs text-muted-foreground leading-relaxed">
+      <p className="px-8 text-center text-[10px] text-gray-600 leading-relaxed uppercase tracking-tighter">
         By clicking register, you agree to our{" "}
-        <Link href="/terms" className="underline hover:text-primary">
+        <Link href="/terms" className="underline hover:text-[#a3a380]">
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link href="/privacy" className="underline hover:text-primary">
+        <Link href="/privacy" className="underline hover:text-[#a3a380]">
           Privacy Policy
         </Link>
         .
