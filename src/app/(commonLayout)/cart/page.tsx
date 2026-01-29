@@ -75,7 +75,12 @@ export default function CartPage() {
                 >
                   {/* Item Image */}
                   <div className="relative h-24 w-32 rounded-lg overflow-hidden shrink-0 bg-[#0c0d0c]">
-                    <Image src="/no-image.png" alt={item.name} width={500} height={500} />
+                    <Image
+                      src="/no-image.png"
+                      alt={item.name}
+                      width={500}
+                      height={500}
+                    />
                   </div>
 
                   {/* Item Details */}
@@ -154,9 +159,14 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <Button className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-14 rounded-2xl mt-8 shadow-xl transition-all active:scale-95">
-                  Proceed to Checkout
-                </Button>
+                <Link
+                  href="/checkout"
+                  className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-14 rounded-lg mt-8 shadow-xl transition-all active:scale-95 hover:cursor-pointer!"
+                >
+                  <Button className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase tracking-widest h-14 rounded-lg mt-8 shadow-xl transition-all active:scale-95  hover:cursor-pointer!">
+                    Proceed to Checkout
+                  </Button>
+                </Link>
 
                 <p className="text-[10px] text-gray-600 text-center uppercase tracking-tighter mt-4 leading-relaxed">
                   Shipping and taxes calculated at checkout. <br /> Secure
