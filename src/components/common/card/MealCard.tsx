@@ -22,17 +22,25 @@ export function MealCard({ meal }: { meal: Meal }) {
         </Badge>
       </div>
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 relative">
         <Link
           href={`/meal/${meal.id}`}
           className="group/meal-link block space-y-2 outline-none"
         >
-          <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover/meal-link:text-[#a3a380] line-clamp-1">
+          <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover/meal-link:text-[#a3a380] line-clamp-1 group-hover/meal-link:underline">
             {meal.name}
           </h3>
-          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed transition-opacity group-hover/meal-link:opacity-80">
+
+          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed transition-opacity duration-300 group-hover/meal-link:opacity-80">
             {meal.description}
           </p>
+
+          {/* Hover CTA */}
+          <div className="pt-3 opacity-0 translate-y-2 transition-all duration-300 group-hover/meal-link:opacity-100 group-hover/meal-link:translate-y-0">
+            <span className="inline-block text-sm font-semibold text-[#a3a380]">
+              View details →
+            </span>
+          </div>
         </Link>
       </CardContent>
 

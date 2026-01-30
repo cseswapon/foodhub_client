@@ -43,7 +43,7 @@ export default async function ProviderDetailsPage({
   const provider = await getProviderDetails(id);
 
   return (
-    <section className="bg-[#0c0d0c] pt-20 pb-15">
+    <section className="bg-[#0c0d0c] text-white pb-15">
       {/* 1. Hero / Header Section */}
       <section className="relative h-[50vh] md:h-[40vh] bg-[#1f2120] flex items-end pb-12 overflow-hidden border-b border-white/5">
         {/* Abstract Background pattern */}
