@@ -108,7 +108,7 @@ export default async function OrderDetailsPage({
                   );
                 })}
                 {/* Connecting Line (Desktop) */}
-                <div className="absolute top-6 left-0 w-full h-[2px] bg-white/5 -z-0 hidden md:block" />
+                <div className="absolute top-6 left-0 w-full h-0.5 bg-white/5 z-0 hidden md:block" />
               </div>
             </Card>
 
