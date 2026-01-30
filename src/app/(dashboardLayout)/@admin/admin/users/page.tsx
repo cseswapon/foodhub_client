@@ -1,7 +1,9 @@
+import UsersList from "@/components/module/admin/UsersList";
+
 export default function AdminUsers() {
   return (
     <>
-      <p>Admin Users</p>
+      <UsersList />
     </>
   );
 }

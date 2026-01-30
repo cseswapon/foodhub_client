@@ -19,7 +19,7 @@ import { RouteItem } from "@/types";
 import { adminRoute, providerRoute } from "@/routes";
 
 const user = {
-  role: "provider",
+  role: "admin",
 };
 let route: RouteItem[] = [];
 

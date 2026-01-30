@@ -41,7 +41,7 @@ const statusConfig = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function OrdersTable({ orders }: { orders: any[] }) {
+export default function OrdersTable({ orders,role }: { orders: any[], role:string }) {
   return (
     <div className="rounded-lg border  backdrop-blur-sm overflow-hidden">
       <Table>
@@ -52,7 +52,9 @@ export default function OrdersTable({ orders }: { orders: any[] }) {
             <TableHead>Items</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="text-right pr-8">Manage</TableHead>
+            {role !== "admin" && (
+              <TableHead className="text-right pr-8">Manage</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -133,31 +135,33 @@ export default function OrdersTable({ orders }: { orders: any[] }) {
               </TableCell>
 
               {/* Actions */}
-              <TableCell className="text-right pr-8">
-                <div className="flex justify-end gap-2">
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
-                  >
-                    <Link href={`/provider/orders/${order.id}`}>
-                      <HiOutlineEye size={18} />
-                    </Link>
-                  </Button>
-                  {/* Status Update shortcut link */}
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
-                  >
-                    <Link href={`/provider/orders/update/${order.id}`}>
-                      <HiOutlineTruck size={18} />
-                    </Link>
-                  </Button>
-                </div>
-              </TableCell>
+              {role !== "admin" && (
+                <TableCell className="text-right pr-8">
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
+                    >
+                      <Link href={`/provider/orders/${order.id}`}>
+                        <HiOutlineEye size={18} />
+                      </Link>
+                    </Button>
+                    {/* Status Update shortcut link */}
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
+                    >
+                      <Link href={`/provider/orders/update/${order.id}`}>
+                        <HiOutlineTruck size={18} />
+                      </Link>
+                    </Button>
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

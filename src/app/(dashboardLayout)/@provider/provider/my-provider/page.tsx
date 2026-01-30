@@ -18,7 +18,6 @@ import {
 import Link from "next/link";
 
 export default function MyProvider() {
-  // --- ফেক ডাটা ---
   const providers = [
     {
       id: "1ea33618-d7c7-4ac2-8ef9-aa0915bcacd4",
@@ -116,13 +115,13 @@ export default function MyProvider() {
 
                 {/* FB Link */}
                 <TableCell>
-                  <a
+                  <Link
                     href={provider.fb_link}
                     target="_blank"
                     className="text-muted-foreground hover:text-[#a3a380] transition-colors"
                   >
                     <HiOutlineGlobeAlt size={18} />
-                  </a>
+                  </Link>
                 </TableCell>
 
                 {/* Actions */}

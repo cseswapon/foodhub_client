@@ -42,7 +42,7 @@ export default function ProviderDashboard() {
         </p>
       </div> */}
 
-      <DashboardStats stats={statsData} />
+      <DashboardStats stats={statsData} role="provider"/>
 
       <RecentOrders orders={recentOrders} />
     </main>
