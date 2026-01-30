@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-gray-50 px-6 overflow-hidden">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] text-white px-6 overflow-hidden">
       <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-primary/10 blur-[100px] animate-pulse" />
       <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-primary-light/15 blur-[120px]" />
 
@@ -13,7 +13,7 @@ export default function Loading() {
         </div>
 
         <div className="mt-8 text-center">
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight uppercase">
+          <h2 className="text-2xl font-black text-white tracking-tight uppercase">
             Loading
             <span className="inline-flex ml-1">
               <span className="animate-[bounce_1s_infinite_100ms]">.</span>
@@ -21,7 +21,7 @@ export default function Loading() {
               <span className="animate-[bounce_1s_infinite_300ms]">.</span>
             </span>
           </h2>
-          <p className="mt-2 text-gray-500 text-sm font-medium tracking-wide">
+          <p className="mt-2 text-white text-sm font-medium tracking-wide">
             ESTABLISHING CONNECTION
           </p>
         </div>

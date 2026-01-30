@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-gray-50 px-6 overflow-hidden">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] text-white px-6 overflow-hidden">
       <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-primary/10 blur-[100px] animate-pulse" />
       <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-primary-light/15 blur-[120px]" />
 
@@ -18,7 +18,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-2">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-200 tracking-tight">
             Lost in Space?
           </h2>
           <p className="mt-4 text-gray-500 text-sm max-w-lg mx-auto leading-relaxed">
@@ -31,14 +31,14 @@ export default function NotFound() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
           <Link
             href="/"
-            className="group relative w-full sm:w-auto px-10 py-4 bg-primary text-white font-semibold rounded-xl transition-all duration-300 shadow-xl   hover:-translate-y-1 active:scale-95"
+            className="group relative w-full sm:w-auto px-10 py-4 bg-primary text-black font-semibold rounded-xl transition-all duration-300 shadow-xl   hover:-translate-y-1 active:scale-95"
           >
             Go Back Home
             <span className="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
 
           <Link
-            href="/contact"
+            href="/"
             className="w-full sm:w-auto px-10 py-4 text-primary font-semibold border-2 border-primary/20 rounded-xl hover:bg-primary/5 hover:border-primary transition-all duration-300"
           >
             Contact Support

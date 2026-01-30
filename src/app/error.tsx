@@ -15,8 +15,8 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-gray-50 px-6 overflow-hidden">
-      <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-red-500/10 blur-[100px] animate-pulse" />
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] px-6 overflow-hidden">
+      <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-white/10 blur-[100px] animate-pulse" />
       <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-primary/15 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl w-full text-center">
@@ -41,7 +41,7 @@ export default function Error({
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">
-          Oops! Something <br />
+          <span className="text-white">Oops! Something</span> <br />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-primary">
             Went Wrong
           </span>
@@ -55,7 +55,7 @@ export default function Error({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => reset()}
-            className="group relative w-full sm:w-auto px-10 py-4 bg-primary text-white font-semibold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
+            className="group relative w-full sm:w-auto px-10 py-4 bg-primary text-black font-semibold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
           >
             <span className="relative z-10">Try Again</span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -63,7 +63,7 @@ export default function Error({
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-10 py-4 text-gray-600 font-semibold border-2 border-gray-200 rounded-xl hover:bg-gray-100 transition-all duration-300"
+            className="w-full sm:w-auto px-10 py-4 text-white font-semibold border-2 border-gray-200 rounded-xl hover:bg-gray-100 transition-all duration-300"
           >
             Back to Home
           </Link>

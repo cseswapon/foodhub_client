@@ -1,3 +1,6 @@
+import { AppSidebar } from "@/components/layout/app-sidebar";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,11 +17,19 @@ export default function DashboardLayout({
   admin: React.ReactNode;
   provider: React.ReactNode;
 }>) {
+  const user = { role: "admin" };
   return (
     <>
-      {admin}
-      {provider}
-      {children}
+      <SidebarProvider>
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="md:p-6 p-5">
+            {user?.role === "admin" ? admin : provider}
+            {children}
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
     </>
   );
 }

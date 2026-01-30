@@ -146,16 +146,10 @@ export default async function ProfilePage() {
                 </div>
 
                 <div className="pt-4 space-y-3">
-                  <Button
-                    variant="default"
-                    className="w-full border-white/10 hover:bg-white/5 text-white rounded-lg justify-start h-12 px-6"
-                  >
+                  <Button className="w-full border-white/10 hover:bg-white/5 bg-[#0c0d0c]/50 hover:cursor-pointer text-white rounded-lg justify-start h-12 px-6">
                     Security Settings
                   </Button>
-                  <Button
-                    variant="default"
-                    className="w-full border-white/10 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 text-gray-400 rounded-xl justify-start h-12 px-6"
-                  >
+                  <Button className="w-full border-white/10 hover:bg-red-500/10 hover:text-red-500 bg-[#0c0d0c]/50 hover:cursor-pointer hover:border-red-500/20 text-gray-400 rounded-xl justify-start h-12 px-6">
                     Logout Account
                   </Button>
                 </div>
