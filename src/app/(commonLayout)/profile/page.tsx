@@ -37,12 +37,12 @@ export default async function ProfilePage() {
       <div className="container mx-auto px-4 md:px-0">
         {/* Profile Header Card */}
         <section className="relative mb-12">
-          <Card className="bg-[#1f2120] border-white/5 rounded-lg overflow-hidden shadow-2xl">
+          <Card className="bg-[#1f2120] border-white/5 rounded-lg overflow-hidden shadow-lg pt-0">
             <div className="h-32 bg-linear-to-r from-[#a3a380]/20 to-transparent" />
             <CardContent className="px-8 pb-10 -mt-16">
               <div className="flex flex-col md:flex-row md:items-end items-center gap-6">
                 {/* Avatar Placeholder */}
-                <div className="h-32 w-32 rounded-[30px] bg-[#a3a380] border-8 border-[#1f2120] flex items-center justify-center text-[#1f2120] text-5xl font-black shadow-xl">
+                <div className="h-32 w-32 rounded-full bg-[#a3a380] border-8 border-[#1f2120] flex items-center justify-center text-[#1f2120] text-5xl font-black shadow-xl">
                   {profile.name.charAt(0)}
                 </div>
 

@@ -32,6 +32,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { IconStar } from "@tabler/icons-react";
 
 interface MenuItem {
   title: string;
@@ -148,6 +149,17 @@ export function Header({ className }: NavbarProps) {
                       className="flex items-center gap-2 w-full"
                     >
                       <User size={16} /> Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    asChild
+                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
+                  >
+                    <Link
+                      href="/review"
+                      className="flex items-center gap-2 w-full"
+                    >
+                      <IconStar size={16} />My Review
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
