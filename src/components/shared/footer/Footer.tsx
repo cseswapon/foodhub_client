@@ -119,10 +119,10 @@ const Footer = ({ className }: FooterProps) => {
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
           <p>© {currentYear} Spicyhunt. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/terms" className="hover:text-white transition-colors">
               Terms of Service
             </Link>
           </div>

@@ -152,7 +152,7 @@ export default function PrivacyPage() {
           </section>
 
           {/* Contact Footer */}
-          <div className="rounded-[40px] bg-[#1f2120] p-12 text-center border border-white/5 space-y-6">
+          <div className="rounded-lg bg-[#1f2120] p-12 text-center border border-white/5 space-y-6">
             <div className="h-16 w-16 bg-[#a3a380]/5 rounded-full flex items-center justify-center mx-auto text-[#a3a380]">
               <Mail size={32} />
             </div>
