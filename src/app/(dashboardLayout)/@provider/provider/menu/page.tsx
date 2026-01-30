@@ -1,7 +1,9 @@
-export default function ProviderMenu() {
+import ProviderMenu from "@/components/module/provider/ProviderMenu";
+
+export default function ProviderMenuList() {
   return (
     <>
-      <h1>Provider Dashboard Menu</h1>
+      <ProviderMenu />
     </>
   );
 }
