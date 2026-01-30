@@ -26,8 +26,7 @@ export function MealReviews({ reviews }: { reviews: Review[] }) {
 
   return (
     <section className="mt-24 space-y-12">
-      {/* রিভিউ হেডার এবং সামারি */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/5 pb-10">
+      <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 border-b border-white/5 pb-10">
         <div className="space-y-3">
           <h3 className="text-[#a3a380] text-xs font-black uppercase tracking-[0.4em] flex items-center gap-2">
             <HiOutlineChatBubbleLeftRight size={20} /> Customer Feedback

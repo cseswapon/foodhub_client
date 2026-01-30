@@ -97,10 +97,10 @@ export default async function MealDetails({
               &quot;{meal.description}&quot;
             </p>
 
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
               <Button
                 size="lg"
-                className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase px-12 h-16 rounded-full gap-4 shadow-[0_20px_40px_-10px_rgba(163,163,128,0.3)] transition-all active:scale-95"
+                className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase px-12 h-16 rounded-full gap-4 transition-all active:scale-95"
               >
                 <HiOutlineShoppingBag size={24} />
                 Add to Cart
