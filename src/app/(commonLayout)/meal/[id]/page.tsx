@@ -85,7 +85,7 @@ export default async function MealDetails({
                 <span className="h-2 w-2 rounded-full bg-[#a3a380] shadow-[0_0_10px_#a3a380]" />
                 {meal.category.name}
               </div>
-              <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-white italic">
+              <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white italic">
                 {meal.name}
               </h1>
               <p className="text-3xl md:text-5xl font-black text-[#a3a380] tracking-tighter">

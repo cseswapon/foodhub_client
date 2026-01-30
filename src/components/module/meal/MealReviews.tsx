@@ -37,7 +37,7 @@ export function MealReviews({ reviews }: { reviews: Review[] }) {
         </div>
 
         {reviews.length > 0 && (
-          <div className="flex items-center gap-5 bg-[#1f2120] px-8 py-5 rounded-lg border border-white/5 shadow-2xl">
+          <div className="flex items-center gap-5 bg-[#1f2120] px-8 py-5 rounded-full border border-white/5 shadow-2xl">
             <div className="text-right">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1">
                 Total Score
@@ -81,7 +81,7 @@ export function MealReviews({ reviews }: { reviews: Review[] }) {
               <div className="space-y-6">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-4">
-                    <div className="size-12 rounded-2xl bg-[#0c0d0c] flex items-center justify-center text-[#a3a380] border border-white/5">
+                    <div className="size-12 rounded-full bg-[#0c0d0c] flex items-center justify-center text-[#a3a380] border border-white/5">
                       <HiOutlineUser size={24} />
                     </div>
                     <div>
