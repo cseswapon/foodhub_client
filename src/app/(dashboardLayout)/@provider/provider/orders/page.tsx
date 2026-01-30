@@ -86,7 +86,7 @@ export default function ProviderOrder() {
       </div>
 
       {/* Orders Table Component */}
-      <OrdersTable orders={fakeOrdersData} />
+      <OrdersTable orders={fakeOrdersData} role="provider"/>
     </main>
   );
 }
