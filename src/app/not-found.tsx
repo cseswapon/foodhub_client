@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] text-white px-6 overflow-hidden">
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] px-6 overflow-hidden">
       <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-primary/10 blur-[100px] animate-pulse" />
       <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-primary-light/15 blur-[120px]" />
 
@@ -12,7 +12,7 @@ export default function NotFound() {
             404
           </h1>
 
-          <div className="absolute top-[15%] -right-4 md:-right-8 bg-primary text-white text-[10px] md:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg rotate-12 animate-bounce">
+          <div className="absolute top-[15%] -right-4 md:-right-8 bg-primary  text-[10px] md:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg rotate-12 animate-bounce">
             Page Not Found
           </div>
         </div>

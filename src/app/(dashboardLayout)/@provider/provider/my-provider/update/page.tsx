@@ -1,0 +1,5 @@
+import { redirect } from "next/navigation";
+
+export default function Provider() {
+  return redirect("/provider/dashboard");
+}

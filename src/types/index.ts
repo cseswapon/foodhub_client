@@ -1,7 +1,7 @@
-import { type Icon } from "@tabler/icons-react";
+import { ComponentType } from "react";
 
 export interface RouteItem {
   title: string;
   url: string;
-  icon: Icon;
+  icon: ComponentType<{ size?: number; className?: string }>;
 }
