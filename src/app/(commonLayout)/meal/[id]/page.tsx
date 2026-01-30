@@ -60,7 +60,7 @@ export default async function MealDetails({
 
   return (
     <div className="bg-[#0c0d0c] pt-30 pb-20 px-4 min-h-screen">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left Side: Product Image */}
           <div className="relative rounded-lg overflow-hidden border border-white/5 shadow-2xl">
