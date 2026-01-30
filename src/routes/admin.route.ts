@@ -3,6 +3,7 @@ import {
   IconUsers,
   IconShoppingBag,
   IconCategory,
+  IconStar,
 } from "@tabler/icons-react";
 
 import { RouteItem } from "@/types";
@@ -27,5 +28,10 @@ export const adminRoute: RouteItem[] = [
     title: "Categories",
     url: "/admin/categories",
     icon: IconCategory,
+  },
+  {
+    title: "Reviews",
+    url: "/admin/reviews",
+    icon: IconStar,
   },
 ];
