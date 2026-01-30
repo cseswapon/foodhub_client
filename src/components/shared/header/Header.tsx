@@ -83,7 +83,7 @@ export function Header({ className }: NavbarProps) {
     <section
       className={cn(
         "fixed top-0 left-0 w-full z-50 py-5 transition-transform duration-300",
-        showHeader ? "translate-y-0" : "-translate-y-full",
+        showHeader ? "translate-y-0 " : "-translate-y-full",
         isHome ? "bg-black/50 backdrop-blur-md" : "bg-[#0a0a0a]",
         className,
       )}
