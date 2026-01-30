@@ -8,18 +8,15 @@ export const metadata: Metadata = {
 export default function DashboardLayout({
   children,
   admin,
-  customer,
   provider,
 }: Readonly<{
   children: React.ReactNode;
   admin: React.ReactNode;
-  customer: React.ReactNode;
   provider: React.ReactNode;
 }>) {
   return (
     <>
       {admin}
-      {customer}
       {provider}
       {children}
     </>
