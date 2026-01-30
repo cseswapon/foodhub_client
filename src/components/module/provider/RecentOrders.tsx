@@ -114,7 +114,7 @@ export function RecentOrders({ orders }: { orders: any[] }) {
                   variant="ghost"
                   className="rounded-full hover:bg-[#a3a380] hover:text-[#1f2120]"
                 >
-                  <Link href={`/dashboard/orders/${order.id}`}>
+                  <Link href={`/provider/orders/${order.id}`}>
                     <HiOutlineEye size={16} />
                   </Link>
                 </Button>
