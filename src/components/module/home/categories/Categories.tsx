@@ -1,25 +1,10 @@
-import { CategoryCard } from '@/components/common/card/CategoryCard';
+import { CategoryCard } from "@/components/common/card/CategoryCard";
+import { CategoriesService } from "@/services/categories.service";
 
-const CATEGORIES_DATA = [
-  {
-    id: 1,
-    title: "Soups",
-  },
-  {
-    id: 2,
-    title: "Main Course",
-  },
-  {
-    id: 3,
-    title: "Desserts",
-  },
-  {
-    id: 4,
-    title: "Desserts",
-  },
-];
-
-export default function Category() {
+export default async function Category() {
+  const categoriesService = new CategoriesService();
+  const categories = await categoriesService.getAllCategories();
+  console.log(categories.data);
   return (
     <>
       <div className="bg-[#1f2120] py-24">
@@ -47,9 +32,15 @@ export default function Category() {
         </div>
 
         <div className="grid md:grid-cols-4 container mx-auto">
-          {CATEGORIES_DATA.map((item, i) => (
-            <CategoryCard key={i} title={item.title} />
-          ))}
+          {categories?.data?.map(
+            (item: { name: string; id: string; created_at: string }) => (
+              <CategoryCard
+                key={item.id}
+                name={item?.name}
+                created={item?.created_at}
+              />
+            ),
+          )}
         </div>
       </div>
     </>
