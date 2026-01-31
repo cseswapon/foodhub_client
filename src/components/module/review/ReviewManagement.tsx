@@ -160,9 +160,9 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
         )}
       </DialogTrigger>
 
-      <DialogContent className="bg-[#0c0d0c]/90 backdrop-blur-xl border-white/10 rounded-lg max-w-md shadow-2xl">
+      <DialogContent className="backdrop-blur-xl border-white/10 rounded-lg max-w-md shadow">
         <DialogHeader className="border-b border-white/5 pb-4">
-          <DialogTitle className="text-white font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
+          <DialogTitle className="text-gray-600 font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
             <HiOutlineChatBubbleLeftRight className="text-[#a3a380]" />
             Review {mode}
           </DialogTitle>
@@ -172,7 +172,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
           {/* Status Toggle - High Priority for Admin */}
           <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/5">
             <div className="space-y-0.5">
-              <Label className="text-[11px] font-black uppercase tracking-widest text-white">
+              <Label className="text-[11px] font-black uppercase tracking-widest text-gray-600">
                 Public Visibility
               </Label>
               <p className="text-[9px] text-gray-500 font-bold uppercase tracking-tighter">
@@ -194,7 +194,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
               <Input
                 defaultValue={data.user.name}
                 disabled
-                className="bg-white/5 border-white/10 text-white rounded-lg"
+                className="bg-white/5 border-white/10 rounded-lg"
               />
             </div>
             <div className="space-y-2">
@@ -204,7 +204,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
               <Input
                 defaultValue={data.rating}
                 disabled={isView}
-                className="bg-white/5 border-white/10 text-white rounded-lg font-black italic"
+                className="bg-white/5 border-white/10 rounded-lg font-black italic"
               />
             </div>
           </div>
@@ -216,7 +216,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
             <Textarea
               defaultValue={data.comment}
               disabled={isView}
-              className="bg-white/5 border-white/10 min-h-25 rounded-lg text-white italic"
+              className="bg-white/5 border-white/10 min-h-25 rounded-lg italic"
             />
           </div>
 

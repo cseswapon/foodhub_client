@@ -41,7 +41,7 @@ export default function CategoryList() {
       {/* Header with Add Button */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight italic text-white">
+          <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight italic">
             Meal <span className="text-[#a3a380]">Categories</span>
           </h1>
           <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
@@ -54,7 +54,7 @@ export default function CategoryList() {
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border border-white/5 bg-card/40 backdrop-blur-sm overflow-hidden shadow">
+      <div className="rounded-lg border bg-card/40 backdrop-blur-sm overflow-hidden shadow">
         <Table>
           <TableHeader className="bg-white/5">
             <TableRow className="border-white/5 uppercase tracking-widest text-[10px] font-black">
@@ -126,7 +126,7 @@ function CategoryModal({
     <Dialog>
       <DialogTrigger asChild>
         {mode === "add" ? (
-          <Button className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-bold rounded-lg uppercase text-[10px] tracking-widest gap-2 h-10 px-6 shadow-xl">
+          <Button className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-bold rounded-lg uppercase text-[10px] tracking-widest gap-2 h-10 px-6 shadow">
             <HiOutlinePlus size={16} /> Add Category
           </Button>
         ) : mode === "edit" ? (
@@ -151,9 +151,9 @@ function CategoryModal({
       {/* Shadcn DialogContent এর ভেতরে ইন্টারনাল ওভারলেতে 
           নিচের CSS ক্লাসগুলো ব্লার ইফেক্ট নিশ্চিত করবে।
       */}
-      <DialogContent className="bg-[#0c0d0c] backdrop-blur-xl border-white/10 rounded-lg max-w-sm shadow-2xl">
+      <DialogContent className="backdrop-blur-xl border-white/10 rounded-lg max-w-sm shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="text-white font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
+          <DialogTitle className="font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
             {mode === "add" && <HiOutlinePlus className="text-[#a3a380]" />}
             {mode === "edit" && (
               <HiOutlinePencilSquare className="text-[#a3a380]" />
@@ -176,7 +176,7 @@ function CategoryModal({
               defaultValue={data?.name || ""}
               disabled={isView}
               placeholder="e.g. Fats & Oils"
-              className="bg-white/5 border-white/10 h-12 focus:ring-[#a3a380] rounded-lg text-white font-bold placeholder:text-gray-700"
+              className="bg-white/5 border-white/10 h-12 focus:ring-[#a3a380] rounded-lg font-bold placeholder:text-gray-700"
             />
           </div>
 

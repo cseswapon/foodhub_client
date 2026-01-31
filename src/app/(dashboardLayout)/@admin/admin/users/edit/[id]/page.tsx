@@ -69,7 +69,7 @@ export default function UsersUpdate() {
         </Button>
       </div>
 
-      <Card className="border-white/5 bg-card/40 backdrop-blur-md max-w-xl mx-auto rounded-lg shadow-xl overflow-hidden pt-0">
+      <Card className="border-white/5 bg-card/40 backdrop-blur-md max-w-xl mx-auto rounded-lg shadow overflow-hidden pt-0">
         <CardHeader className="border-b border-white/5 pb-6 bg-white/5 pt-5">
           <div className="flex items-center gap-4">
             <div className="size-12 rounded-lg bg-[#a3a380]/10 flex items-center justify-center text-[#a3a380]">
