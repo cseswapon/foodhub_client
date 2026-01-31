@@ -140,7 +140,7 @@ export default async function ProviderDetailsPage({
               <CardContent className="p-0 space-y-10">
                 {/* User / Owner Info */}
                 <div className="flex items-center gap-6">
-                  <div className="size-16 rounded-2xl bg-linear-to-br from-[#a3a380] to-[#8e8e6f] flex items-center justify-center text-[#1f2120]">
+                  <div className="size-16 rounded-xl bg-linear-to-br from-[#a3a380] to-[#8e8e6f] flex items-center justify-center text-[#1f2120]">
                     <HiOutlineUserCircle size={32} />
                   </div>
                   <div>
