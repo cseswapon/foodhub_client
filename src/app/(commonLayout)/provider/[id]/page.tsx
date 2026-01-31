@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
+import { MealCard } from "@/components/common/card/MealCard";
 
 // API Fetching (Server Component logic)
 async function getProviderDetails(id: string) {
@@ -31,6 +32,20 @@ async function getProviderDetails(id: string) {
       email: "swaponsaha20@gmail.com",
       phone: "01829930827",
     },
+    meals: [
+      {
+        id: "ef5a7cb9-b218-490d-a224-684d3124d154",
+        provider_id: "762b9ef3-37be-4e7a-aafc-0c0960ca5f67",
+        category_id: "7153229c-d3d2-4157-a65f-ffb878bdc528",
+        name: "Chicken Biryani",
+        description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
+        price: "500",
+        dietary_type: "veg",
+        is_available: true,
+        created_at: "2026-01-31T05:20:11.522Z",
+        updated_at: "2026-01-31T05:20:11.522Z",
+      },
+    ],
   };
 }
 
@@ -77,7 +92,7 @@ export default async function ProviderDetailsPage({
               <Button
                 asChild
                 size="lg"
-                className="bg-white/5 hover:bg-[#a3a380] hover:text-[#1f2120] border border-white/10 rounded-full px-8 transition-all duration-500"
+                className="bg-white/5 hover:bg-[#a3a380] hover:text-[#1f2120] text-gray-400 border border-white/10 rounded-full px-8 transition-all duration-500"
               >
                 <Link href={provider.fb_link} target="_blank">
                   <FaFacebookF className="mr-2" /> Follow on Facebook
@@ -184,6 +199,54 @@ export default async function ProviderDetailsPage({
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* 3. Signature Menu Section - লার্জার এবং স্পেসড আউট গ্রিড */}
+      <section className="container mx-auto px-6 py-16 border-t border-white/5">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20">
+          <div className="space-y-4">
+            <h3 className="text-[#a3a380] text-xs font-black uppercase tracking-[0.5em] flex items-center gap-4">
+              <span className="h-px w-12 bg-[#a3a380]" /> The Collection
+            </h3>
+            <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter italic">
+              Signature <span className="text-[#a3a380]">Menu</span>
+            </h2>
+          </div>
+
+          <div className="bg-white/5 px-8 py-4 rounded-2xl border border-white/10 backdrop-blur-md">
+            <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">
+              Available Items:{" "}
+              <span className="text-[#a3a380] text-lg ml-2">
+                {provider.meals?.length || 0}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+          {provider.meals && provider.meals.length > 0 ? (
+            provider?.meals?.map((meal) => (
+              <div
+                key={meal?.id}
+                className="group animate-in fade-in zoom-in duration-700"
+              >
+                <MealCard meal={meal} />
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full py-40 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-[3rem] bg-white/1">
+              <div className="size-24 rounded-full bg-white/5 flex items-center justify-center text-gray-800 mb-8 border border-white/5">
+                <HiOutlineGlobeAlt size={48} />
+              </div>
+              <h4 className="text-gray-500 uppercase font-black tracking-[0.3em] text-sm">
+                No Delicacies Found
+              </h4>
+              <p className="text-[10px] text-gray-700 font-bold uppercase mt-4">
+                The chef is preparing something special
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </section>

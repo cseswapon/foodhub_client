@@ -52,7 +52,7 @@ export default function MealsPage() {
         <div className="md:mb-12 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
-              Our <span className="text-[#a3a380]">Menu</span>
+              Our <span className="text-[#a3a380]">All Menu</span>
             </h1>
             <p className="text-gray-500 mt-2">
               Discover the finest flavors crafted just for you.

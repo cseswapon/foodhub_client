@@ -77,6 +77,7 @@ export function Header({ className }: NavbarProps) {
   const menu: MenuItem[] = [
     { title: "Home", url: "/" },
     { title: "Meal", url: "/meal" },
+    { title: "Provider", url: "/provider" },
   ];
 
   return (
