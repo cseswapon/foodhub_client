@@ -81,7 +81,7 @@ export default function UpdateMenuForm() {
         </Button>
       </div>
 
-      <Card className="border-white/5 bg-card/40 backdrop-blur-md max-w-2xl mx-auto rounded-lg shadow-xl overflow-hidden">
+      <Card className="border-white/5 bg-card/40 backdrop-blur-md max-w-2xl mx-auto rounded-lg shadow overflow-hidden">
         <CardHeader className="border-b border-white/5 pb-6">
           <div className="flex justify-between items-center">
             <div className="space-y-1">
