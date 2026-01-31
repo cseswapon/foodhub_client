@@ -13,24 +13,12 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { HiOutlineMail } from "react-icons/hi";
 import Link from "next/link";
-
-// API Data Simulation
-async function getProfileData() {
-  return {
-    id: "eebCTSpTw7lnWacx6hmwvzOszvD9gQ80",
-    name: "Abcd",
-    email: "swaponsaha20@gmail.com",
-    emailVerified: false,
-    role: "provider",
-    phone: "01829930827",
-    address: null,
-    status: "activate",
-    createdAt: "2026-01-28T12:39:22.933Z",
-  };
-}
+import { UserService } from "@/services/user.service";
 
 export default async function ProfilePage() {
-  const profile = await getProfileData();
+  const userService = new UserService();
+  const user = await userService.currentUser();
+  const profile = user?.data;
 
   return (
     <main className="min-h-screen bg-[#0c0d0c] text-white  pt-30 pb-15">
@@ -42,21 +30,22 @@ export default async function ProfilePage() {
             <CardContent className="px-8 pb-10 -mt-16">
               <div className="flex flex-col md:flex-row md:items-end items-center gap-6">
                 {/* Avatar Placeholder */}
-                <div className="h-32 w-32 rounded-full bg-[#a3a380] border-8 border-[#1f2120] flex items-center justify-center text-[#1f2120] text-5xl font-black shadow-xl">
-                  {profile.name.charAt(0)}
+                <div className="h-32 w-32 rounded-full bg-[#a3a380] border-8 border-[#1f2120] flex items-center justify-center text-[#1f2120]] text-5xl font-black shadow-xl">
+                  {profile?.name.charAt(0)}
                 </div>
 
                 <div className="flex-1 space-y-2 text-center md:text-left">
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic">
-                      {profile.name}
+                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-gray-200 italic">
+                      {profile?.name}
                     </h1>
                     <Badge className="bg-[#a3a380]/10 text-[#a3a380] border-[#a3a380]/20 uppercase text-[10px] font-bold tracking-widest px-3">
-                      {profile.role}
+                      {profile?.role}
                     </Badge>
                   </div>
                   <p className="text-gray-500 flex items-center justify-center md:justify-start gap-2 text-sm font-medium">
-                    <HiOutlineMail className="text-[#a3a380]" /> {profile.email}
+                    <HiOutlineMail className="text-[#a3a380]" />{" "}
+                    {profile?.email}
                   </p>
                 </div>
                 <Link href="/profile/update">
@@ -81,18 +70,18 @@ export default async function ProfilePage() {
                 <InfoItem
                   icon={<HiOutlinePhone />}
                   label="Contact Phone"
-                  value={profile.phone}
+                  value={profile?.phone || ""}
                 />
                 <InfoItem
                   icon={<HiOutlineShieldCheck />}
                   label="Account Status"
-                  value={profile.status}
+                  value={profile?.status || ""}
                   isCapitalize
                 />
                 <InfoItem
                   icon={<HiOutlineCalendar />}
                   label="Member Since"
-                  value={new Date(profile.createdAt).toLocaleDateString(
+                  value={new Date(profile?.createdAt || "").toLocaleDateString(
                     "en-US",
                     { month: "long", year: "numeric" },
                   )}
@@ -100,7 +89,7 @@ export default async function ProfilePage() {
                 <InfoItem
                   icon={<HiOutlineMapPin />}
                   label="Primary Address"
-                  value={profile.address || "Not set yet"}
+                  value={profile?.address || "Not set yet"}
                 />
               </div>
 
@@ -110,11 +99,11 @@ export default async function ProfilePage() {
                 <div
                   className={cn(
                     "h-3 w-3 rounded-full animate-pulse",
-                    profile.emailVerified ? "bg-green-500" : "bg-amber-500",
+                    profile?.emailVerified ? "bg-green-500" : "bg-amber-500",
                   )}
                 />
                 <p className="text-xs text-gray-500 uppercase font-bold tracking-widest">
-                  {profile.emailVerified
+                  {profile?.emailVerified
                     ? "Email Verified"
                     : "Email Verification Pending"}
                 </p>
@@ -143,15 +132,6 @@ export default async function ProfilePage() {
                   <p className="text-right text-[10px] text-[#a3a380] font-bold mt-2 italic">
                     Level 2 Provider
                   </p>
-                </div>
-
-                <div className="pt-4 space-y-3">
-                  <Button className="w-full border-white/10 hover:bg-white/5 bg-[#0c0d0c]/50 hover:cursor-pointer text-white rounded-lg justify-start h-12 px-6">
-                    Security Settings
-                  </Button>
-                  <Button className="w-full border-white/10 hover:bg-red-500/10 hover:text-red-500 bg-[#0c0d0c]/50 hover:cursor-pointer hover:border-red-500/20 text-gray-400 rounded-xl justify-start h-12 px-6">
-                    Logout Account
-                  </Button>
                 </div>
               </div>
             </Card>
