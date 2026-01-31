@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Menu, User, ShoppingBag, LogOut, UserCircle } from "lucide-react";
 import { FaBowlFood } from "react-icons/fa6";
@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { IconStar } from "@tabler/icons-react";
+import { authClient } from "@/lib/auth-client";
 
 interface MenuItem {
   title: string;
@@ -49,13 +50,22 @@ interface NavbarProps {
 export function Header({ className }: NavbarProps) {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const router = useRouter();
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // --- Static Login Variable ---
-  const isLoggedIn = true; // এটাকে true/false করে টেস্ট করতে পারেন
-  // -----------------------------
+  useEffect(() => {
+    (async () => {
+      const session = await authClient.getSession();
+      if (session.data?.user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,6 +89,14 @@ export function Header({ className }: NavbarProps) {
     { title: "Meal", url: "/meal" },
     { title: "Provider", url: "/provider" },
   ];
+
+  const handelSignout = async () => {
+    const data = await authClient.signOut();
+    if (data.data?.success) {
+      router.push("/");
+      setIsLoggedIn(false);
+    }
+  };
 
   return (
     <section
@@ -160,7 +178,8 @@ export function Header({ className }: NavbarProps) {
                       href="/review"
                       className="flex items-center gap-2 w-full"
                     >
-                      <IconStar size={16} />My Review
+                      <IconStar size={16} />
+                      My Review
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -175,28 +194,32 @@ export function Header({ className }: NavbarProps) {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-white/5" />
-                  <DropdownMenuItem className="text-red-500 focus:bg-red-500/10 focus:text-red-500 cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={() => handelSignout()}
+                    className="text-red-500 focus:bg-red-500/10 focus:text-red-500 cursor-pointer"
+                  >
                     <LogOut size={16} className="mr-2" /> Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               /* Auth Buttons when Logged Out */
-              <div className="flex gap-2">
+              <div className="flex items-center gap-3">
                 <Button
                   asChild
                   variant="outline"
                   size="sm"
-                  className="text-white border-white/20 hover:bg-white/10"
+                  className="bg-[#1a1a1a] text-white border-white/10 hover:bg-[#252525] hover:text-[#a3a380] transition-all duration-300"
                 >
                   <Link href="/auth/login">Login</Link>
                 </Button>
+
                 <Button
                   asChild
                   size="sm"
-                  className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-bold"
+                  className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] tracking-tight active:scale-95 transition-all duration-300 border-none"
                 >
-                  <Link href="/auth/register">Sign up</Link>
+                  <Link href="/auth/register">Signup</Link>
                 </Button>
               </div>
             )}
@@ -269,6 +292,7 @@ export function Header({ className }: NavbarProps) {
                         <ShoppingBag size={20} /> My Orders
                       </Link>
                       <Button
+                        onClick={() => handelSignout()}
                         variant="default"
                         className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
                       >
@@ -279,8 +303,7 @@ export function Header({ className }: NavbarProps) {
                     <>
                       <Button
                         asChild
-                        variant="outline"
-                        className="border-white/10 text-white hover:bg-white/5"
+                        className="border-white/10 hover:bg-white/5"
                       >
                         <Link href="/auth/login">Login</Link>
                       </Button>

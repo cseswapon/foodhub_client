@@ -23,12 +23,15 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Loader2, Eye, EyeOff, User, Mail, Phone, Lock } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword,setShowPassword] = useState(false);
+  const router = useRouter()
 
   const formSchema = z.object({
     name: z.string().min(2, "Name minimum 2 character"),
@@ -50,10 +53,19 @@ export function RegisterForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Creating your account...");
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        console.log("REGISTER DATA:", value);
-        toast.success("Account created successfully!", { id: toastId });
+        const {error } = await authClient.signUp.email({
+          ...value,
+          callbackURL:"/auth/login"
+        });
+  
+        if (error) {
+          toast.error(error.message, { id: toastId });
+          return;
+        }
+        // console.log(data);
+        toast.success("User Created Successfully",{ id: toastId });
         form.reset();
+        router.push('/auth/login')
       } catch {
         toast.error("Something went wrong", { id: toastId });
       }

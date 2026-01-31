@@ -23,6 +23,7 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export function LoginForm({
   className,
@@ -46,8 +47,16 @@ export function LoginForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        console.log("LOGIN DATA:", value);
+        const { error } = await authClient.signIn.email({
+          ...value,
+          callbackURL: "/",
+        });
+
+        if (error) {
+          toast.error(error.message, { id: toastId });
+          return;
+        }
+
         toast.success("Login successful!", { id: toastId });
         form.reset();
       } catch {
@@ -69,7 +78,7 @@ export function LoginForm({
             form.handleSubmit();
           }}
         >
-          <CardHeader className="space-y-2 text-center pt-8">
+          <CardHeader className="space-y-2 text-center md:pt-8 pb-5">
             <CardTitle className="text-3xl font-black tracking-tighter text-white uppercase">
               Welcome <span className="text-[#a3a380]">Back</span>
             </CardTitle>

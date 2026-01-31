@@ -55,7 +55,7 @@ export default function Error({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => reset()}
-            className="group relative w-full sm:w-auto px-10 py-4 bg-primary text-black font-semibold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
+            className="group relative w-full sm:w-auto px-10 py-4 bg-primary  font-semibold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
           >
             <span className="relative z-10">Try Again</span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
