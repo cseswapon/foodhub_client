@@ -34,12 +34,12 @@ export function ProviderCard({ provider }: { provider: Provider }) {
         <div className="absolute inset-0 bg-linear-to-t from-[#1f2120] to-transparent" />
         <Badge
           className={`absolute top-4 right-4 uppercase text-[10px] font-black tracking-widest px-3 py-1 border-none ${
-            provider.is_open
+            provider?.is_open
               ? "bg-green-500 text-white"
               : "bg-red-500 text-white"
           }`}
         >
-          {provider.is_open ? "Open Now" : "Closed"}
+          {provider?.is_open ? "Open Now" : "Closed"}
         </Badge>
       </div>
 
@@ -49,17 +49,17 @@ export function ProviderCard({ provider }: { provider: Provider }) {
         </div>
 
         <h3 className="text-2xl font-black text-white uppercase tracking-tighter italic group-hover:text-[#a3a380] transition-colors line-clamp-1">
-          {provider.restaurant_name}
+          {provider?.restaurant_name}
         </h3>
 
         <p className="text-gray-400 text-sm line-clamp-2 min-h-10 leading-relaxed italic">
-          `{provider.description}`
+          `{provider?.description}`
         </p>
 
         <div className="flex items-start gap-2 text-gray-500 pt-2">
           <HiOutlineMapPin size={16} className="text-[#a3a380] shrink-0" />
           <span className="text-[11px] font-bold uppercase tracking-tight line-clamp-1">
-            {provider.address}
+            {provider?.address}
           </span>
         </div>
       </CardContent>

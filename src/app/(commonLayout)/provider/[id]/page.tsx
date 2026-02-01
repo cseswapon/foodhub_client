@@ -12,41 +12,22 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
 import { MealCard } from "@/components/common/card/MealCard";
+import { ProviderData, ProvidersService } from "@/services/provider.service";
 
-// API Fetching (Server Component logic)
-async function getProviderDetails(id: string) {
-  // const res = await fetch(`YOUR_API_URL/provider/${id}`);
-  // return res.json();
-
-  // আপনার দেওয়া লেটেস্ট অবজেক্ট রেসপন্স সিমুলেশন:
-  return {
-    id: "1ea33618-d7c7-4ac2-8ef9-aa0915bcacd4",
-    restaurant_name: "Pizza Point - 9",
-    description: "ফ্রেশ পিজ্জা ও বার্গার পাওয়া যায়",
-    address: "গুলশান ১, ঢাকা",
-    is_open: true,
-    fb_link: "https://facebook.com/pizzapointbd",
-    created_at: "2026-01-28T12:41:10.289Z",
-    user: {
-      name: "Abcd",
-      email: "swaponsaha20@gmail.com",
-      phone: "01829930827",
-    },
-    meals: [
-      {
-        id: "ef5a7cb9-b218-490d-a224-684d3124d154",
-        provider_id: "762b9ef3-37be-4e7a-aafc-0c0960ca5f67",
-        category_id: "7153229c-d3d2-4157-a65f-ffb878bdc528",
-        name: "Chicken Biryani",
-        description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
-        price: "500",
-        dietary_type: "veg",
-        is_available: true,
-        created_at: "2026-01-31T05:20:11.522Z",
-        updated_at: "2026-01-31T05:20:11.522Z",
-      },
-    ],
-  };
+export async function generateStaticParams() {
+  const providerService = new ProvidersService();
+  try {
+    const provider = await providerService.getAllProviders();
+    if (!provider || !provider.data) {
+      return [];
+    }
+    return provider.data.map((provider: ProviderData) => ({
+      id: provider.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Failed to generate static params:", error);
+    return [];
+  }
 }
 
 export default async function ProviderDetailsPage({
@@ -55,7 +36,8 @@ export default async function ProviderDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const provider = await getProviderDetails(id);
+  const providerService = new ProvidersService();
+  const provider = await providerService.getProviderDetails(id);
 
   return (
     <section className="bg-[#0c0d0c] text-white pb-15">
@@ -71,30 +53,32 @@ export default async function ProviderDetailsPage({
                 <Badge
                   className={cn(
                     "px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full",
-                    provider.is_open
+                    provider?.data?.is_open
                       ? "bg-[#a3a380] text-[#1f2120]"
                       : "bg-red-500 text-white",
                   )}
                 >
-                  {provider.is_open ? "● Accepting Orders" : "○ Closed Now"}
+                  {provider?.data?.is_open
+                    ? "● Accepting Orders"
+                    : "○ Closed Now"}
                 </Badge>
               </div>
               <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-                {provider.restaurant_name}
+                {provider?.data?.restaurant_name}
               </h1>
               <p className="flex items-center gap-2 text-[#a3a380] font-medium tracking-wide">
                 <HiOutlineLocationMarker className="size-5" />
-                {provider.address}
+                {provider?.data?.address}
               </p>
             </div>
 
-            {provider.fb_link && (
+            {provider?.data?.fb_link && (
               <Button
                 asChild
                 size="lg"
                 className="bg-white/5 hover:bg-[#a3a380] hover:text-[#1f2120] text-gray-400 border border-white/10 rounded-full px-8 transition-all duration-500"
               >
-                <Link href={provider.fb_link} target="_blank">
+                <Link href={provider?.data?.fb_link} target="_blank">
                   <FaFacebookF className="mr-2" /> Follow on Facebook
                 </Link>
               </Button>
@@ -113,7 +97,7 @@ export default async function ProviderDetailsPage({
                 Our Philosophy
               </h3>
               <p className="text-2xl md:text-3xl font-light text-gray-300 leading-relaxed italic">
-                &quot;{provider.description}&quot;
+                &quot;{provider?.data?.description}&quot;
               </p>
             </div>
 
@@ -148,7 +132,7 @@ export default async function ProviderDetailsPage({
                       Kitchen Manager
                     </p>
                     <h4 className="text-xl font-bold text-white uppercase tracking-tight">
-                      {provider.user.name}
+                      {provider?.data?.user.name}
                     </h4>
                   </div>
                 </div>
@@ -166,7 +150,7 @@ export default async function ProviderDetailsPage({
                         Direct Call
                       </p>
                       <p className="text-gray-200 font-medium">
-                        {provider.user.phone}
+                        {provider?.data?.user.phone}
                       </p>
                     </div>
                   </div>
@@ -180,7 +164,7 @@ export default async function ProviderDetailsPage({
                         Email Inquiry
                       </p>
                       <p className="text-gray-200 font-medium truncate max-w-50">
-                        {provider.user.email}
+                        {provider?.data?.user.email}
                       </p>
                     </div>
                   </div>
@@ -190,7 +174,9 @@ export default async function ProviderDetailsPage({
                 <div className="pt-6 text-center">
                   <p className="text-[9px] text-gray-700 uppercase tracking-[0.2em]">
                     Partnering since{" "}
-                    {new Date(provider.created_at).toLocaleDateString("en-US", {
+                    {new Date(
+                      provider?.data?.created_at || "",
+                    ).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                     })}
@@ -218,15 +204,15 @@ export default async function ProviderDetailsPage({
             <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">
               Available Items:{" "}
               <span className="text-[#a3a380] text-lg ml-2">
-                {provider.meals?.length || 0}
+                {provider?.data?.meals?.length || 0}
               </span>
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {provider.meals && provider.meals.length > 0 ? (
-            provider?.meals?.map((meal) => (
+          {provider?.data.meals && provider?.data?.meals.length > 0 ? (
+            provider?.data?.meals?.map((meal) => (
               <div
                 key={meal?.id}
                 className="group animate-in fade-in zoom-in duration-700"
