@@ -16,7 +16,6 @@ interface Review {
 }
 
 export function MealReviews({ reviews }: { reviews: Review[] }) {
-  // গড় রেটিং হিসাব করা
   const averageRating =
     reviews.length > 0
       ? (
@@ -64,7 +63,6 @@ export function MealReviews({ reviews }: { reviews: Review[] }) {
         )}
       </div>
 
-      {/* রিভিউ লিস্ট */}
       {reviews.length === 0 ? (
         <div className="py-20 text-center bg-[#1f2120]/30 rounded-lg border border-dashed border-white/10">
           <p className="text-gray-500 uppercase font-black tracking-[0.3em] text-xs italic">

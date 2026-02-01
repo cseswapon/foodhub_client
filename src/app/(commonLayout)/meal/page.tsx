@@ -8,44 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { MealDataRes, MealsService } from "@/services/meal.service";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
-const MEALS_DATA = [
-  {
-    id: "5e0af171-f951-48b3-b02c-2770d6fb0dfb",
-    name: "Chicken Biryani",
-    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
-    price: "500",
-    dietary_type: "non_veg",
-    is_available: true,
-  },
-  {
-    id: "5e0af171-f951-48b3-b02c-2770d6fb0dfd",
-    name: "Chicken Biryani",
-    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
-    price: "500",
-    dietary_type: "non_veg",
-    is_available: true,
-  },
-  {
-    id: "5e0af171-f951-48b3-b02c-2770d6gb0dfd",
-    name: "Chicken Biryani",
-    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
-    price: "500",
-    dietary_type: "non_veg",
-    is_available: true,
-  },
-  {
-    id: "5e0af171-f951-98b3-b02c-2770d6gb0dfd",
-    name: "Chicken Biryani",
-    description: "স্পেশাল কাচ্চি স্টাইল চিকেন বিরিয়ানি",
-    price: "500",
-    dietary_type: "non_veg",
-    is_available: true,
-  },
-];
-
-export default function MealsPage() {
+export default async function MealsPage() {
+  const mealService = new MealsService();
+  const meals = await mealService.getAllMeal();
+  // console.log(meals);
   return (
     <div className="bg-[#0c0d0c] pt-30 pb-15 px-4 min-h-screen">
       <div className="container mx-auto">
@@ -80,7 +49,7 @@ export default function MealsPage() {
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-4">
-                  <MealFilter />
+                  <MealFilter meals={meals?.data as MealDataRes[]} />
                 </div>
               </SheetContent>
             </Sheet>
@@ -90,15 +59,17 @@ export default function MealsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <aside className="lg:col-span-3 hidden lg:block">
             <div className="sticky top-1">
-              <MealFilter />
+              <MealFilter meals={meals?.data as MealDataRes[]} />
             </div>
           </aside>
 
           {/* Meal List */}
           <section className="lg:col-span-9">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {MEALS_DATA.length > 0 ? (
-                MEALS_DATA.map((meal) => <MealCard key={meal.id} meal={meal} />)
+              {meals?.data && meals?.data.length > 0 ? (
+                meals?.data?.map((meal) => (
+                  <MealCard key={meal.id} meal={meal} />
+                ))
               ) : (
                 <div className="col-span-full py-20 text-center">
                   <p className="text-gray-500 italic">
