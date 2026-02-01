@@ -8,14 +8,29 @@ export class UserService {
   constructor() {
     this.API_URL = env.BACKEND_URL;
   }
+  getCookieData = async () => {
+    try {
+      const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
+
+      if (!cookieHeader) return null;
+
+      return cookieHeader;
+    } catch {
+      return null;
+    }
+  };
   currentUser = async () => {
     try {
-      const cookie = cookies();
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
       const response = await fetch(`${this.API_URL}/api/auth/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Cookie: (await cookie).toString(),
+          Cookie: cookieStore,
         },
         cache: "no-store",
         next: {
@@ -32,11 +47,13 @@ export class UserService {
   };
   getSession = async () => {
     try {
-      const cookieStore = await cookies();
-
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
       const res = await fetch(`${this.API_URL}/api/auth/get-session`, {
         headers: {
-          Cookie: cookieStore.toString(),
+          Cookie: cookieStore,
         },
         cache: "no-store",
       });

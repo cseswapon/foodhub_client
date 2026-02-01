@@ -138,11 +138,23 @@ export class OrderService {
   constructor() {
     this.API_URL = env.BACKEND_URL;
   }
-  getAllOrders = async (): Promise<AllOrdersResponse | undefined> => {
+
+  getCookieData = async () => {
     try {
       const cookieStore = await cookies();
       const cookieHeader = cookieStore.toString();
 
+      if (!cookieHeader) return null;
+
+      return cookieHeader;
+    } catch {
+      return null;
+    }
+  };
+
+  getAllOrders = async (): Promise<AllOrdersResponse | undefined> => {
+    try {
+      const cookieHeader = await this.getCookieData();
       if (!cookieHeader) return undefined;
 
       const response = await fetch(`${this.API_URL}/api/order/all`, {
@@ -151,10 +163,10 @@ export class OrderService {
           "Content-Type": "application/json",
           Cookie: cookieHeader,
         },
+        // cache: 'no-store',
         next: {
-          revalidate: 60,
-          tags: ["orders"],
-        },
+          revalidate: 60
+        }
       });
 
       if (!response.ok) {

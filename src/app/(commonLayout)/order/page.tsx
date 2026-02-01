@@ -1,3 +1,4 @@
+"use server"
 import {
   Table,
   TableBody,
@@ -18,8 +19,7 @@ import { cn } from "@/lib/utils";
 import { OrderService } from "@/services/order.service";
 import { CancelOrderButton } from "@/components/module/order/CancelOrderModal";
 
-
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const statusConfig = {
   placed: {
@@ -44,8 +44,8 @@ const statusConfig = {
   },
 };
 
+const orderService = new OrderService();
 export default async function OrderPage() {
-  const orderService = new OrderService();
   const orders = await orderService.getAllOrders();
   // console.log(orders?.data);
 

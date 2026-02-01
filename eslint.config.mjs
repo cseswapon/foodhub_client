@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "react/no-children-prop": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ]);

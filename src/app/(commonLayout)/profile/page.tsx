@@ -14,13 +14,13 @@ import { cn } from "@/lib/utils";
 import { HiOutlineMail } from "react-icons/hi";
 import Link from "next/link";
 import { UserService } from "@/services/user.service";
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
+const userService = new UserService();
 export default async function ProfilePage() {
-  const userService = new UserService();
   const user = await userService.currentUser();
   const profile = user?.data;
-
+  // return 'hello world'
   return (
     <main className="min-h-screen bg-[#0c0d0c] text-white  pt-30 pb-15">
       <div className="container mx-auto px-4 md:px-0">

@@ -34,6 +34,7 @@ import {
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { IconStar } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
+import { MdDashboard } from "react-icons/md";
 
 interface MenuItem {
   title: string;
@@ -55,12 +56,15 @@ export function Header({ className }: NavbarProps) {
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
       const session = await authClient.getSession();
+      // console.log(session);
       if (session.data?.user) {
         setIsLoggedIn(true);
+        setUser(session ? session : null);
       } else {
         setIsLoggedIn(false);
       }
@@ -93,10 +97,12 @@ export function Header({ className }: NavbarProps) {
   const handelSignout = async () => {
     const data = await authClient.signOut();
     if (data.data?.success) {
-      router.push("/");
+      router.push("/auth/login");
       setIsLoggedIn(false);
     }
   };
+
+  // console.log("User=>", user);
 
   return (
     <section
@@ -159,6 +165,21 @@ export function Header({ className }: NavbarProps) {
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-white/5" />
+                  {["admin", "provider"].includes(
+                    user?.data?.user?.role as string,
+                  ) && (
+                    <DropdownMenuItem
+                      asChild
+                      className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
+                    >
+                      <Link
+                        href={`${user?.data?.user?.role === "admin" ? "/admin" : "/provider/dashboard"}`}
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <MdDashboard size={16} /> Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem
                     asChild
                     className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
@@ -170,29 +191,38 @@ export function Header({ className }: NavbarProps) {
                       <User size={16} /> Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    asChild
-                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
-                  >
-                    <Link
-                      href="/review"
-                      className="flex items-center gap-2 w-full"
+
+                  {String(user?.data?.user?.role || "").startsWith(
+                    "customer",
+                  ) && (
+                    <DropdownMenuItem
+                      asChild
+                      className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
                     >
-                      <IconStar size={16} />
-                      My Review
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    asChild
-                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
-                  >
-                    <Link
-                      href="/order"
-                      className="flex items-center gap-2 w-full"
+                      <Link
+                        href="/review"
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <IconStar size={16} />
+                        My Review
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  {String(user?.data?.user?.role || "").startsWith(
+                    "customer",
+                  ) && (
+                    <DropdownMenuItem
+                      asChild
+                      className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
                     >
-                      <ShoppingBag size={16} /> My Orders
-                    </Link>
-                  </DropdownMenuItem>
+                      <Link
+                        href="/order"
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <ShoppingBag size={16} /> My Orders
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator className="bg-white/5" />
                   <DropdownMenuItem
                     onClick={() => handelSignout()}

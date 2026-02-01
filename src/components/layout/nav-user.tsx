@@ -27,6 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
 
 export function NavUser({
   user,
@@ -42,6 +43,12 @@ export function NavUser({
   const handelSwitchRoute = async (name:string) => { 
     router.push(name)
   }
+  const handelSignout = async () => {
+      const data = await authClient.signOut();
+      if (data.data?.success) {
+        router.push("/auth/login");
+      }
+    };
 
   return (
     <SidebarMenu>
@@ -64,7 +71,6 @@ export function NavUser({
               </div>
               <IconDotsVertical className="ml-auto size-4" />
             </SidebarMenuButton>
-
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
@@ -87,14 +93,14 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup onClick={()=>handelSwitchRoute('/profile')}>
-              <DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => handelSwitchRoute("/profile")}>
                 <IconUserCircle />
                 Account
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handelSignout}>
               <IconLogout />
               Log out
             </DropdownMenuItem>
@@ -102,5 +108,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

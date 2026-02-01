@@ -17,30 +17,45 @@ import Link from "next/link";
 import { FaBowlFood } from "react-icons/fa6";
 import { RouteItem } from "@/types";
 import { adminRoute, providerRoute } from "@/routes";
-
-const user = {
-  role: "provider",
-};
-let route: RouteItem[] = [];
-
-if (user.role === "admin") {
-  route = adminRoute;
-} else if (user.role === "provider") {
-  route = providerRoute;
-} else {
-  route = providerRoute;
-}
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/no-image.png",
-  },
-  navMain: route,
-};
+import { authClient } from "@/lib/auth-client";
+import { ROLE } from "@/lib/roles";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [userData, setUserData] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    (async () => {
+      const session = await authClient.getSession();
+      // console.log(session);
+      if (session.data?.user) {
+        setUserData(session ? session : null);
+      }
+    })();
+  }, []);
+
+  const user = {
+    role: userData?.data?.user?.role as string,
+  };
+
+  let route: RouteItem[] | [] = [];
+
+  if (user.role === ROLE.ADMIN) {
+    route = adminRoute;
+  } else if (user.role === ROLE.PROVIDER) {
+    route = providerRoute;
+  } else {
+    route = [];
+  }
+
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "/no-image.png",
+    },
+    navMain: route,
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
