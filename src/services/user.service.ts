@@ -30,6 +30,30 @@ export class UserService {
       return undefined;
     }
   };
+  getSession = async () => {
+    try {
+      const cookieStore = await cookies();
+
+      const res = await fetch(`${this.API_URL}/api/auth/get-session`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+      });
+
+      const session = await res.json();
+
+      if (session === null) {
+        return { data: null, error: { message: "Session is missing." } };
+      }
+
+      return { data: session, error: null };
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
+    }
+  };
   updateUser = async (
     data: Partial<{ name: string; address: string; phone: string }>,
   ) => {

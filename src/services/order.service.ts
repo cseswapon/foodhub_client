@@ -141,12 +141,15 @@ export class OrderService {
   getAllOrders = async (): Promise<AllOrdersResponse | undefined> => {
     try {
       const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
+
+      if (!cookieHeader) return undefined;
 
       const response = await fetch(`${this.API_URL}/api/order/all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          Cookie: cookieHeader,
         },
         next: {
           revalidate: 60,

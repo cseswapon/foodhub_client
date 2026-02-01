@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { HiOutlineMail } from "react-icons/hi";
 import Link from "next/link";
 import { UserService } from "@/services/user.service";
+export const dynamic = "force-dynamic";
 
 export default async function ProfilePage() {
   const userService = new UserService();

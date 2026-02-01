@@ -18,33 +18,9 @@ import { cn } from "@/lib/utils";
 import { OrderService } from "@/services/order.service";
 import { CancelOrderButton } from "@/components/module/order/CancelOrderModal";
 
-// API Response Simulation based on your Prisma Model
-const ORDERS_DATA = [
-  {
-    id: "ORD-7234",
-    total_price: "1410.00",
-    status: "preparing",
-    payment_method: "cod",
-    created_at: "2026-01-29T10:00:00Z",
-    provider: {
-      restaurant_name: "Pizza Point - 9",
-    },
-    orderItems: [{ id: "1", meal: { name: "Chicken Biryani" }, quantity: 2 }],
-  },
-  {
-    id: "ORD-9812",
-    total_price: "560.00",
-    status: "delivered",
-    payment_method: "online",
-    created_at: "2026-01-28T14:30:00Z",
-    provider: {
-      restaurant_name: "Kacchi Bhai",
-    },
-    orderItems: [{ id: "2", meal: { name: "Beef Tehari" }, quantity: 1 }],
-  },
-];
 
-// Helper to style OrderStatus
+export const dynamic = "force-dynamic";
+
 const statusConfig = {
   placed: {
     label: "Placed",
@@ -199,7 +175,7 @@ export default async function OrderPage() {
             </TableBody>
           </Table>
 
-          {ORDERS_DATA.length === 0 && (
+          {orders?.data?.length === 0 && (
             <div className="text-center py-20">
               <p className="text-gray-500 italic uppercase tracking-widest text-sm">
                 No orders found yet.
