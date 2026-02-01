@@ -9,42 +9,18 @@ import {
   HiOutlineClock,
 } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
-
-// API Response Simulation for Single Order
-async function getOrderDetails(id: string) {
-  return {
-    id: "ORD-7234",
-    total_price: "1410.00",
-    delivery_address: "House 24, Road 7, Dhanmondi, Dhaka",
-    payment_method: "cash_on_delivery",
-    status: "preparing", // placed, preparing, ready, delivered, cancelled
-    created_at: "2026-01-29T10:00:00Z",
-    provider: {
-      restaurant_name: "Pizza Point - 9",
-      address: "গুলশান ১, ঢাকা",
-    },
-    orderItems: [
-      {
-        id: "1",
-        meal: { name: "Chicken Biryani" },
-        quantity: 2,
-        price: "500.00",
-      },
-      { id: "2", meal: { name: "Beef Tehari" }, quantity: 1, price: "350.00" },
-    ],
-  };
-}
+import { OrderService } from "@/services/order.service";
 
 export default async function OrderDetailsPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const orderService = new OrderService();
   const { id } = await params;
-  const order = await getOrderDetails(id);
-
+  const order = await orderService.getOrderDetails(id);
   const steps = ["placed", "preparing", "ready", "delivered"];
-  const currentStepIndex = steps.indexOf(order.status);
+  const currentStepIndex = steps.indexOf(order?.data?.status as string);
 
   return (
     <main className="min-h-screen bg-[#0c0d0c] text-white pt-30 pb-15">
@@ -53,15 +29,16 @@ export default async function OrderDetailsPage({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div className="space-y-2">
             <h1 className="text-4xl font-black uppercase tracking-tighter">
-              Order <span className="text-[#a3a380]">#{order.id}</span>
+              Order <span className="text-[#a3a380]">#{order?.data?.id}</span>
             </h1>
             <p className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-2">
               <HiOutlineClock className="text-[#a3a380]" />
-              Placed on {new Date(order.created_at).toLocaleString()}
+              Placed on{" "}
+              {new Date(order?.data?.created_at as string).toLocaleString()}
             </p>
           </div>
           <Badge className="bg-[#a3a380] text-[#1f2120] px-6 py-2 rounded-full font-black uppercase tracking-widest">
-            {order.status}
+            {order?.data?.status}
           </Badge>
         </div>
 
@@ -73,7 +50,7 @@ export default async function OrderDetailsPage({
               <div className="relative flex flex-col md:flex-row justify-between gap-8">
                 {steps.map((step, index) => {
                   const isCompleted = index <= currentStepIndex;
-                  const isCurrent = index === currentStepIndex;
+                  // const isCurrent = index === currentStepIndex;
 
                   return (
                     <div
@@ -120,23 +97,25 @@ export default async function OrderDetailsPage({
               </h3>
               <Card className="bg-[#1f2120] border-white/5 rounded-lg overflow-hidden">
                 <CardContent className="p-0">
-                  {order.orderItems.map((item, idx) => (
+                  {order?.data?.orderItems?.map((item, idx) => (
                     <div
-                      key={item.id}
+                      key={idx}
                       className={cn(
                         "p-6 flex justify-between items-center",
-                        idx !== order.orderItems.length - 1 &&
+                        idx !== order?.data?.orderItems.length - 1 &&
                           "border-b border-white/5",
                       )}
                     >
                       <div>
-                        <p className="font-bold text-lg text-white">{item.meal.name}</p>
+                        <p className="font-bold text-lg text-white">
+                          {item?.meal?.name}
+                        </p>
                         <p className="text-xs text-gray-500">
-                          Qty: {item.quantity} x ৳{item.price}
+                          Qty: {item?.quantity} x ৳{item?.meal?.price}
                         </p>
                       </div>
                       <p className="font-black text-[#a3a380]">
-                        ৳{Number(item.price) * item.quantity}
+                        ৳{Number(item?.meal?.price) * Number(item?.quantity)}
                       </p>
                     </div>
                   ))}
@@ -155,7 +134,7 @@ export default async function OrderDetailsPage({
                     <HiOutlineMapPin /> Delivery Address
                   </div>
                   <p className="text-sm text-gray-300 leading-relaxed italic">
-                    {order.delivery_address}
+                    {order?.data?.delivery_address}
                   </p>
                 </div>
 
@@ -167,10 +146,10 @@ export default async function OrderDetailsPage({
                     <HiOutlineTruck /> Restaurant Info
                   </div>
                   <h4 className="font-bold text-white uppercase">
-                    {order.provider.restaurant_name}
+                    {order?.data?.provider.restaurant_name}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    {order.provider.address}
+                    {order?.data?.provider.address}
                   </p>
                 </div>
 
@@ -182,15 +161,22 @@ export default async function OrderDetailsPage({
                     <span className="text-xs text-gray-500 uppercase font-bold">
                       Total Bill
                     </span>
-                    <span className="text-3xl font-black text-white tracking-tighter">
-                      ৳{order.total_price}
+                    <span
+                      className={cn(
+                        "text-3xl font-black text-white tracking-tighter ",
+                        order?.data.status === "cancelled" && "line-through text-red-500",
+                      )}
+                    >
+                      ৳{order?.data?.total_price}
                     </span>
                   </div>
                   <Badge
                     variant="outline"
                     className="w-full justify-center py-2 border-white/10 text-gray-400 text-[10px] uppercase font-bold"
                   >
-                    Paid via {order.payment_method.replace(/_/g, " ")}
+                    {order?.data.status === "cancelled"
+                      ? "Cancelled Order"
+                      : `Paid via ${order?.data?.payment_method.replace(/_/g, " ")}`}
                   </Badge>
                 </div>
               </div>

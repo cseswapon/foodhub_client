@@ -15,6 +15,8 @@ import {
 } from "react-icons/hi2";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { OrderService } from "@/services/order.service";
+import { CancelOrderButton } from "@/components/module/order/CancelOrderModal";
 
 // API Response Simulation based on your Prisma Model
 const ORDERS_DATA = [
@@ -66,7 +68,11 @@ const statusConfig = {
   },
 };
 
-export default function OrderPage() {
+export default async function OrderPage() {
+  const orderService = new OrderService();
+  const orders = await orderService.getAllOrders();
+  // console.log(orders?.data);
+
   return (
     <main className="min-h-screen bg-[#0c0d0c] text-white pt-30 pb-15">
       <div className="container mx-auto px-4 md:px-0">
@@ -86,7 +92,7 @@ export default function OrderPage() {
               Total Orders
             </p>
             <p className="text-2xl font-black text-[#a3a380]">
-              {ORDERS_DATA.length}
+              {orders?.data?.length}
             </p>
           </div>
         </div>
@@ -109,7 +115,7 @@ export default function OrderPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {ORDERS_DATA.map((order) => (
+              {orders?.data?.map((order) => (
                 <TableRow
                   key={order.id}
                   className="border-white/5 hover:bg-white/2 transition-colors group"
@@ -117,12 +123,12 @@ export default function OrderPage() {
                   {/* Order ID & Item Preview */}
                   <TableCell className="py-6 pl-8">
                     <p className="font-black text-white group-hover:text-[#a3a380] transition-colors uppercase tracking-tight">
-                      #{order.id}
-                    </p>
-                    <p className="text-[10px] text-gray-500 mt-1">
                       {order.orderItems[0]?.meal.name}
                       {order.orderItems.length > 1 &&
                         ` + ${order.orderItems.length - 1} more`}
+                    </p>
+                    <p className="text-[10px] text-gray-500 mt-1">
+                      #{order.id}
                     </p>
                   </TableCell>
 
@@ -172,15 +178,21 @@ export default function OrderPage() {
 
                   {/* Actions */}
                   <TableCell className="text-right pr-8">
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="h-10 w-10 p-0 rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
-                    >
-                      <Link href={`/order/${order.id}`}>
-                        <HiOutlineEye size={18} />
-                      </Link>
-                    </Button>
+                    <div className="flex items-center justify-end gap-3">
+                      <CancelOrderButton
+                        orderId={order.id}
+                        currentStatus={order.status}
+                      />
+                      <Button
+                        asChild
+                        variant="ghost"
+                        className="h-10 w-10 p-0 rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
+                      >
+                        <Link href={`/order/${order.id}`}>
+                          <HiOutlineEye size={18} />
+                        </Link>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
