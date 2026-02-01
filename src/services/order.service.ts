@@ -183,12 +183,16 @@ export class OrderService {
       return { success: false, message: e.message };
     }
   };
-  getAllOrders = async (): Promise<AllOrdersResponse | undefined> => {
+  getAllOrders = async (
+    status?: string,
+  ): Promise<AllOrdersResponse | undefined> => {
     try {
       const cookieHeader = await this.getCookieData();
       if (!cookieHeader) return undefined;
-
-      const response = await fetch(`${this.API_URL}/api/order/all`, {
+      const url = status
+        ? `${this.API_URL}/api/order/all?status=${status}`
+        : `${this.API_URL}/api/order/all`;
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

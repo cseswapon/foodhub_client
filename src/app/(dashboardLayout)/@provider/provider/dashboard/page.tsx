@@ -1,35 +1,17 @@
+import { statsData } from "@/app/(dashboardLayout)/@admin/admin/page";
 import { DashboardStats } from "@/components/common/DashboardStats/DashboardStats";
 import { RecentOrders } from "@/components/module/provider/RecentOrders";
+import { OrderService } from "@/services/order.service";
+import { UserService } from "@/services/user.service";
 
-const statsData = {
-  activeUser: 1,
-  suspendUser: 0,
-  customer: 1,
-  provider: 0,
-  completeOrder: 0,
-  cancelOrder: 0,
-  totalMeals: 12,
-  totalCategories: 1,
-};
-
-const recentOrders = [
-  {
-    id: "bbc0db56-6225-41da-b021-86d940705a96",
-    total_price: "1500",
-    payment_method: "cod",
-    status: "placed",
-    created_at: "2026-01-30T09:41:40.026Z",
-    orderItems: [
-      {
-        quantity: 3,
-        meal: { name: "Chicken Biryani" },
-      },
-    ],
-    user: { name: "Customer", email: "customer@gmail.com" },
-  },
-];
-
-export default function ProviderDashboard() {
+const userService = new UserService();
+const orderService = new OrderService();
+export default async function ProviderDashboard() {
+  const [user, order] = await Promise.all([
+    userService.dashboard(),
+    orderService.getAllOrders("placed"),
+  ]);
+  // console.log(order);
   return (
     <main className="p-6 md:p-10 space-y-10">
       {/* Welcome Header */}
@@ -42,9 +24,11 @@ export default function ProviderDashboard() {
         </p>
       </div> */}
 
-      <DashboardStats stats={statsData} role="provider"/>
+      <DashboardStats stats={user?.data as statsData} role="provider" />
 
-      <RecentOrders orders={recentOrders} />
+      {order?.data && order?.data?.length > 0 && (
+        <RecentOrders orders={order?.data as any} />
+      )}
     </main>
   );
 }

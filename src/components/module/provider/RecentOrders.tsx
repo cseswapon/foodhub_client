@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Table,
   TableBody,
@@ -64,32 +63,32 @@ export function RecentOrders({ orders }: { orders: any[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <TableRow
-              key={order.id}
+              key={order?.id}
               className="border-white/5 hover:bg-white/2 group transition-colors"
             >
               <TableCell className="py-6 pl-8">
                 <p className="font-bold text-white uppercase text-sm tracking-tight">
-                  {order.user.name}
+                  {order?.user?.name}
                 </p>
                 <p className="text-[10px] text-gray-500">
-                  {order.orderItems[0]?.meal.name} (x
-                  {order.orderItems[0]?.quantity})
+                  {order?.orderItems[0]?.meal?.name} (x
+                  {order?.orderItems[0]?.quantity})
                 </p>
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase">
                   <HiOutlineCalendar className="text-[#a3a380]" />
-                  {new Date(order.created_at).toLocaleDateString()}
+                  {new Date(order?.created_at).toLocaleDateString()}
                 </div>
               </TableCell>
               <TableCell>
                 <p className="font-black text-white italic">
-                  ৳{order.total_price}
+                  ৳{order?.total_price}
                 </p>
                 <p className="text-[9px] uppercase font-bold text-gray-600 tracking-tighter">
-                  {order.payment_method}
+                  {order?.payment_method}
                 </p>
               </TableCell>
               <TableCell>
@@ -97,12 +96,12 @@ export function RecentOrders({ orders }: { orders: any[] }) {
                   variant="outline"
                   className={cn(
                     "rounded-full px-3 py-0.5 text-[9px] uppercase font-black tracking-widest border",
-                    statusConfig[order.status as keyof typeof statusConfig]
+                    statusConfig[order?.status as keyof typeof statusConfig]
                       ?.className,
                   )}
                 >
                   {
-                    statusConfig[order.status as keyof typeof statusConfig]
+                    statusConfig[order?.status as keyof typeof statusConfig]
                       ?.label
                   }
                 </Badge>
@@ -114,7 +113,7 @@ export function RecentOrders({ orders }: { orders: any[] }) {
                   variant="ghost"
                   className="rounded-full hover:bg-[#a3a380] hover:text-[#1f2120]"
                 >
-                  <Link href={`/provider/orders/${order.id}`}>
+                  <Link href={`/provider/orders/${order?.id}`}>
                     <HiOutlineEye size={16} />
                   </Link>
                 </Button>

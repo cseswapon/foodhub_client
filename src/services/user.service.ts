@@ -45,6 +45,30 @@ export class UserService {
       return undefined;
     }
   };
+  dashboard = async () => {
+    try {
+      const cookiesStore = await this.getCookieData();
+      if (!cookiesStore) {
+        return undefined;
+      }
+      const response = await fetch(`${this.API_URL}/api/dashboard`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookiesStore,
+        },
+        next: {
+          revalidate: 1200,
+        },
+      });
+      const result = await response.json();
+      return result;
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
+    }
+  };
   getSession = async () => {
     try {
       const cookieStore = await this.getCookieData();

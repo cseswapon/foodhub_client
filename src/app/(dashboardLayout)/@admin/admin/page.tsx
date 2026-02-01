@@ -1,20 +1,25 @@
 import { DashboardStats } from "@/components/common/DashboardStats/DashboardStats";
+import { UserService } from "@/services/user.service";
 
-const statsData = {
-  activeUser: 1,
-  suspendUser: 2,
-  customer: 1,
-  provider: 4,
-  completeOrder: 0,
-  cancelOrder: 0,
-  totalMeals: 12,
-  totalCategories: 1,
+export type statsData = {
+  activeUser: number;
+  suspendUser: number;
+  customer: number;
+  provider: number;
+  completeOrder: number;
+  cancelOrder: number;
+  totalMeals: number;
+  totalCategories: number;
 };
 
-export default function AdminPage() {
+const userService = new UserService();
+export default async function AdminPage() {
+  const user = await userService.dashboard();
+  // console.log(user?.data);
+
   return (
     <>
-      <DashboardStats stats={statsData} role="admin" />
+      <DashboardStats stats={user?.data as statsData} role="admin" />
     </>
   );
 }
