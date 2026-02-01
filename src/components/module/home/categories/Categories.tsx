@@ -3,8 +3,9 @@ import { CategoriesService } from "@/services/categories.service";
 
 export default async function Category() {
   const categoriesService = new CategoriesService();
-  const categories = await categoriesService.getAllCategories();
-  console.log(categories.data);
+  const categories = (await categoriesService.getAllCategories()) || [];
+  // console.log(categories);
+  // console.log(categories.data);
   return (
     <>
       <div className="bg-[#1f2120] py-24">
