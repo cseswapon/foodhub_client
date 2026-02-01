@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,34 +12,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
-// Dummy Cart Data
-const CART_ITEMS = [
-  {
-    id: "1",
-    name: "Chicken Biryani",
-    price: 500,
-    quantity: 2,
-    image: "/no-image.png", // Replace with your image path
-    restaurant: "Pizza Point - 9",
-  },
-  {
-    id: "2",
-    name: "Special Beef Tehari",
-    price: 350,
-    quantity: 1,
-    image: "/no-image.png",
-    restaurant: "Kacchi Bhai",
-  },
-];
+import { useCart } from "@/hooks/useCart";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
-  const subtotal = CART_ITEMS.reduce(
+  const { cart, updateQuantity, removeFromCart } = useCart();
+  const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
   const deliveryFee = 60;
   const total = subtotal + deliveryFee;
+  const router = useRouter()
+  useEffect(() => {
+    if (cart.length===0) {
+      router.push('/meal')
+    }
+   },[cart,router])
 
   return (
     <main className="bg-[#0c0d0c] pt-30 pb-15 px-4 min-h-screen text-white">
@@ -50,7 +42,7 @@ export default function CartPage() {
             </h1>
             <p className="text-gray-500 mt-2 flex items-center gap-2">
               <HiOutlineShoppingBag className="text-[#a3a380]" />
-              You have {CART_ITEMS.length} items in your bag
+              You have {cart?.length} items in your bag
             </p>
           </div>
           <Button
@@ -67,8 +59,8 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* 1. Left Side: Cart Items List */}
           <div className="lg:col-span-8 space-y-6">
-            {CART_ITEMS.length > 0 ? (
-              CART_ITEMS.map((item) => (
+            {cart?.length > 0 ? (
+              cart?.map((item) => (
                 <div
                   key={item.id}
                   className="group relative flex flex-col md:flex-row items-center gap-6 p-6 bg-[#1f2120] border border-white/5 rounded-lg transition-all hover:border-[#a3a380]/20"
@@ -85,9 +77,6 @@ export default function CartPage() {
 
                   {/* Item Details */}
                   <div className="flex-1 text-center md:text-left">
-                    <p className="text-[10px] uppercase tracking-widest text-[#a3a380] font-bold mb-1">
-                      {item.restaurant}
-                    </p>
                     <h3 className="text-xl font-bold uppercase tracking-tight">
                       {item.name}
                     </h3>
@@ -98,13 +87,19 @@ export default function CartPage() {
 
                   {/* Quantity Controller */}
                   <div className="flex items-center gap-4 bg-[#0c0d0c] px-4 py-2 rounded-full border border-white/5">
-                    <button className="text-gray-400 hover:text-[#a3a380] transition-colors">
+                    <button
+                      onClick={() => updateQuantity(item.id, -1)}
+                      className="text-gray-400 hover:text-[#a3a380] transition-colors"
+                    >
                       <HiOutlineMinus />
                     </button>
                     <span className="font-bold min-w-5 text-center">
                       {item.quantity}
                     </span>
-                    <button className="text-gray-400 hover:text-[#a3a380] transition-colors">
+                    <button
+                      onClick={() => updateQuantity(item.id, 1)}
+                      className="text-gray-400 hover:text-[#a3a380] transition-colors"
+                    >
                       <HiOutlinePlus />
                     </button>
                   </div>
@@ -114,7 +109,10 @@ export default function CartPage() {
                     <p className="text-lg font-black tracking-tighter">
                       ৳{item.price * item.quantity}
                     </p>
-                    <button className="text-gray-600 hover:text-red-500 transition-colors">
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-gray-600 hover:text-red-500 transition-colors"
+                    >
                       <HiOutlineTrash size={20} />
                     </button>
                   </div>

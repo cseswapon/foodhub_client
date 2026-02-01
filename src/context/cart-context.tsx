@@ -7,6 +7,7 @@ export type CartItem = {
   id: string;
   name: string;
   price: number;
+  provider_id: string;
   quantity: number;
   image?: string;
 };
@@ -39,8 +40,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, [cart]);
 
   const addToCart = (item: CartItem) => {
-    const tostId = toast.loading("Adding to cart...", { id: item.id });
-    //   console.log("Item", item);
+    const tostId = toast.loading("Adding to cart...", {
+      id: item.id,
+      position: "top-center",
+    });
+      // console.log("Item", item);
     setCart((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {

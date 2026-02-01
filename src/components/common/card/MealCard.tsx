@@ -13,6 +13,7 @@ interface Meal {
   description: string;
   price: string;
   dietary_type: string;
+  provider_id: string;
 }
 
 export function MealCard({ meal }: { meal: Meal }) {
@@ -23,6 +24,7 @@ export function MealCard({ meal }: { meal: Meal }) {
       id: meal.id,
       name: meal.name,
       price: Number(meal.price),
+      provider_id: meal.provider_id,
       quantity: 1,
     });
   };

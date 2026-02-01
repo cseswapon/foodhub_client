@@ -151,7 +151,38 @@ export class OrderService {
       return null;
     }
   };
+  createOrder = async (payloads: any[]) => {
+    try {
+      const cookieHeader = await this.getCookieData();
+      // console.log(payloads);
+      const promises = payloads.map((payload) =>
+        fetch(`${this.API_URL}/api/order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieHeader || "",
+          },
+          body: JSON.stringify(payload),
+        }),
+      );
 
+      const responses = await Promise.all(promises);
+
+      for (const response of responses) {
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Failed to create one or more orders",
+          );
+        }
+      }
+
+      return { success: true, message: "Orders created successfully" };
+    } catch (e: any) {
+      console.error("Error in createOrder Service:", e);
+      return { success: false, message: e.message };
+    }
+  };
   getAllOrders = async (): Promise<AllOrdersResponse | undefined> => {
     try {
       const cookieHeader = await this.getCookieData();
@@ -165,8 +196,9 @@ export class OrderService {
         },
         // cache: 'no-store',
         next: {
-          revalidate: 60
-        }
+          revalidate: 60,
+          tags: ["orders"],
+        },
       });
 
       if (!response.ok) {
@@ -194,6 +226,7 @@ export class OrderService {
         },
         next: {
           revalidate: 0,
+          tags: ["orders"],
         },
       });
 
@@ -248,6 +281,9 @@ export class OrderService {
         },
         body: JSON.stringify({ status }),
         cache: "no-store",
+        next: {
+          tags: ["orders"],
+        },
       });
 
       const result = await response.json();

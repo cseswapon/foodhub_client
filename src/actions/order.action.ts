@@ -27,6 +27,32 @@ export async function getMyOrdersAction() {
   }
 }
 
+export async function createOrderAction(payload: any[]) {
+  try {
+    const result = await orderService.createOrder(payload);
+
+    if (result.success) {
+      updateTag("orders");
+
+      return {
+        success: true,
+        message: "Order placed successfully!"
+      };
+    }
+
+    return {
+      success: false,
+      message: result.message || "Failed to create order",
+    };
+  } catch (error: any) {
+    console.error("Create Order Action Error:", error);
+    return {
+      success: false,
+      message: error.message || "An unexpected error occurred",
+    };
+  }
+}
+
 export async function cancelOrderAction(orderId: string) {
   const result = await orderService.updateOrderStatus(orderId, "cancelled");
 
