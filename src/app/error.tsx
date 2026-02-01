@@ -10,21 +10,26 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const brandColor = "#a3a380";
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] px-6 overflow-hidden">
-      <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-white/10 blur-[100px] animate-pulse" />
-      <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-primary/15 blur-[120px]" />
+    // bg-[#0c0d0c] এবং text-white ফিক্সড রাখা হয়েছে
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-[#0c0d0c] text-white px-6 overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-[-15%] left-[-10%] w-120 md:w-200 h-120 md:h-200 rounded-full bg-white/5 blur-[100px] animate-pulse" />
+      <div className="absolute bottom-[-15%] right-[-10%] w-100 md:w-180 h-100 md:h-180 rounded-full bg-[#a3a380]/10 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl w-full text-center">
         <div className="flex justify-center mb-8">
           <div className="relative">
-            <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center animate-bounce">
+            {/* Error Icon - Red accents for warning but on dark base */}
+            <div className="w-24 h-24 bg-red-500/10 border border-red-500/20 rounded-full flex items-center justify-center animate-bounce">
               <svg
-                className="w-12 h-12 text-red-600"
+                className="w-12 h-12 text-red-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -40,47 +45,58 @@ export default function Error({
           </div>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">
+        {/* Heading with Brand Gradient */}
+        <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 uppercase">
           <span className="text-white">Oops! Something</span> <br />
-          <span className="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-primary">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              backgroundImage: `linear-gradient(to right, #ef4444, ${brandColor})`,
+            }}
+          >
             Went Wrong
           </span>
         </h1>
 
-        <p className="text-gray-500 text-sm md:text-base max-w-md mx-auto leading-relaxed mb-10">
+        <p className="text-white/50 text-sm md:text-base max-w-md mx-auto leading-relaxed mb-10">
           We apologize for the inconvenience. An unexpected error occurred. Our
           team has been notified and we are working to fix it.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Try Again Button */}
           <button
             onClick={() => reset()}
-            className="group relative w-full sm:w-auto px-10 py-4 bg-primary  font-semibold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
+            className="group relative w-full sm:w-auto px-10 py-4 bg-[#a3a380] text-[#0c0d0c] font-bold rounded-xl transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden"
           >
             <span className="relative z-10">Try Again</span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
 
+          {/* Back to Home Button */}
           <Link
             href="/"
-            className="w-full sm:w-auto px-10 py-4 text-white font-semibold border-2 border-gray-200 rounded-xl hover:bg-gray-100 transition-all duration-300"
+            className="w-full sm:w-auto px-10 py-4 text-white font-bold border-2 border-white/10 rounded-xl hover:bg-white/5 hover:border-[#a3a380]/50 transition-all duration-300"
           >
             Back to Home
           </Link>
         </div>
 
+        {/* Error Digest */}
         {error.digest && (
-          <p className="mt-12 text-gray-400 text-[10px] font-mono tracking-widest uppercase">
+          <p className="mt-12 text-white/30 text-[10px] font-mono tracking-widest uppercase">
             Error Digest:{" "}
-            <span className="text-primary/60">{error.digest}</span>
+            <span className="text-[#a3a380]/60">{error.digest}</span>
           </p>
         )}
       </div>
 
+      {/* Background Dots */}
       <div
-        className="absolute inset-0 z-[-1] opacity-[0.02] pointer-events-none"
+        className="absolute inset-0 z-[-1] opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(circle, #000 1px, transparent 1px)",
+          backgroundImage:
+            "radial-gradient(circle, #ffffff 1px, transparent 1px)",
           backgroundSize: "30px 30px",
         }}
       ></div>

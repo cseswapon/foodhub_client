@@ -129,7 +129,7 @@ export default function CheckoutPage() {
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          className="bg-[#0c0d0c] border-white/10 focus:ring-[#a3a380]"
+                          className="bg-[#0c0d0c] border-white/10 text-gray-400 focus:ring-[#a3a380]"
                           placeholder="John Doe"
                         />
                       </div>
@@ -149,7 +149,7 @@ export default function CheckoutPage() {
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          className="bg-[#0c0d0c] border-white/10 focus:ring-[#a3a380]"
+                          className="bg-[#0c0d0c] border-white/10 text-gray-400 focus:ring-[#a3a380]"
                           placeholder="017XXXXXXXX"
                         />
                       </div>
@@ -170,7 +170,7 @@ export default function CheckoutPage() {
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            className="bg-[#0c0d0c] border-white/10 focus:ring-[#a3a380]"
+                            className="bg-[#0c0d0c] border-white/10 text-gray-400 focus:ring-[#a3a380]"
                             placeholder="House No, Road No, Area"
                           />
                         </div>
