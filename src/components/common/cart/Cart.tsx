@@ -1,62 +1,61 @@
 "use client";
 
-import { ShoppingCart, X, Trash2, Plus, Minus, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetClose,
-} from "@/components/ui/sheet";
-import { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+//   SheetTrigger,
+//   SheetClose,
+// } from "@/components/ui/sheet";
+// import { useState } from "react";
+// import Image from "next/image";
+// import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useCart } from "@/hooks/useCart";
+// import { CartItem } from "../card/MealCard";
 
 const Cart = () => {
-  const router = useRouter();
+  // const router = useRouter();
+  // const getItem = JSON.parse(localStorage.getItem("cart") || "[]");
+  // console.log(getItem);
+  // console.log(getItem);
+  // const [cartItems] = useState(getItem);
 
-  const [cartItems] = useState([
-    {
-      id: 1,
-      name: "Special Burger",
-      price: 12.0,
-      qty: 1,
-      img: "/hero-img-3.jpg",
-    },
-    {
-      id: 2,
-      name: "French Fries",
-      price: 5.5,
-      qty: 2,
-      img: "/hero-img-2.jpg",
-    },
-  ]);
-
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
+  /* const subtotal = cartItems.reduce(
+    (acc, item) => acc + item?.price * item?.quantity,
     0,
-  );
+  ); */
 
-  const handleCheckout = () => {
+  /* const handleCheckout = () => {
     router.push("/checkout");
-  };
+  }; */
 
-  return (
-    <>
+  const { cart } = useCart();
+  const totalQuantity = cart.reduce((acc,item) => acc + item.quantity,0);
+  const isShowing = cart.length > 0;
+  let data;
+  if (isShowing) {
+    data = <>
       <Link href="/cart">
         <button className="relative -right-5 p-3 bg-[#a3a380] text-black rounded-full shadow-lg hover:scale-110 transition-transform  hover:cursor-pointer active:scale-95 z-50 group">
           <ShoppingCart size={24} />
-          {cartItems.length > 0 && (
+          {cart.length > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-black">
-              {cartItems.length}
+              {totalQuantity}
             </span>
           )}
         </button>
       </Link>
     </>
+  } else {
+    data = null
+  }
+  return data;
+  return 
+    
     // <Sheet>
     //   <SheetTrigger asChild>
     //     <button className="relative -right-5 p-3 bg-[#a3a380] text-black rounded-full shadow-lg hover:scale-110 transition-transform active:scale-95 z-50 group">
@@ -179,7 +178,7 @@ const Cart = () => {
     //     )}
     //   </SheetContent>
     // </Sheet>
-  );
+  ;
 };
 
 export default Cart;

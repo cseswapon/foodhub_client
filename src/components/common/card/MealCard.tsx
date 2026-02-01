@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
+import { useCart } from "@/hooks/useCart";
 
 interface Meal {
   id: string;
@@ -13,6 +16,17 @@ interface Meal {
 }
 
 export function MealCard({ meal }: { meal: Meal }) {
+  const { addToCart } = useCart();
+
+  const handleAdd = () => {
+    addToCart({
+      id: meal.id,
+      name: meal.name,
+      price: Number(meal.price),
+      quantity: 1,
+    });
+  };
+
   return (
     <Card className="group bg-[#1f2120] border-white/5 overflow-hidden transition-all hover:border-[#a3a380]/50 hover:cursor-default py-0 gap-0">
       <div className="relative">
@@ -46,7 +60,10 @@ export function MealCard({ meal }: { meal: Meal }) {
 
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
         <span className="text-xl font-black text-[#a3a380]">৳{meal.price}</span>
-        <button className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#a3a380] hover:text-[#1f2120] transition-colors">
+        <button
+          onClick={handleAdd}
+          className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#a3a380] hover:text-[#1f2120] transition-colors"
+        >
           <HiOutlineShoppingBag className="cursor-pointer" size={20} />
         </button>
       </CardFooter>
