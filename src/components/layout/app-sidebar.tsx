@@ -49,8 +49,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const data = {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: userData?.data?.user?.name,
+      email: userData?.data?.user?.email,
       avatar: "/no-image.png",
     },
     navMain: route,

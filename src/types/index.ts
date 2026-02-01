@@ -1,4 +1,3 @@
-
 export interface RouteItem {
   title: string;
   url: string;
@@ -58,4 +57,18 @@ export interface AuthResponse {
     user: AuthUser;
   } | null;
   error: any | null;
+}
+
+export interface IAllUsersResponse {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  role: string;
+  phone: string;
+  address: string;
+  status: string;
 }

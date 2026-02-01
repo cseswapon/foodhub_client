@@ -18,3 +18,24 @@ export async function updateCurrentUser(data: {
   updateTag("users");
   return result;
 }
+
+export async function deleteUserAction(id: string) {
+  const result = await userService.deleteUser(id);
+  updateTag("users");
+  return result;
+}
+
+export async function updateUserStatusAction(
+  id: string,
+  data: { status?: string; role?: string },
+) {
+  const result = await userService.updateUserStatus(id, data);
+  updateTag("users");
+  return result;
+}
+
+export async function getUserDetailsAction(id: string) {
+  const result = await userService.getUserDetails(id);
+  updateTag("users");
+  return result;
+}

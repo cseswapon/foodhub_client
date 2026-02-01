@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { IUserResponse } from "@/types";
+import { IAllUsersResponse, IUserResponse } from "@/types";
 import { cookies } from "next/headers";
 
 export class UserService {
@@ -18,6 +18,57 @@ export class UserService {
       return cookieHeader;
     } catch {
       return null;
+    }
+  };
+  getAllUsers = async () => {
+    try {
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
+      const response = await fetch(`${this.API_URL}/api/admin/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore,
+        },
+        cache: "no-store",
+        next: {
+          tags: ["users"],
+        },
+      });
+      const result: Partial<{ data: IAllUsersResponse[] }> =
+        await response.json();
+      return result;
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
+    }
+  };
+  getUserDetails = async (id: string) => {
+    try {
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
+      const response = await fetch(`${this.API_URL}/api/admin/users/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore,
+        },
+        cache: "no-store",
+        next: {
+          tags: ["users"],
+        },
+      });
+      const result = await response.json();
+      return result;
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
     }
   };
   currentUser = async () => {
@@ -107,6 +158,46 @@ export class UserService {
           Cookie: (await cookie).toString(),
         },
         body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      return result;
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
+    }
+  };
+  updateUserStatus = async (
+    id: string,
+    data: { status?: string; role?: string },
+  ) => {
+    try {
+      const cookie = cookies();
+      const response = await fetch(`${this.API_URL}/api/admin/users/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: (await cookie).toString(),
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      return result;
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      console.log(error);
+      return undefined;
+    }
+  };
+  deleteUser = async (id: string) => {
+    try {
+      const cookie = cookies();
+      const response = await fetch(`${this.API_URL}/api/admin/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: (await cookie).toString(),
+        },
       });
       const result = await response.json();
       return result;
