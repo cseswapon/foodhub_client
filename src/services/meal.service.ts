@@ -83,30 +83,37 @@ export interface Review {
 interface ReviewUser {
   name: string;
 }
-
+interface MealQueryParams {
+  maxPrice?: string;
+  minPrice?: string;
+  type?: string;
+};
 export class MealsService {
   static API_URL = "Categories Service";
   private readonly API_URL;
   constructor() {
     this.API_URL = env.BACKEND_URL;
   }
-  getAllMeal = async () => {
+  getAllMeal = async (params?: MealQueryParams) => {
     try {
-      const response = await fetch(`${this.API_URL}/api/meal`, {
+      const query = new URLSearchParams();
+      if (params?.minPrice) query.append("minPrice", params.minPrice);
+      if (params?.maxPrice) query.append("maxPrice", params.maxPrice);
+      if (params?.type) query.append("type", params.type);
+
+      const queryString = query.toString();
+      const url = `${this.API_URL}/api/meal${queryString ? `?${queryString}` : ""}`;
+
+      const response = await fetch(url, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: {
-          revalidate: 60,
-          tags: ["meal"],
-        },
+        headers: { "Content-Type": "application/json" },
+        next: { revalidate: 60, tags: ["meal"] },
       });
+
       const result: MealResponse = await response.json();
       return result;
     } catch (e) {
-      const error = e instanceof Error ? e.message : "Something went wrong";
-      console.log(error);
+      console.log(e instanceof Error ? e.message : "Something went wrong");
       return undefined;
     }
   };

@@ -8,13 +8,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { MealDataRes, MealsService } from "@/services/meal.service";
+import { MealsService } from "@/services/meal.service";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
-export default async function MealsPage() {
+export default async function MealsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
   const mealService = new MealsService();
-  const meals = await mealService.getAllMeal();
-  // console.log(meals);
+
+  const meals = await mealService.getAllMeal({
+    minPrice: params.minPrice as string,
+    maxPrice: params.maxPrice as string,
+    type: params.type as string,
+  });
+
+  const allMealsForFilter = await mealService.getAllMeal();
+  const categories = Array.from(
+    new Set(allMealsForFilter?.data?.map((m) => m.dietary_type) || []),
+  );
+  const maxPriceLimit = Math.max(
+    ...(allMealsForFilter?.data?.map((m) => Number(m.price)) || [1000]),
+  );
+
   return (
     <div className="bg-[#0c0d0c] pt-30 pb-15 px-4 min-h-screen">
       <div className="container mx-auto">
@@ -23,9 +41,6 @@ export default async function MealsPage() {
             <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
               Our <span className="text-[#a3a380]">All Menu</span>
             </h1>
-            <p className="text-gray-500 mt-2">
-              Discover the finest flavors crafted just for you.
-            </p>
           </div>
 
           <div className="lg:hidden flex justify-center">
@@ -49,7 +64,11 @@ export default async function MealsPage() {
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-4">
-                  <MealFilter meals={meals?.data as MealDataRes[]} />
+                  {/* Pass categories and max price to the mobile filter too */}
+                  <MealFilter
+                    categories={categories}
+                    maxPriceLimit={maxPriceLimit}
+                  />
                 </div>
               </SheetContent>
             </Sheet>
@@ -57,24 +76,24 @@ export default async function MealsPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* DESKTOP SIDEBAR */}
           <aside className="lg:col-span-3 hidden lg:block">
-            <div className="sticky top-1">
-              <MealFilter meals={meals?.data as MealDataRes[]} />
+            <div className="sticky top-24">
+              <MealFilter
+                categories={categories}
+                maxPriceLimit={maxPriceLimit}
+              />
             </div>
           </aside>
 
-          {/* Meal List */}
+          {/* MEAL LIST */}
           <section className="lg:col-span-9">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {meals?.data && meals?.data.length > 0 ? (
-                meals?.data?.map((meal) => (
-                  <MealCard key={meal.id} meal={meal} />
-                ))
+              {meals?.data && meals.data.length > 0 ? (
+                meals.data.map((meal) => <MealCard key={meal.id} meal={meal} />)
               ) : (
-                <div className="col-span-full py-20 text-center">
-                  <p className="text-gray-500 italic">
-                    No meals found matching your filters.
-                  </p>
+                <div className="col-span-full py-20 text-center text-gray-500 italic">
+                  No meals found matching your filters.
                 </div>
               )}
             </div>
