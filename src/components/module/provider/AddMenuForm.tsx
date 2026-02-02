@@ -28,9 +28,11 @@ import { createMealAction } from "@/actions/meal.action";
 type DietaryType = "veg" | "non_veg" | "vegan";
 
 export default function AddMenuForm({
+  user,
   providers,
   categories,
 }: {
+  user: any;
   providers: any;
   categories: any;
 }) {
@@ -39,7 +41,7 @@ export default function AddMenuForm({
 
   const form = useForm({
     defaultValues: {
-      provider_id: "",
+      user_id: user?.id,
       category_id: "",
       name: "",
       description: "",
@@ -47,6 +49,7 @@ export default function AddMenuForm({
       dietary_type: "non_veg" as DietaryType,
     },
     onSubmit: async ({ value }) => {
+      // return console.log(value);
       const toastId = toast.loading("Logging in...");
       try {
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -73,7 +76,7 @@ export default function AddMenuForm({
         </p>
       </CardHeader>
 
-      <CardContent className="pt-8">
+      <CardContent className="">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -84,7 +87,7 @@ export default function AddMenuForm({
         >
           <div className="grid grid-cols-1 gap-6">
             {/* Provider Select */}
-            <form.Field
+            {/* <form.Field
               name="provider_id"
               children={(field) => (
                 <div className="space-y-2">
@@ -108,7 +111,7 @@ export default function AddMenuForm({
                   </Select>
                 </div>
               )}
-            />
+            /> */}
 
             {/* Category Select */}
             <form.Field

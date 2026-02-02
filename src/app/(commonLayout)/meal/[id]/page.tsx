@@ -40,6 +40,8 @@ export default async function MealDetails({
 
   const meal = await mealService.getMealDetails(id);
 
+  // console.log(meal);
+
   return (
     <div className="bg-[#0c0d0c] pt-30 pb-20 px-4 min-h-screen">
       <div className="container mx-auto">
@@ -96,12 +98,14 @@ export default async function MealDetails({
                     variant="outline"
                     className={cn(
                       "text-[10px] uppercase font-black px-3 py-1 rounded-full",
-                      meal?.data.provider.is_open
+                      meal?.data?.user?.status === "activate"
                         ? "text-green-500 border-green-500/20 bg-green-500/5"
                         : "text-red-500 border-red-500/20 bg-red-500/5",
                     )}
                   >
-                    {meal?.data?.provider?.is_open ? "● Live Now" : "○ Closed"}
+                    {meal?.data?.user?.status === "activate"
+                      ? "● Live Now"
+                      : "○ Closed"}
                   </Badge>
                 </div>
 
@@ -111,13 +115,13 @@ export default async function MealDetails({
                     className="group/provider block w-fit"
                   >
                     <h2 className="text-2xl font-black text-white uppercase tracking-tight transition-all group-hover/provider:text-[#a3a380]">
-                      {meal?.data?.provider?.restaurant_name}
+                      {meal?.data?.user?.name || "N/A"}
                     </h2>
                     <div className="h-0.5 w-0 bg-[#a3a380] transition-all duration-500 group-hover/provider:w-full" />
                   </Link>
                   <p className="text-gray-500 text-sm flex items-center gap-2 mt-3 font-medium">
                     <HiOutlineLocationMarker className="text-[#a3a380] size-5" />
-                    {meal?.data?.provider.address}
+                    {meal?.data?.user?.address || "N/A"}
                   </p>
                 </div>
               </CardContent>

@@ -18,8 +18,9 @@ import {
 } from "react-icons/hi2";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { deleteProviderAction } from "@/actions/provider.action";
+// import { deleteProviderAction } from "@/actions/provider.action";
 import { toast } from "sonner";
+import { deleteMealAction } from "@/actions/meal.action";
 
 export default function ProviderMenu({ meals }: { meals: any[] }) {
   const handleDelete = async (id: string) => {
@@ -29,7 +30,7 @@ export default function ProviderMenu({ meals }: { meals: any[] }) {
     }
     const tostId = toast.loading("Deleting user...", { id: id });
     try {
-      const result = await deleteProviderAction(id);
+      const result = await deleteMealAction(id);
       // console.log(result);
       if (result) {
         toast.success("User deleted", { id: tostId });

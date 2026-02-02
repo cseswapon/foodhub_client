@@ -72,6 +72,7 @@ export function RegisterForm({
       const toastId = toast.loading("Creating your account...");
       // return console.log(value);
       try {
+        // console.log(value);
         const { error } = await authClient.signUp.email({
           ...value,
           callbackURL: "/auth/login",

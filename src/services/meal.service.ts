@@ -50,7 +50,19 @@ interface Meal {
   created_at: string;
   updated_at: string;
   category: Category;
-  provider: Provider;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+    role: string;
+    phone: string;
+    address: null;
+    status: string;
+  };
   reviews: Review[];
 }
 
@@ -61,7 +73,7 @@ interface Category {
   updated_at: string;
 }
 
-interface Provider {
+/* interface Provider {
   id: string;
   user_id: string;
   restaurant_name: string;
@@ -71,7 +83,7 @@ interface Provider {
   fb_link: string;
   created_at: string;
   updated_at: string;
-}
+} */
 
 export interface Review {
   id: string;

@@ -90,15 +90,20 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
             {user.role !== ROLE.ADMIN && (
-              <DropdownMenuGroup>
-                <DropdownMenuItem onClick={() => handelSwitchRoute("/profile")}>
-                  <IconUserCircle />
-                  Account
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    onClick={() => handelSwitchRoute("/profile")}
+                  >
+                    <IconUserCircle />
+                    Account
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </>
             )}
+
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handelSignout}>
               <IconLogout />

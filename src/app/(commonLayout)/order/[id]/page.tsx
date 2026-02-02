@@ -146,10 +146,10 @@ export default async function OrderDetailsPage({
                     <HiOutlineTruck /> Restaurant Info
                   </div>
                   <h4 className="font-bold text-white uppercase">
-                    {order?.data?.provider.restaurant_name}
+                    {order?.data?.user?.name || "N/A"}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    {order?.data?.provider.address}
+                    {order?.data?.user?.address || "N/A"}
                   </p>
                 </div>
 
@@ -164,7 +164,8 @@ export default async function OrderDetailsPage({
                     <span
                       className={cn(
                         "text-3xl font-black text-white tracking-tighter ",
-                        order?.data.status === "cancelled" && "line-through text-red-500",
+                        order?.data.status === "cancelled" &&
+                          "line-through text-red-500",
                       )}
                     >
                       ৳{order?.data?.total_price}

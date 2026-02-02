@@ -11,6 +11,7 @@ export async function providerDetailsAction(id: string) {
 export async function createProviderAction(data: any) {
   const res = await providerService.createProvider(data);
   if (res.success) updateTag("providers");
+  updateTag("users");
   return res;
 }
 
@@ -18,6 +19,7 @@ export async function updateProviderAction(name: string, data: any) {
   const res = await providerService.updateProviderDetails(name, data);
   if (res.success) {
     updateTag("providers");
+    updateTag("users");
     updateTag(`provider-${name}`);
   }
   return res;
@@ -27,6 +29,7 @@ export async function deleteProviderAction(id: string) {
   const res = await providerService.deleteProviderDetails(id);
   if (res.success) {
     updateTag("providers");
+    updateTag("users");
   }
   return res;
 }

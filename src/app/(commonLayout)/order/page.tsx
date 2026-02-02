@@ -111,7 +111,7 @@ export default async function OrderPage() {
 
                     {/* Provider Name */}
                     <TableCell className="font-medium text-gray-300">
-                      {order.provider.restaurant_name}
+                      {order?.user?.name}
                     </TableCell>
 
                     {/* Date */}

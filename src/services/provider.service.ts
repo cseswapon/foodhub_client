@@ -95,7 +95,8 @@ export class ProvidersService {
       return undefined;
     }
   };
-  getAllProviders = async (): Promise<AllProvidersResponse | undefined> => {
+  // some thing went wrong handel backend use provider using user table
+  getAllProviders = async () => {
     try {
       const response = await fetch(`${this.API_URL}/api/provider`, {
         method: "GET",
@@ -122,9 +123,7 @@ export class ProvidersService {
     }
   };
 
-  getProviderDetails = async (
-    id: string,
-  ): Promise<SingleProviderResponse | undefined> => {
+  getProviderDetails = async (id: string) => {
     try {
       const response = await fetch(`${this.API_URL}/api/provider/${id}`, {
         method: "GET",

@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useState, useTransition, useCallback } from "react";
+import {
+  useEffect,
+  useState,
+  useTransition,
+  useCallback,
+  useMemo,
+} from "react";
 import {
   Table,
   TableBody,
@@ -46,6 +52,7 @@ export default function ReviewPage() {
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [myOrder, setMyOrder] = useState<OrderMealItem[]>([]);
+
   const fetchReviews = useCallback(async () => {
     try {
       const res = await getAllReviewsAction();
@@ -59,6 +66,7 @@ export default function ReviewPage() {
       setIsLoading(false);
     }
   }, []);
+
   const fetchOrderItem = useCallback(async () => {
     try {
       const res = await getMyOrdersAction();
@@ -66,8 +74,8 @@ export default function ReviewPage() {
         setMyOrder(res.data as OrderMealItem[]);
       }
     } catch (error) {
-      console.error("Error fetching reviews:", error);
-      toast.error("Failed to load reviews");
+      console.error("Error fetching order items:", error);
+      toast.error("Failed to load orders");
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +102,7 @@ export default function ReviewPage() {
               </p>
             </div>
 
-            <AddReviewModal meals={myOrder} onRefresh={fetchReviews} />
+            <AddReviewModal orders={myOrder} onRefresh={fetchReviews} />
           </div>
 
           {isLoading ? (
@@ -123,41 +131,30 @@ export default function ReviewPage() {
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                {reviews?.length > 0 ? (
-                  <TableBody>
-                    {reviews?.map((review) => (
-                      <TableRow
-                        key={review.id}
-                        className="border-white/5 hover:bg-white/3 transition-colors"
-                      >
-                        <TableCell className="py-5 pl-8 font-bold text-xs uppercase tracking-tight text-white/90">
-                          Meal ID: {review.meal_id.slice(0, 8)}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1.5 font-black text-xs text-[#a3a380] italic">
-                            <HiOutlineStar fill="currentColor" size={14} />
-                            {review.rating}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-xs text-gray-400 italic max-w-xs truncate">
-                          `{review.comment}`
-                        </TableCell>
-                        <TableCell className="text-right pr-8 text-[10px] font-bold text-white/90 uppercase">
-                          {new Date(review.created_at).toLocaleDateString()}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={5}
-                      className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+                <TableBody>
+                  {reviews.map((review) => (
+                    <TableRow
+                      key={review.id}
+                      className="border-white/5 hover:bg-white/3 transition-colors"
                     >
-                      No reviews found
-                    </TableCell>
-                  </TableRow>
-                )}
+                      <TableCell className="py-5 pl-8 font-bold text-xs uppercase tracking-tight text-white/90">
+                        Meal ID: {review.meal_id.slice(0, 8)}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1.5 font-black text-xs text-[#a3a380] italic">
+                          <HiOutlineStar fill="currentColor" size={14} />
+                          {review.rating}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-xs text-gray-400 italic max-w-xs truncate">
+                        {review.comment}
+                      </TableCell>
+                      <TableCell className="text-right pr-8 text-[10px] font-bold text-white/90 uppercase">
+                        {new Date(review.created_at).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
               </Table>
             </div>
           )}
@@ -169,14 +166,27 @@ export default function ReviewPage() {
 
 // --- Add Review Modal Component ---
 function AddReviewModal({
-  meals,
+  orders,
   onRefresh,
 }: {
-  meals: OrderMealItem[];
+  orders: OrderMealItem[];
   onRefresh: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  // ইউনিক খাবার বাছাই করার জন্য useMemo ব্যবহার (অর্ডার লিস্ট বড় হলে অপ্টিমাইজড থাকবে)
+  const uniqueMeals = useMemo(() => {
+    const mealMap = new Map();
+    orders?.forEach((item) => {
+      // meal_id ইউনিক কি হিসেবে কাজ করবে, ফলে ডুপ্লিকেট থাকবে না
+      if (!mealMap.has(item.meal_id)) {
+        mealMap.set(item.meal_id, item.meal?.name || "Unknown Meal");
+      }
+    });
+    // ম্যাপ থেকে অ্যারো হিসেবে রিটার্ন
+    return Array.from(mealMap.entries()).map(([id, name]) => ({ id, name }));
+  }, [orders]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -233,11 +243,17 @@ function AddReviewModal({
                 <SelectValue placeholder="Which dish did you try?" />
               </SelectTrigger>
               <SelectContent className="bg-[#141514] border-white/10 text-white uppercase font-bold text-xs">
-                {meals?.map((meal) => (
-                  <SelectItem key={meal?.id} value={meal.meal_id}>
-                    {meal?.meal?.name}
-                  </SelectItem>
-                ))}
+                {uniqueMeals.length > 0 ? (
+                  uniqueMeals.map((meal) => (
+                    <SelectItem key={meal.id} value={meal.id}>
+                      {meal.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <div className="py-2 px-4 text-gray-500 italic">
+                    No meals ordered yet
+                  </div>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -253,6 +269,7 @@ function AddReviewModal({
               min="0"
               max="5"
               placeholder="4.5"
+              required
               className="bg-white/5 border-white/10 h-12 rounded-lg text-white font-black italic focus:ring-[#a3a380]"
             />
           </div>
@@ -263,6 +280,7 @@ function AddReviewModal({
             </label>
             <Textarea
               name="comment"
+              required
               placeholder="How was the taste? Write something nice..."
               className="bg-white/5 border-white/10 min-h-30 rounded-lg text-white italic resize-none"
             />

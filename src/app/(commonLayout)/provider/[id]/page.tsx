@@ -3,32 +3,15 @@ import {
   HiOutlinePhone,
   HiOutlineUserCircle,
   HiOutlineGlobeAlt,
+  HiOutlineChevronLeft,
 } from "react-icons/hi2";
-import { FaFacebookF } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
 import { MealCard } from "@/components/common/card/MealCard";
-import { ProviderData, ProvidersService } from "@/services/provider.service";
-
-export async function generateStaticParams() {
-  const providerService = new ProvidersService();
-  try {
-    const provider = await providerService.getAllProviders();
-    if (!provider || !provider.data) {
-      return [];
-    }
-    return provider.data.map((provider: ProviderData) => ({
-      id: provider.id.toString(),
-    }));
-  } catch (error) {
-    console.error("Failed to generate static params:", error);
-    return [];
-  }
-}
+import { ProvidersService } from "@/services/provider.service";
+import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
 
 export default async function ProviderDetailsPage({
   params,
@@ -37,202 +20,187 @@ export default async function ProviderDetailsPage({
 }) {
   const { id } = await params;
   const providerService = new ProvidersService();
-  const provider = await providerService.getProviderDetails(id);
+  const res = await providerService.getProviderDetails(id);
+
+  const provider = res?.data?.provider;
+  const meals = res?.data?.meals || [];
+
+  if (!provider) {
+    return (
+      <div className="min-h-screen bg-[#0c0d0c] flex items-center justify-center text-white">
+        <p className="uppercase tracking-widest font-black italic">
+          Provider Not Found
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <section className="bg-[#0c0d0c] text-white pb-15">
-      {/* 1. Hero / Header Section */}
-      <section className="relative h-[50vh] md:h-[40vh] bg-[#1f2120] flex items-end pb-12 overflow-hidden border-b border-white/5">
-        {/* Abstract Background pattern */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-[#a3a380]/5 blur-[120px] rounded-full -mr-20 -mt-20" />
+    <section className="bg-[#0c0d0c] text-white min-h-screen pb-20">
+      <div className="container mx-auto px-6 py-6 flex items-center justify-between">
+        <Button
+          asChild
+          variant="ghost"
+          className="text-gray-400 hover:text-[#a3a380] gap-2 p-0 h-auto"
+        >
+          <Link href="/providers">
+            <HiOutlineChevronLeft /> Back to Providers
+          </Link>
+        </Button>
+      </div>
+
+      {/* 2. Hero Section */}
+      <section className="relative pt-10 pb-16 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#a3a380]/5 blur-[120px] rounded-full" />
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Badge
-                  className={cn(
-                    "px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full",
-                    provider?.data?.is_open
-                      ? "bg-[#a3a380] text-[#1f2120]"
-                      : "bg-red-500 text-white",
-                  )}
-                >
-                  {provider?.data?.is_open
-                    ? "● Accepting Orders"
-                    : "○ Closed Now"}
-                </Badge>
-              </div>
-              <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-                {provider?.data?.restaurant_name}
-              </h1>
-              <p className="flex items-center gap-2 text-[#a3a380] font-medium tracking-wide">
-                <HiOutlineLocationMarker className="size-5" />
-                {provider?.data?.address}
-              </p>
-            </div>
+          <div className="flex flex-col gap-6 max-w-4xl">
+            <Badge className="w-fit px-4 py-1 text-[10px] font-black uppercase tracking-[0.2em] bg-[#a3a380] text-[#1f2120] rounded-full">
+              {provider.role} Profile
+            </Badge>
 
-            {provider?.data?.fb_link && (
-              <Button
-                asChild
-                size="lg"
-                className="bg-white/5 hover:bg-[#a3a380] hover:text-[#1f2120] text-gray-400 border border-white/10 rounded-full px-8 transition-all duration-500"
-              >
-                <Link href={provider?.data?.fb_link} target="_blank">
-                  <FaFacebookF className="mr-2" /> Follow on Facebook
-                </Link>
-              </Button>
-            )}
+            <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-tight italic">
+              {provider.name}
+            </h1>
+
+            <div className="flex flex-wrap gap-6 text-gray-400 text-sm font-bold uppercase tracking-widest">
+              <span className="flex items-center gap-2">
+                <HiOutlineLocationMarker className="text-[#a3a380] size-5" />
+                {provider.address || "Location Not Set"}
+              </span>
+              <span className="flex items-center gap-2">
+                <Badge
+                  variant="outline"
+                  className="border-white/10 text-green-400"
+                >
+                  ● {provider.status}
+                </Badge>
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Content Section */}
-      <section className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Left Side: Description & Menu Info */}
-          <div className="lg:col-span-7 space-y-12">
-            <div className="space-y-6">
-              <h3 className="text-[#a3a380] text-sm font-black uppercase tracking-[0.4em]">
-                Our Philosophy
-              </h3>
-              <p className="text-2xl md:text-3xl font-light text-gray-300 leading-relaxed italic">
-                &quot;{provider?.data?.description}&quot;
-              </p>
+      {/* 3. Main Content Grid */}
+      <section className="container mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left Column: Stats & Meals */}
+          <div className="lg:col-span-8 space-y-16">
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/5">
+                <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
+                  Total Items
+                </p>
+                <h4 className="text-2xl font-black italic text-[#a3a380]">
+                  {meals.length}
+                </h4>
+              </div>
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/5">
+                <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
+                  Status
+                </p>
+                <h4 className="text-2xl font-black italic text-green-500">
+                  Active
+                </h4>
+              </div>
             </div>
 
-            <Separator className="bg-white/5" />
+            {/* Meals Collection */}
+            <div className="space-y-10">
+              <div className="flex items-center gap-4">
+                <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter italic">
+                  Signature <span className="text-[#a3a380]">Menu</span>
+                </h2>
+                <Separator className="flex-1 bg-white/5" />
+              </div>
 
-            <div className="space-y-8">
-              <h3 className="text-2xl font-black uppercase tracking-tight text-gray-400">
-                Browse our <span className="text-[#a3a380]">Collection</span>
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-8 border border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center text-center space-y-3 opacity-50">
-                  <HiOutlineGlobeAlt className="size-8 text-[#a3a380]" />
-                  <p className="text-xs uppercase tracking-widest text-gray-500">
-                    Menu items loading...
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {meals.length > 0 ? (
+                  meals.map((meal: any) => (
+                    <div
+                      key={meal.id}
+                      className="transition-transform hover:scale-[1.02] duration-500"
+                    >
+                      <MealCard meal={meal} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-full py-20 border border-dashed border-white/10 rounded-3xl flex flex-col items-center justify-center text-center">
+                    <HiOutlineGlobeAlt className="size-12 text-gray-800 mb-4" />
+                    <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">
+                      No meals available at the moment
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Right Side: Contact & Owner Info Card */}
-          <div className="lg:col-span-5">
-            <Card className="bg-[#1f2120] border-white/5 rounded-lg p-10 sticky top-24 shadow-2xl">
-              <CardContent className="p-0 space-y-10">
-                {/* User / Owner Info */}
-                <div className="flex items-center gap-6">
-                  <div className="size-16 rounded-xl bg-linear-to-br from-[#a3a380] to-[#8e8e6f] flex items-center justify-center text-[#1f2120]">
+          {/* Right Column: Contact Card */}
+          <div className="lg:col-span-4">
+            <Card className="bg-[#1f2120] border-white/5 rounded-[2rem] p-8 md:p-10 sticky top-24 shadow-2xl">
+              <CardContent className="p-0 space-y-8">
+                <div className="flex items-center gap-5">
+                  <div className="size-14 rounded-2xl bg-[#a3a380] flex items-center justify-center text-[#1f2120]">
                     <HiOutlineUserCircle size={32} />
                   </div>
                   <div>
-                    <p className="text-[#a3a380] text-[10px] font-black uppercase tracking-widest">
-                      Kitchen Manager
+                    <p className="text-[#a3a380] text-[9px] font-black uppercase tracking-[0.3em]">
+                      Authorized Provider
                     </p>
-                    <h4 className="text-xl font-bold text-white uppercase tracking-tight">
-                      {provider?.data?.user.name}
+                    <h4 className="text-lg font-bold text-white uppercase truncate">
+                      {provider.name}
                     </h4>
                   </div>
                 </div>
 
                 <Separator className="bg-white/5" />
 
-                {/* Contact Details */}
-                <div className="space-y-8">
-                  <div className="group flex items-center gap-5">
-                    <div className="size-12 rounded-full bg-white/5 flex items-center justify-center text-[#a3a380] group-hover:bg-[#a3a380] group-hover:text-[#1f2120] transition-all">
-                      <HiOutlinePhone size={20} />
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 group">
+                    <div className="size-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-[#a3a380] group-hover:text-[#1f2120] transition-colors">
+                      <HiOutlinePhone size={18} />
                     </div>
                     <div>
-                      <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">
-                        Direct Call
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">
+                        Phone
                       </p>
-                      <p className="text-gray-200 font-medium">
-                        {provider?.data?.user.phone}
+                      <p className="text-sm text-gray-400 font-medium">
+                        {provider.phone || "Not available"}
                       </p>
                     </div>
                   </div>
 
-                  <div className="group flex items-center gap-5">
-                    <div className="size-12 rounded-full bg-white/5 flex items-center justify-center text-[#a3a380] group-hover:bg-[#a3a380] group-hover:text-[#1f2120] transition-all">
-                      <HiOutlineMail size={20} />
+                  <div className="flex items-center gap-4 group">
+                    <div className="size-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-[#a3a380] group-hover:text-[#1f2120] transition-colors">
+                      <HiOutlineMail size={18} />
                     </div>
                     <div>
-                      <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-1">
-                        Email Inquiry
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">
+                        Email
                       </p>
-                      <p className="text-gray-200 font-medium truncate max-w-50">
-                        {provider?.data?.user.email}
+                      <p className="text-sm font-medium text-gray-400 truncate w-40 md:w-full">
+                        {provider.email}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Join Date */}
-                <div className="pt-6 text-center">
-                  <p className="text-[9px] text-gray-700 uppercase tracking-[0.2em]">
-                    Partnering since{" "}
-                    {new Date(
-                      provider?.data?.created_at || "",
-                    ).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                    })}
-                  </p>
-                </div>
+                <Button className="w-full bg-white/5 hover:bg-[#a3a380] hover:text-[#1f2120] text-white rounded-xl h-14 font-black uppercase tracking-widest transition-all">
+                  Contact Kitchen
+                </Button>
+
+                <p className="text-center text-[8px] text-gray-600 uppercase tracking-widest">
+                  Joined Since{" "}
+                  {new Date(provider.createdAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
               </CardContent>
             </Card>
           </div>
-        </div>
-      </section>
-
-      {/* 3. Signature Menu Section - লার্জার এবং স্পেসড আউট গ্রিড */}
-      <section className="container mx-auto px-6 py-16 border-t border-white/5">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20">
-          <div className="space-y-4">
-            <h3 className="text-[#a3a380] text-xs font-black uppercase tracking-[0.5em] flex items-center gap-4">
-              <span className="h-px w-12 bg-[#a3a380]" /> The Collection
-            </h3>
-            <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter italic">
-              Signature <span className="text-[#a3a380]">Menu</span>
-            </h2>
-          </div>
-
-          <div className="bg-white/5 px-8 py-4 rounded-2xl border border-white/10 backdrop-blur-md">
-            <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">
-              Available Items:{" "}
-              <span className="text-[#a3a380] text-lg ml-2">
-                {provider?.data?.meals?.length || 0}
-              </span>
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-          {provider?.data.meals && provider?.data?.meals.length > 0 ? (
-            provider?.data?.meals?.map((meal) => (
-              <div
-                key={meal?.id}
-                className="group animate-in fade-in zoom-in duration-700"
-              >
-                <MealCard meal={meal} />
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full py-40 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-[3rem] bg-white/1">
-              <div className="size-24 rounded-full bg-white/5 flex items-center justify-center text-gray-800 mb-8 border border-white/5">
-                <HiOutlineGlobeAlt size={48} />
-              </div>
-              <h4 className="text-gray-500 uppercase font-black tracking-[0.3em] text-sm">
-                No Delicacies Found
-              </h4>
-              <p className="text-[10px] text-gray-700 font-bold uppercase mt-4">
-                The chef is preparing something special
-              </p>
-            </div>
-          )}
         </div>
       </section>
     </section>
