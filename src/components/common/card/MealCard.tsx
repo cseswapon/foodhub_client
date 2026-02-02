@@ -47,7 +47,7 @@ export function MealCard({ meal }: { meal: Meal }) {
             {meal.name}
           </h3>
 
-          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed transition-opacity duration-300 group-hover/meal-link:opacity-80">
+          <p className="text-gray-400 text-xs line-clamp-1 leading-relaxed transition-opacity duration-300 group-hover/meal-link:opacity-80">
             {meal.description}
           </p>
 
