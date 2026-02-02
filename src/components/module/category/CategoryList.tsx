@@ -25,20 +25,44 @@ import {
   HiOutlineEye,
   HiOutlineClock,
 } from "react-icons/hi2";
+import { toast } from "sonner";
+import { useState } from "react";
+import {
+  addCategories,
+  deleteCategories,
+  updateCategories,
+} from "@/actions/categories.action";
 
-export default function CategoryList() {
-  // --- ফেক ডাটা ---
-  const categories = [
-    {
-      id: "bc56b6a0-4127-47f2-b533-0f96526f5522",
-      name: "fats & oils",
-      created_at: "2026-01-28T12:40:59.137Z",
-    },
-  ];
+export default function CategoryList({ categories }: { categories: any[] }) {
+  const handleDelete = async (id: string, name: string) => {
+    const deleteData = confirm(`Are you sure you want to delete ${name}?`);
+    if (!deleteData) return;
+
+    const toastId = "delete-category";
+    toast.loading(`Deleting ${name}...`, {
+      id: toastId,
+      position: "top-center",
+    });
+
+    try {
+      const result = await deleteCategories(id);
+      if (result) {
+        toast.success(`${name} deleted successfully`, { id: toastId });
+      } else {
+        toast.error("Something went wrong", { id: toastId });
+      }
+    } catch {
+      toast.error("Something went wrong", { id: toastId });
+    }
+
+    /* setTimeout(() => {
+      console.log("Deleted Category ID:", id);
+      toast.success(`${name} deleted successfully`, { id: toastId });
+    }, 1500); */
+  };
 
   return (
-    <main className="p-6 md:p-10 space-y-6">
-      {/* Header with Add Button */}
+    <main className="p-6 md:p-10 space-y-6 bg-[#0c0d0c] min-h-screen text-white">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight italic">
@@ -49,12 +73,10 @@ export default function CategoryList() {
           </p>
         </div>
 
-        {/* Add Category Modal */}
         <CategoryModal mode="add" />
       </div>
 
-      {/* Table */}
-      <div className="rounded-lg border bg-card/40 backdrop-blur-sm overflow-hidden shadow">
+      <div className="rounded-lg border border-white/5 bg-white/5 backdrop-blur-sm overflow-hidden shadow">
         <Table>
           <TableHeader className="bg-white/5">
             <TableRow className="border-white/5 uppercase tracking-widest text-[10px] font-black">
@@ -73,7 +95,7 @@ export default function CategoryList() {
             {categories.map((cat) => (
               <TableRow
                 key={cat.id}
-                className="border-white/5 hover:bg-white/2 transition-colors group"
+                className="border-white/5 hover:bg-white/2 transition-colors"
               >
                 <TableCell className="py-5 pl-8">
                   <div className="flex items-center gap-3">
@@ -83,18 +105,18 @@ export default function CategoryList() {
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="text-xs text-gray-500 font-medium italic flex items-center gap-2 py-5">
-                  <HiOutlineClock size={14} />{" "}
-                  {new Date(cat.created_at).toLocaleDateString()}
+                <TableCell className="text-xs text-gray-500 font-medium italic py-5">
+                  <div className="flex items-center gap-2">
+                    <HiOutlineClock size={14} />
+                    {new Date(cat.created_at).toLocaleDateString()}
+                  </div>
                 </TableCell>
                 <TableCell className="text-right pr-8">
                   <div className="flex justify-end gap-2">
-                    {/* View Modal */}
                     <CategoryModal mode="view" data={cat} />
-                    {/* Edit Modal */}
                     <CategoryModal mode="edit" data={cat} />
-                    {/* Delete */}
                     <Button
+                      onClick={() => handleDelete(cat.id, cat.name)}
                       size="icon"
                       variant="ghost"
                       className="size-8 rounded-lg hover:bg-red-500/10 text-gray-400 hover:text-red-500"
@@ -119,10 +141,42 @@ function CategoryModal({
   mode: "add" | "edit" | "view";
   data?: any;
 }) {
+  const [open, setOpen] = useState(false);
   const isView = mode === "view";
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
+
+    const toastId = "category-modal-action";
+    toast.loading("Processing...", { id: toastId, position: "top-center" });
+
+    try {
+      if (mode === "add") {
+        await addCategories(formValues);
+      } else if (mode === "edit") {
+        await updateCategories(data?.id, formValues);
+      }
+      toast.success(`${mode === "add" ? "created" : "updated"}`, {
+        id: toastId,
+      });
+      setOpen(false);
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Something went wrong";
+      toast.error(error, { id: toastId });
+    }
+
+    /* console.log(
+      `${mode === "add" ? "Creating" : "Updating"} Category Data:`,
+      formValues,
+      data?.id,
+    );
+ */
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {mode === "add" ? (
           <Button className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-bold rounded-lg uppercase text-[10px] tracking-widest gap-2 h-10 px-6 shadow">
@@ -147,10 +201,7 @@ function CategoryModal({
         )}
       </DialogTrigger>
 
-      {/* Shadcn DialogContent এর ভেতরে ইন্টারনাল ওভারলেতে 
-          নিচের CSS ক্লাসগুলো ব্লার ইফেক্ট নিশ্চিত করবে।
-      */}
-      <DialogContent className="backdrop-blur-xl border-white/10 rounded-lg max-w-sm shadow-2xl">
+      <DialogContent className="bg-[#0c0d0c] backdrop-blur-xl border-white/10 rounded-lg max-w-sm shadow-2xl text-white">
         <DialogHeader>
           <DialogTitle className="font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
             {mode === "add" && <HiOutlinePlus className="text-[#a3a380]" />}
@@ -158,33 +209,39 @@ function CategoryModal({
               <HiOutlinePencilSquare className="text-[#a3a380]" />
             )}
             {mode === "view" && <HiOutlineEye className="text-[#a3a380]" />}
-            {mode} Category
+            <span className="text-white">{mode} Category</span>
           </DialogTitle>
           <p className="text-[9px] text-gray-500 font-bold uppercase tracking-tighter">
             System Classification Entry
           </p>
         </DialogHeader>
 
-        <div className="space-y-6 pt-6">
+        {/* ফর্ম র‍্যাপার */}
+        <form onSubmit={handleSubmit} className="space-y-6 pt-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 flex items-center gap-2">
               <HiOutlineTag size={12} className="text-[#a3a380]" />
               Category Name
             </label>
             <Input
+              name="name" // FormData-র জন্য name প্রপার্টি জরুরি
               defaultValue={data?.name || ""}
               disabled={isView}
+              required
               placeholder="e.g. Fats & Oils"
-              className="bg-white/5 border-white/10 h-12 focus:ring-[#a3a380] rounded-lg font-bold placeholder:text-gray-700"
+              className="bg-white/5 border-white/10 h-12 text-white focus:ring-[#a3a380] rounded-lg font-bold placeholder:text-gray-700"
             />
           </div>
 
           {!isView && (
-            <Button className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase rounded-lg h-12 shadow-lg transition-transform active:scale-95">
+            <Button
+              type="submit"
+              className="w-full bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase rounded-lg h-12 shadow-lg transition-transform active:scale-95"
+            >
               {mode === "add" ? "Create Category" : "Update Entry"}
             </Button>
           )}
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

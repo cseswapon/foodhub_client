@@ -133,6 +133,7 @@ interface OrderItem {
 }
 
 export class OrderService {
+  static API_URL = "Order Service";
   private readonly API_URL: string;
 
   constructor() {
