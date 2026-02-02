@@ -26,6 +26,13 @@ Email: customer@gmail.com
 Password: customer@gmail.com
 ```
 
+### Provider
+
+```
+Email: provider@gmail.com
+Password: provider@gmail.com
+```
+
 ### Admin
 
 ```
