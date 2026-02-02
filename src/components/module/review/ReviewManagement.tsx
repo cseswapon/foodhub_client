@@ -144,11 +144,14 @@ export default function ReviewManagement({ reviews }: { reviews: any[] }) {
               ))}
             </TableBody>
           ) : (
-            <div className="flex justify-center items-center">
-              <p className="text-center text-muted-foreground text-sm p-2">
-                No reviews found
-              </p>
-            </div>
+            <TableRow>
+              <TableCell
+                colSpan={5}
+                className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+              >
+                No review found
+              </TableCell>
+            </TableRow>
           )}
         </Table>
       </div>

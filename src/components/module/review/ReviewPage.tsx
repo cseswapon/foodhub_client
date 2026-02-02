@@ -123,30 +123,41 @@ export default function ReviewPage() {
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
-                  {reviews.map((review) => (
-                    <TableRow
-                      key={review.id}
-                      className="border-white/5 hover:bg-white/3 transition-colors"
+                {reviews?.length > 0 ? (
+                  <TableBody>
+                    {reviews?.map((review) => (
+                      <TableRow
+                        key={review.id}
+                        className="border-white/5 hover:bg-white/3 transition-colors"
+                      >
+                        <TableCell className="py-5 pl-8 font-bold text-xs uppercase tracking-tight text-white/90">
+                          Meal ID: {review.meal_id.slice(0, 8)}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1.5 font-black text-xs text-[#a3a380] italic">
+                            <HiOutlineStar fill="currentColor" size={14} />
+                            {review.rating}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-xs text-gray-400 italic max-w-xs truncate">
+                          `{review.comment}`
+                        </TableCell>
+                        <TableCell className="text-right pr-8 text-[10px] font-bold text-white/90 uppercase">
+                          {new Date(review.created_at).toLocaleDateString()}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
                     >
-                      <TableCell className="py-5 pl-8 font-bold text-xs uppercase tracking-tight text-white/90">
-                        Meal ID: {review.meal_id.slice(0, 8)}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 font-black text-xs text-[#a3a380] italic">
-                          <HiOutlineStar fill="currentColor" size={14} />
-                          {review.rating}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-xs text-gray-400 italic max-w-xs truncate">
-                        `{review.comment}`
-                      </TableCell>
-                      <TableCell className="text-right pr-8 text-[10px] font-bold text-white/90 uppercase">
-                        {new Date(review.created_at).toLocaleDateString()}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                      No reviews found
+                    </TableCell>
+                  </TableRow>
+                )}
               </Table>
             </div>
           )}

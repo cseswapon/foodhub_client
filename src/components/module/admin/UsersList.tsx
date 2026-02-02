@@ -188,9 +188,14 @@ export default function UsersList({
               ))}
             </TableBody>
           ) : (
-            <div className="text-muted-foreground text-center py-4">
-              No users found
-            </div>
+            <TableRow>
+              <TableCell
+                colSpan={5}
+                className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+              >
+                No users found
+              </TableCell>
+            </TableRow>
           )}
         </Table>
       </div>

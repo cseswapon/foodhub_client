@@ -92,41 +92,52 @@ export default function CategoryList({ categories }: { categories: any[] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories.map((cat) => (
-              <TableRow
-                key={cat.id}
-                className="border-white/5 hover:bg-white/2 transition-colors"
-              >
-                <TableCell className="py-5 pl-8">
-                  <div className="flex items-center gap-3">
-                    <HiOutlineTag className="text-[#a3a380]" size={18} />
-                    <span className="font-bold text-white uppercase text-sm tracking-tight">
-                      {cat.name}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="text-xs text-gray-500 font-medium italic py-5">
-                  <div className="flex items-center gap-2">
-                    <HiOutlineClock size={14} />
-                    {new Date(cat.created_at).toLocaleDateString()}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right pr-8">
-                  <div className="flex justify-end gap-2">
-                    <CategoryModal mode="view" data={cat} />
-                    <CategoryModal mode="edit" data={cat} />
-                    <Button
-                      onClick={() => handleDelete(cat.id, cat.name)}
-                      size="icon"
-                      variant="ghost"
-                      className="size-8 rounded-lg hover:bg-red-500/10 text-gray-400 hover:text-red-500"
-                    >
-                      <HiOutlineTrash size={16} />
-                    </Button>
-                  </div>
+            {categories?.length > 0 ? (
+              categories.map((cat) => (
+                <TableRow
+                  key={cat.id}
+                  className="border-white/5 hover:bg-white/2 transition-colors"
+                >
+                  <TableCell className="py-5 pl-8">
+                    <div className="flex items-center gap-3">
+                      <HiOutlineTag className="text-[#a3a380]" size={18} />
+                      <span className="font-bold text-white uppercase text-sm tracking-tight">
+                        {cat.name}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-xs text-gray-500 font-medium italic py-5">
+                    <div className="flex items-center gap-2">
+                      <HiOutlineClock size={14} />
+                      {new Date(cat.created_at).toLocaleDateString()}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right pr-8">
+                    <div className="flex justify-end gap-2">
+                      <CategoryModal mode="view" data={cat} />
+                      <CategoryModal mode="edit" data={cat} />
+                      <Button
+                        onClick={() => handleDelete(cat.id, cat.name)}
+                        size="icon"
+                        variant="ghost"
+                        className="size-8 rounded-lg hover:bg-red-500/10 text-gray-400 hover:text-red-500"
+                      >
+                        <HiOutlineTrash size={16} />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+                >
+                  No categories found
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>

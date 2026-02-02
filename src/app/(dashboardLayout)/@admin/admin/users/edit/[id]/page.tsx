@@ -25,6 +25,7 @@ import {
   updateUserStatusAction,
 } from "@/actions/user.action";
 import { useEffect, useState } from "react";
+import Loading from "@/components/common/loading/Loading";
 
 type UserStatus = "activate" | "suspend";
 type UserRole = "customer" | "provider" | "admin";
@@ -77,7 +78,7 @@ export default function UsersUpdate() {
   });
   let content;
   if (loading) {
-    content = <main className="container mx-auto py-10 px-4">Loading...</main>;
+    content = <Loading />;
   } else {
     content = (
       <main className="container mx-auto py-10 px-4">

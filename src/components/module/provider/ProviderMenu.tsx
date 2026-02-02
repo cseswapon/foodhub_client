@@ -172,7 +172,14 @@ export default function ProviderMenu({ meals }: { meals: any[] }) {
                 </TableRow>
               ))
             ) : (
-              <div>No Meals Found</div>
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+                >
+                  No meals found
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>

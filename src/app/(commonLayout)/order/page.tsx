@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import {
   Table,
   TableBody,
@@ -90,89 +90,105 @@ export default async function OrderPage() {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {orders?.data?.map((order) => (
-                <TableRow
-                  key={order.id}
-                  className="border-white/5 hover:bg-white/2 transition-colors group"
-                >
-                  {/* Order ID & Item Preview */}
-                  <TableCell className="py-6 pl-8">
-                    <p className="font-black text-white group-hover:text-[#a3a380] transition-colors uppercase tracking-tight">
-                      {order.orderItems[0]?.meal.name}
-                      {order.orderItems.length > 1 &&
-                        ` + ${order.orderItems.length - 1} more`}
-                    </p>
-                    <p className="text-[10px] text-gray-500 mt-1">
-                      #{order.id}
-                    </p>
-                  </TableCell>
+            {orders?.data && orders?.data?.length > 0 ? (
+              <TableBody>
+                {orders?.data?.map((order) => (
+                  <TableRow
+                    key={order.id}
+                    className="border-white/5 hover:bg-white/2 transition-colors group"
+                  >
+                    {/* Order ID & Item Preview */}
+                    <TableCell className="py-6 pl-8">
+                      <p className="font-black text-white group-hover:text-[#a3a380] transition-colors uppercase tracking-tight">
+                        {order.orderItems[0]?.meal.name}
+                        {order.orderItems.length > 1 &&
+                          ` + ${order.orderItems.length - 1} more`}
+                      </p>
+                      <p className="text-[10px] text-gray-500 mt-1">
+                        #{order.id}
+                      </p>
+                    </TableCell>
 
-                  {/* Provider Name */}
-                  <TableCell className="font-medium text-gray-300">
-                    {order.provider.restaurant_name}
-                  </TableCell>
+                    {/* Provider Name */}
+                    <TableCell className="font-medium text-gray-300">
+                      {order.provider.restaurant_name}
+                    </TableCell>
 
-                  {/* Date */}
-                  <TableCell className="text-gray-400">
-                    <div className="flex items-center gap-2 text-xs font-medium">
-                      <HiOutlineCalendar className="text-[#a3a380]" />
-                      {new Date(order.created_at).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </div>
-                  </TableCell>
+                    {/* Date */}
+                    <TableCell className="text-gray-400">
+                      <div className="flex items-center gap-2 text-xs font-medium">
+                        <HiOutlineCalendar className="text-[#a3a380]" />
+                        {new Date(order.created_at).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          },
+                        )}
+                      </div>
+                    </TableCell>
 
-                  {/* Price */}
-                  <TableCell>
-                    <p className="font-black text-white">
-                      ৳{order.total_price}
-                    </p>
-                    <p className="text-[10px] text-gray-600 uppercase font-bold tracking-tighter italic">
-                      {order.payment_method}
-                    </p>
-                  </TableCell>
+                    {/* Price */}
+                    <TableCell>
+                      <p className="font-black text-white">
+                        ৳{order.total_price}
+                      </p>
+                      <p className="text-[10px] text-gray-600 uppercase font-bold tracking-tighter italic">
+                        {order.payment_method}
+                      </p>
+                    </TableCell>
 
-                  {/* Status Badge */}
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        "rounded-full px-3 py-1 text-[10px] uppercase font-black tracking-widest border",
-                        statusConfig[order.status as keyof typeof statusConfig]
-                          ?.className,
-                      )}
-                    >
-                      {
-                        statusConfig[order.status as keyof typeof statusConfig]
-                          ?.label
-                      }
-                    </Badge>
-                  </TableCell>
-
-                  {/* Actions */}
-                  <TableCell className="text-right pr-8">
-                    <div className="flex items-center justify-end gap-3">
-                      <CancelOrderButton
-                        orderId={order.id}
-                        currentStatus={order.status}
-                      />
-                      <Button
-                        asChild
-                        variant="ghost"
-                        className="h-10 w-10 p-0 rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
+                    {/* Status Badge */}
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "rounded-full px-3 py-1 text-[10px] uppercase font-black tracking-widest border",
+                          statusConfig[
+                            order.status as keyof typeof statusConfig
+                          ]?.className,
+                        )}
                       >
-                        <Link href={`/order/${order.id}`}>
-                          <HiOutlineEye size={18} />
-                        </Link>
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+                        {
+                          statusConfig[
+                            order.status as keyof typeof statusConfig
+                          ]?.label
+                        }
+                      </Badge>
+                    </TableCell>
+
+                    {/* Actions */}
+                    <TableCell className="text-right pr-8">
+                      <div className="flex items-center justify-end gap-3">
+                        <CancelOrderButton
+                          orderId={order.id}
+                          currentStatus={order.status}
+                        />
+                        <Button
+                          asChild
+                          variant="ghost"
+                          className="h-10 w-10 p-0 rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
+                        >
+                          <Link href={`/order/${order.id}`}>
+                            <HiOutlineEye size={18} />
+                          </Link>
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  className="text-center py-10 text-gray-500 uppercase text-xs font-bold tracking-widest"
+                >
+                  No orders found
+                </TableCell>
+              </TableRow>
+            )}
           </Table>
 
           {orders?.data?.length === 0 && (
