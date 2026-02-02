@@ -39,9 +39,13 @@ const statusConfig = {
     className: "bg-red-500/10 text-red-500 border-red-500/20",
   },
 };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function OrdersTable({ orders,role }: { orders: any[], role:string }) {
+export default function OrdersTable({
+  orders,
+  role,
+}: {
+  orders: any[];
+  role: string;
+}) {
   return (
     <div className="rounded-lg border  backdrop-blur-sm overflow-hidden">
       <Table>
@@ -58,18 +62,18 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order) => (
-            <TableRow key={order.id} className="transition-all group">
+          {orders?.map((order) => (
+            <TableRow key={order?.id} className="transition-all group">
               {/* Order ID & Customer Info */}
               <TableCell className="py-6 pl-8">
                 <div className="space-y-1">
                   <p className="font-black text-gray-500 transition-colors uppercase tracking-tighter">
-                    #{order.id.slice(0, 8)}
+                    #{order?.id?.slice(0, 8)}
                   </p>
                   <div className="flex items-center gap-1.5">
                     <HiOutlineUser size={12} />
                     <span className="text-[11px] text-gray-300 font-medium">
-                      {order.user.name}
+                      {order?.user?.name}
                     </span>
                   </div>
                 </div>
@@ -79,10 +83,10 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
               <TableCell>
                 <div className="space-y-1">
                   <p className="text-sm text-gray-500 font-bold uppercase tracking-tight">
-                    {order.provider.restaurant_name}
+                    {order?.provider?.restaurant_name}
                   </p>
                   <p className="text-[10px] text-gray-300 truncate max-w-37.5">
-                    {order.provider.address}
+                    {order?.provider?.address}
                   </p>
                 </div>
               </TableCell>
@@ -95,10 +99,10 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
                   </div>
                   <div className="text-xs">
                     <p className="text-gray-500 font-bold">
-                      {order.orderItems[0]?.meal.name}
+                      {order?.orderItems?.[0]?.meal.name}
                     </p>
                     <p className="text-gray-300 font-medium">
-                      Qty: {order.orderItems[0]?.quantity}
+                      Qty: {order?.orderItems?.[0]?.quantity}
                     </p>
                   </div>
                 </div>
@@ -107,13 +111,13 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
               {/* Pricing & Method */}
               <TableCell>
                 <p className="font-black text-gray-500 italic">
-                  ৳{order.total_price}
+                  ৳{order?.total_price}
                 </p>
                 <Badge
                   variant="secondary"
                   className="bg-white/5 text-[9px] h-4 uppercase font-bold text-gray-500"
                 >
-                  {order.payment_method}
+                  {order?.payment_method}
                 </Badge>
               </TableCell>
 
@@ -144,7 +148,7 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
                       size="icon"
                       className="rounded-full hover:bg-[#a3a380] hover:text-[#1f2120] transition-all"
                     >
-                      <Link href={`/provider/orders/${order.id}`}>
+                      <Link href={`/provider/orders/${order?.id}`}>
                         <HiOutlineEye size={18} />
                       </Link>
                     </Button>
@@ -155,7 +159,7 @@ export default function OrdersTable({ orders,role }: { orders: any[], role:strin
                       size="icon"
                       className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
                     >
-                      <Link href={`/provider/orders/update/${order.id}`}>
+                      <Link href={`/provider/orders/update/${order?.id}`}>
                         <HiOutlineTruck size={18} />
                       </Link>
                     </Button>
