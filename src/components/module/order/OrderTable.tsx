@@ -152,17 +152,22 @@ export default function OrdersTable({
                         <HiOutlineEye size={18} />
                       </Link>
                     </Button>
+
                     {/* Status Update shortcut link */}
-                    <Button
-                      asChild
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
-                    >
-                      <Link href={`/provider/orders/update/${order?.id}`}>
-                        <HiOutlineTruck size={18} />
-                      </Link>
-                    </Button>
+                    {!["delivered", "cancelled"].includes(
+                      order?.status as string,
+                    ) && (
+                      <Button
+                        asChild
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
+                      >
+                        <Link href={`/provider/orders/update/${order?.id}`}>
+                          <HiOutlineTruck size={18} />
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </TableCell>
               )}

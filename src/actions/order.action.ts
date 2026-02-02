@@ -36,7 +36,7 @@ export async function createOrderAction(payload: any[]) {
 
       return {
         success: true,
-        message: "Order placed successfully!"
+        message: "Order placed successfully!",
       };
     }
 
@@ -67,4 +67,10 @@ export async function cancelOrderAction(orderId: string) {
       result?.message ||
       "Failed to cancel order. It might be in a stage where cancellation is not allowed.",
   };
+}
+
+export async function updateOrderOrderStatus(id: string, status: string) {
+  const result = await orderService.updateOrderStatus(id, status);
+  updateTag("orders");
+  return result;
 }

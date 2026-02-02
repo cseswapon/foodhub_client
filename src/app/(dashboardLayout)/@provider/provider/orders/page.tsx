@@ -1,6 +1,8 @@
 import OrdersTable from "@/components/module/order/OrderTable";
+import { OrderService } from "@/services/order.service";
 
-export default function ProviderOrder() {
+const orderService = new OrderService();
+export default async function ProviderOrder() {
   const fakeOrdersData = [
     {
       id: "ec809d49-317e-4c6a-9c73-70688aa87260",
@@ -52,6 +54,9 @@ export default function ProviderOrder() {
     },
   ];
 
+  const orders = await orderService.getAllOrders();
+  // console.log("Orders", orders?.data);
+
   return (
     <main className="p-6 md:p-10 space-y-8">
       {/* Table Header Section */}
@@ -71,7 +76,7 @@ export default function ProviderOrder() {
               Total
             </p>
             <p className="text-xl font-black text-[#a3a380] leading-none">
-              {fakeOrdersData.length}
+              {fakeOrdersData?.length}
             </p>
           </div>
           <div className="text-center">
@@ -79,14 +84,14 @@ export default function ProviderOrder() {
               New
             </p>
             <p className="text-xl font-black text-blue-500 leading-none">
-              {fakeOrdersData.filter((o) => o.status === "placed").length}
+              {fakeOrdersData?.filter((o) => o.status === "placed").length}
             </p>
           </div>
         </div>
       </div>
 
       {/* Orders Table Component */}
-      <OrdersTable orders={fakeOrdersData} role="provider"/>
+      <OrdersTable orders={orders?.data as any[]} role="provider" />
     </main>
   );
 }

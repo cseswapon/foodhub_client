@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HiOutlineArrowPath } from "react-icons/hi2";
+import { updateOrderOrderStatus } from "@/actions/order.action";
 
 type OrderStatus = "placed" | "preparing" | "ready" | "delivered" | "cancelled";
 
@@ -35,9 +36,15 @@ export default function OrderUpdateForm({ order }: OrderUpdateProps) {
       const toastId = toast.loading("Update in...");
       try {
         await new Promise((resolve) => setTimeout(resolve, 1500));
-        console.log("UPDATE DATA:", value);
-        toast.success("update successful!", { id: toastId });
-        form.reset();
+        // console.log("UPDATE DATA:", value);
+        const result = await updateOrderOrderStatus(order.id, value.status);
+        if (result) {
+          toast.success("update successful!", { id: toastId });
+          form.reset();
+          router.back();
+        } else {
+          toast.error("Something went wrong", { id: toastId });
+        }
       } catch {
         toast.error("Something went wrong", { id: toastId });
       }

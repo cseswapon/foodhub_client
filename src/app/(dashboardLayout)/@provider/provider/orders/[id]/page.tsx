@@ -10,6 +10,7 @@ import {
   HiOutlineCurrencyBangladeshi,
 } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
+import { OrderService } from "@/services/order.service";
 
 // Status Configuration
 const statusConfig = {
@@ -28,38 +29,19 @@ const statusConfig = {
   cancelled: { label: "Cancelled", color: "text-red-500", bg: "bg-red-500/10" },
 };
 
-export default function OrderDetails() {
-  // --- ফেক ডাটা (আপনার API রেসপন্স অনুযায়ী) ---
-  const order = {
-    id: "ec809d49-317e-4c6a-9c73-70688aa87260",
-    total_price: "1500",
-    delivery_address: "ধানমন্ডি, ঢাকা",
-    payment_method: "cod",
-    status: "delivered",
-    created_at: "2026-01-30T10:29:32.454Z",
-    updated_at: "2026-01-30T11:00:34.647Z",
-    provider: {
-      restaurant_name: "Pizza Point - 10",
-      description: "ফ্রেশ পিজ্জা ও বার্গার পাওয়া যায়",
-      address: "গুলশান ১, ঢাকা",
-    },
-    user: {
-      name: "Csutomer",
-      email: "cusomter@gmail.com",
-      phone: "01829930827",
-    },
-    orderItems: [
-      {
-        meal_id: "2155fb2a-e358-4ae8-8b4e-c8db80d4449e",
-        quantity: 3,
-        price: "500",
-        meal_name: "Chicken Biryani", // ফেক হিসেবে অ্যাড করলাম
-      },
-    ],
-  };
+const orderService = new OrderService();
 
-  const statusInfo = statusConfig[order.status as keyof typeof statusConfig];
+export default async function OrderDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const details = await orderService.getOrderDetails(id);
+  const order = details?.data || ({} as any);
 
+  const statusInfo = statusConfig[order?.status as keyof typeof statusConfig];
+  // console.log(order);
   return (
     <main className="p-6 md:p-10  min-h-screen space-y-8">
       {/* Header with Order ID and Status */}
@@ -93,26 +75,26 @@ export default function OrderDetails() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8 space-y-6">
-              {order.orderItems.map((item, idx) => (
+              {order?.orderItems?.map((item: any, idx: number) => (
                 <div
                   key={idx}
                   className="flex justify-between items-center group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center font-black">
-                      {item.quantity}x
+                    <div className="size-12 rounded-full bg-white/5 flex items-center justify-center font-black">
+                      {item?.quantity}x
                     </div>
                     <div>
                       <p className="font-bold group-hover:text-[#a3a380] transition-colors uppercase">
-                        {item.meal_name}
+                        {item?.meal?.name}
                       </p>
                       <p className="text-xs text-gray-500 tracking-widest">
-                        UNIT PRICE: ৳{item.price}
+                        UNIT PRICE: ৳{item?.meal?.price}
                       </p>
                     </div>
                   </div>
                   <p className="font-black text-white italic">
-                    ৳{Number(item.price) * item.quantity}
+                    ৳{Number(item?.meal?.price) * item?.quantity}
                   </p>
                 </div>
               ))}
@@ -122,11 +104,11 @@ export default function OrderDetails() {
               <div className="space-y-3 pt-2">
                 <div className="flex justify-between text-gray-400 text-sm font-bold uppercase tracking-widest">
                   <span>Subtotal</span>
-                  <span>৳{order.total_price}</span>
+                  <span>৳{order?.total_price}</span>
                 </div>
                 <div className="flex justify-between text-[#a3a380] text-xl font-black uppercase tracking-tighter pt-2 border-t border-white/5">
                   <span>Grand Total</span>
-                  <span>৳{order.total_price}</span>
+                  <span>৳{order?.total_price}</span>
                 </div>
               </div>
             </CardContent>
@@ -141,7 +123,7 @@ export default function OrderDetails() {
                   Order Placed On
                 </p>
                 <p className="text-sm font-bold text-white uppercase">
-                  {new Date(order.created_at).toLocaleString()}
+                  {new Date(order?.created_at).toLocaleString()}
                 </p>
               </div>
             </div>
@@ -155,7 +137,7 @@ export default function OrderDetails() {
                   Payment Strategy
                 </p>
                 <p className="text-sm font-bold text-white uppercase">
-                  {order.payment_method === "cod"
+                  {order?.payment_method === "cod"
                     ? "Cash On Delivery"
                     : "Online Payment"}
                 </p>
@@ -179,21 +161,21 @@ export default function OrderDetails() {
             <CardContent className="p-6 space-y-4">
               <div>
                 <p className="text-xl font-black text-white uppercase italic">
-                  {order.user.name}
+                  {order?.user?.name}
                 </p>
                 <p className="text-xs text-gray-500 font-bold">
-                  {order.user.email}
+                  {order?.user?.email}
                 </p>
               </div>
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-400">
                   <HiOutlinePhone className="text-[#a3a380]" />
-                  <span className="font-bold">{order.user.phone}</span>
+                  <span className="font-bold">{order?.user?.phone}</span>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-400">
                   <HiOutlineMapPin className="text-[#a3a380] mt-1 shrink-0" />
                   <span className="font-medium leading-relaxed italic">
-                    &quot;{order.delivery_address}&quot;
+                    &quot;{order?.delivery_address}&quot;
                   </span>
                 </div>
               </div>
@@ -212,13 +194,13 @@ export default function OrderDetails() {
             </CardHeader>
             <CardContent className="p-6 pt-0 space-y-3">
               <p className="text-lg font-black text-white uppercase tracking-tight">
-                {order.provider.restaurant_name}
+                {order?.provider?.restaurant_name}
               </p>
               <p className="text-xs text-gray-500 italic leading-relaxed border-l border-white/10 pl-3">
-                {order.provider.description}
+                {order?.provider?.description}
               </p>
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-2">
-                LOC: {order.provider.address}
+                LOC: {order?.provider?.address}
               </p>
             </CardContent>
           </Card>
