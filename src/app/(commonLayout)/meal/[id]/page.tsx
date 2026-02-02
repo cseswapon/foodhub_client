@@ -5,13 +5,13 @@ import {
   HiOutlineClock,
 } from "react-icons/hi";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { MealReviews } from "@/components/module/meal/MealReviews";
 import { cn } from "@/lib/utils";
 import { MealDataRes, MealsService, Review } from "@/services/meal.service";
+import AddCartDetails from "@/components/common/cart/AddCartDetails";
 
 export async function generateStaticParams() {
   const mealService = new MealsService();
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
     }));
   } catch (error) {
     console.error("Failed to generate static params:", error);
-    return []; 
+    return [];
   }
 }
 
@@ -80,13 +80,7 @@ export default async function MealDetails({
             </p>
 
             <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
-              <Button
-                size="lg"
-                className="bg-[#a3a380] hover:bg-[#8e8e6f] text-[#1f2120] font-black uppercase px-12 h-16 rounded-full gap-4 transition-all active:scale-95"
-              >
-                <HiOutlineShoppingBag size={24} />
-                Add to Cart
-              </Button>
+              <AddCartDetails meal={meal?.data as any} />
             </div>
 
             <Separator className="bg-white/5" />
