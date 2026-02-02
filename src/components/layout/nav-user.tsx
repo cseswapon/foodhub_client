@@ -1,16 +1,12 @@
-"use client"
+"use client";
 
 import {
   IconDotsVertical,
   IconLogout,
   IconUserCircle,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,36 +15,38 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { useRouter } from "next/navigation"
-import { authClient } from "@/lib/auth-client"
+} from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { ROLE } from "@/lib/roles";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+    role: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
-  const router = useRouter()
-  const handelSwitchRoute = async (name:string) => { 
-    router.push(name)
-  }
+  const { isMobile } = useSidebar();
+  const router = useRouter();
+  const handelSwitchRoute = async (name: string) => {
+    router.push(name);
+  };
   const handelSignout = async () => {
-      const data = await authClient.signOut();
-      if (data.data?.success) {
-        router.push("/auth/login");
-      }
-    };
+    const data = await authClient.signOut();
+    if (data.data?.success) {
+      router.push("/auth/login");
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -93,12 +91,14 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => handelSwitchRoute("/profile")}>
-                <IconUserCircle />
-                Account
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+            {user.role !== ROLE.ADMIN && (
+              <DropdownMenuGroup>
+                <DropdownMenuItem onClick={() => handelSwitchRoute("/profile")}>
+                  <IconUserCircle />
+                  Account
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handelSignout}>
               <IconLogout />

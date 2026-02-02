@@ -180,17 +180,21 @@ export function Header({ className }: NavbarProps) {
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuItem
-                    asChild
-                    className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
-                  >
-                    <Link
-                      href="/profile"
-                      className="flex items-center gap-2 w-full"
+                  {["customer", "provider"].includes(
+                    user?.data?.user?.role as string,
+                  ) && (
+                    <DropdownMenuItem
+                      asChild
+                      className="hover:bg-white/5 cursor-pointer focus:bg-white/5 focus:text-white"
                     >
-                      <User size={16} /> Profile
-                    </Link>
-                  </DropdownMenuItem>
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <User size={16} /> Profile
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
 
                   {String(user?.data?.user?.role || "").startsWith(
                     "customer",
