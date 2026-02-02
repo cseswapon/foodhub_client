@@ -74,12 +74,13 @@ export default function UpdateProvider() {
           value?.restaurant_name as string,
           value,
         );
-        if (result) {
+        // console.log(result, value);
+        if (result?.success) {
           toast.success("Update successful!", { id: toastId });
           form.reset();
           router.back();
         } else {
-          toast.error("Something went wrong", { id: toastId });
+          toast.error(result, { id: toastId });
         }
       } catch {
         toast.error("Something went wrong", { id: toastId });
