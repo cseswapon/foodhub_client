@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { useForm } from "@tanstack/react-form";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,9 +14,10 @@ import {
   HiOutlineDocumentText,
   HiOutlineArrowPath,
 } from "react-icons/hi2";
+import { createProviderAction } from "@/actions/provider.action";
 
 export default function AddProviderForm() {
-  //   const router = useRouter();
+  const router = useRouter();
 
   const form = useForm({
     defaultValues: {
@@ -29,10 +29,15 @@ export default function AddProviderForm() {
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        console.log("add provider DATA:", value);
-        toast.success("add provider successful!", { id: toastId });
-        form.reset();
+        // await new Promise((resolve) => setTimeout(resolve, 1500));
+        // console.log("add provider DATA:", value);
+        const result = await createProviderAction(value);
+        // console.log(result);
+        if (result) {
+          toast.success("add provider successful!", { id: toastId });
+          form.reset();
+          router.back();
+        }
       } catch {
         toast.error("Something went wrong", { id: toastId });
       }
