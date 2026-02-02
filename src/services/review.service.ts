@@ -42,7 +42,6 @@ interface CreateReviewResponse {
   data: ReviewData;
 }
 
-
 export class ReviewService {
   private readonly API_URL: string;
 
@@ -50,14 +49,30 @@ export class ReviewService {
     this.API_URL = env.BACKEND_URL;
   }
 
-  getAllReviews = async (): Promise<AllReviewsResponse | undefined> => {
+  getCookieData = async () => {
     try {
       const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
+
+      if (!cookieHeader) return null;
+
+      return cookieHeader;
+    } catch {
+      return null;
+    }
+  };
+
+  getAllReviews = async (): Promise<AllReviewsResponse | undefined> => {
+    try {
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
       const response = await fetch(`${this.API_URL}/api/review/all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          Cookie: cookieStore,
         },
         next: {
           revalidate: 60,
@@ -78,12 +93,15 @@ export class ReviewService {
     payload: CreateReviewPayload,
   ): Promise<CreateReviewResponse | undefined> => {
     try {
-      const cookieStore = await cookies();
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
       const response = await fetch(`${this.API_URL}/api/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          Cookie: cookieStore,
         },
         body: JSON.stringify(payload),
         cache: "no-store",
@@ -98,6 +116,63 @@ export class ReviewService {
       return result;
     } catch (e) {
       console.error("Error in createReview:", e);
+      return undefined;
+    }
+  };
+
+  updateReview = async (id: string, payload: Partial<CreateReviewPayload>) => {
+    try {
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
+      const response = await fetch(`${this.API_URL}/api/review/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore,
+        },
+        body: JSON.stringify(payload),
+        cache: "no-store",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to updated review");
+      }
+
+      return result;
+    } catch (e) {
+      console.error("Error in updated:", e);
+      return undefined;
+    }
+  };
+
+  deleteReview = async (id: string) => {
+    try {
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
+      const response = await fetch(`${this.API_URL}/api/review/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore,
+        },
+        cache: "no-store",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to Delete review");
+      }
+
+      return result;
+    } catch (e) {
+      console.error("Error in delete:", e);
       return undefined;
     }
   };
