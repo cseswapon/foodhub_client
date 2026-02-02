@@ -23,22 +23,19 @@ import {
   HiOutlineArrowPath,
   HiOutlineSparkles,
 } from "react-icons/hi2";
+import { createMealAction } from "@/actions/meal.action";
 
 type DietaryType = "veg" | "non_veg" | "vegan";
 
-export default function AddMenuForm() {
+export default function AddMenuForm({
+  providers,
+  categories,
+}: {
+  providers: any;
+  categories: any;
+}) {
+  // console.log(providers, categories);
   const router = useRouter();
-
-  // --- Fake Data for Selects (এগুলো সাধারণত API থেকে আসবে) ---
-  const providers = [
-    { id: "0dd55798-1b64-4ecd-bb47-be82951d7d06", name: "Pizza Point - 10" },
-    { id: "1ea33618-d7c7-4ac2-8ef9-aa0915bcacd4", name: "Pizza Point - 9" },
-  ];
-
-  const categories = [
-    { id: "bc56b6a0-4127-47f2-b533-0f96526f5522", name: "Biryani" },
-    { id: "category-2", name: "Fast Food" },
-  ];
 
   const form = useForm({
     defaultValues: {
@@ -53,9 +50,11 @@ export default function AddMenuForm() {
       const toastId = toast.loading("Logging in...");
       try {
         await new Promise((resolve) => setTimeout(resolve, 1500));
-        console.log("menu DATA:", value);
+        // console.log("menu DATA:", value);
+        await createMealAction(value);
         toast.success("menu successful!", { id: toastId });
         form.reset();
+        router.push("/provider/menu");
       } catch {
         toast.error("Something went wrong", { id: toastId });
       }
@@ -83,7 +82,7 @@ export default function AddMenuForm() {
           }}
           className="space-y-6"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {/* Provider Select */}
             <form.Field
               name="provider_id"
@@ -100,9 +99,9 @@ export default function AddMenuForm() {
                       <SelectValue placeholder="Choose Kitchen" />
                     </SelectTrigger>
                     <SelectContent>
-                      {providers.map((p) => (
+                      {providers?.map((p: any) => (
                         <SelectItem key={p.id} value={p.id}>
-                          {p.name}
+                          {p?.restaurant_name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -127,7 +126,7 @@ export default function AddMenuForm() {
                       <SelectValue placeholder="Choose Category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((c) => (
+                      {categories.map((c: any) => (
                         <SelectItem key={c.id} value={c.id}>
                           {c.name}
                         </SelectItem>

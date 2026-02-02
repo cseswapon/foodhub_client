@@ -71,7 +71,8 @@ export default function AddProviderForm() {
             children={(field) => (
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <HiOutlineBuildingStorefront size={14} /> Restaurant Name
+                  <HiOutlineBuildingStorefront size={14} /> Restaurant Name{" "}
+                  <span className="text-[7px] text-red-500">(Unique Name)</span>
                 </label>
                 <Input
                   value={field.state.value}

@@ -221,13 +221,15 @@ export class OrderService {
     id: string,
   ): Promise<SingleOrderResponse | undefined> => {
     try {
-      const cookieStore = await cookies();
-
+      const cookieStore = await this.getCookieData();
+      if (!cookieStore) {
+        return undefined;
+      }
       const response = await fetch(`${this.API_URL}/api/order/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          Cookie: cookieStore,
         },
         next: {
           revalidate: 0,

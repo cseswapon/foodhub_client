@@ -1,9 +1,13 @@
 import ProviderMenu from "@/components/module/provider/ProviderMenu";
+import { MealsService } from "@/services/meal.service";
 
-export default function ProviderMenuList() {
+const mealService = new MealsService();
+export default async function ProviderMenuList() {
+  const meals = await mealService.getAllMealMe();
+  // console.log(meals?.data);
   return (
     <>
-      <ProviderMenu />
+      <ProviderMenu meals={meals?.data as any[]} />
     </>
   );
 }
