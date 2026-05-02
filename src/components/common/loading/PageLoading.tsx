@@ -1,23 +1,23 @@
+import { Loader2 } from "lucide-react";
+
 export default function PageLoading() {
   return (
-    <div className="relative min-h-[60vh] w-full p-6 text-foreground">
-      <div className="relative z-10 mx-auto flex h-full max-w-4xl flex-col justify-center gap-6 py-8">
-        <div className="flex items-center gap-3">
-          <div className="h-3 w-3 animate-pulse rounded-full bg-[#a3a380]" />
-          <div className="h-2 w-28 rounded-full bg-muted" />
-        </div>
+    <div className="flex min-h-[60vh] w-full flex-col items-center justify-center gap-4 p-6">
+      <div className="relative flex items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+        <Loader2 className="absolute h-10 w-10 text-primary/20" />
+      </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="h-28 animate-pulse rounded-2xl border border-border/60 bg-muted/60" />
-          <div className="h-28 animate-pulse rounded-2xl border border-border/60 bg-muted/70" />
-          <div className="h-28 animate-pulse rounded-2xl border border-border/60 bg-muted/60" />
-        </div>
-
-        <div className="h-56 animate-pulse rounded-2xl border border-border/60 bg-muted/60" />
-
-        <p className="text-center text-xs font-bold uppercase tracking-[0.28em] text-[#a3a380]">
-          Loading your experience
+      {/* Loading Text */}
+      <div className="flex flex-col items-center gap-1">
+        <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground animate-pulse">
+          Loading
         </p>
+        <span className="flex gap-1">
+          <span className="h-1 w-1 animate-bounce rounded-full bg-primary [animation-delay:-0.3s]"></span>
+          <span className="h-1 w-1 animate-bounce rounded-full bg-primary [animation-delay:-0.15s]"></span>
+          <span className="h-1 w-1 animate-bounce rounded-full bg-primary"></span>
+        </span>
       </div>
     </div>
   );
