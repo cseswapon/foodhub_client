@@ -4,13 +4,23 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
 import React from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const AddCartDetails: React.FC<{
   meal: { id: string; name: string; price: string; provider_id: string };
 }> = ({ meal }) => {
   const { addToCart } = useCart();
+  const router = useRouter();
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
+    const session = await authClient.getSession();
+
+    if (!session?.data?.session) {
+      router.push("/auth/login");
+      return;
+    }
+
     addToCart({
       id: meal.id,
       name: meal.name,

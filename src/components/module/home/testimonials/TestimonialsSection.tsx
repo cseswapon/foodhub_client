@@ -64,7 +64,7 @@ export default function TestimonialsSection({
       : testimonials;
 
   return (
-    <section className="py-24 bg-[#0d0d0b] text-white">
+    <section className="md:py-24 py-12 bg-[#0d0d0b] text-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

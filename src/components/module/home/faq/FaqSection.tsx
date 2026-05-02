@@ -35,8 +35,8 @@ export default function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-[#0a0a0a] text-white">
-      <div className="container mx-auto px-4 max-w-3xl">
+    <section className="container mx-auto px-4 md:py-24 py-12 bg-[#0a0a0a] text-white">
+      <div className=" max-w-3xl">
         <div className="text-center mb-14">
           <span className="text-xs tracking-widest text-[#a3a380] uppercase font-semibold">
             FAQs

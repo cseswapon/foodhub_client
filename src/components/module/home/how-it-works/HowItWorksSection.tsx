@@ -32,7 +32,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-24 bg-[#0a0a0a] text-white">
+    <section className="md:py-24 py-12 bg-[#0a0a0a] text-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

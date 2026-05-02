@@ -110,7 +110,7 @@ export default function ReviewPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#a3a380]"></div>
             </div>
           ) : !hasReviews ? (
-            <div className="flex flex-col items-center justify-center py-24 rounded-lg border border-dashed border-white/10 bg-white/2">
+            <div className="flex flex-col items-center justify-center md:py-24 py-12 rounded-lg border border-dashed border-white/10 bg-white/2">
               <HiOutlineInbox size={48} className="text-gray-700 mb-4" />
               <p className="text-gray-500 uppercase font-black tracking-widest text-xs">
                 No reviews found yet

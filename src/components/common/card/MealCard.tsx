@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { useCart } from "@/hooks/useCart";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface Meal {
   id: string;
@@ -18,8 +20,16 @@ interface Meal {
 
 export function MealCard({ meal }: { meal: Meal }) {
   const { addToCart } = useCart();
+  const router = useRouter();
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
+    const session = await authClient.getSession();
+
+    if (!session?.data?.session) {
+      router.push("/auth/login");
+      return;
+    }
+
     addToCart({
       id: meal.id,
       name: meal.name,

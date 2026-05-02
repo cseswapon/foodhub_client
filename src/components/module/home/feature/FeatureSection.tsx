@@ -1,11 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { HiOutlineChevronRight } from "react-icons/hi";
-import {
-  GiCook,
-  GiBowlOfRice,
-  GiGlassShot,
-} from "react-icons/gi";
+import { GiCook, GiBowlOfRice, GiGlassShot } from "react-icons/gi";
 import { LuUsers, LuBadgeCheck } from "react-icons/lu";
 import { MdOutlineFastfood, MdOutlineLocalOffer } from "react-icons/md";
 
@@ -18,7 +14,7 @@ const stats = [
 
 export default function FeatureSection() {
   return (
-    <section className="bg-[#0c0d0c] text-white py-24 px-4  overflow-hidden">
+    <section className="bg-[#0c0d0c] text-white md:py-24 py-12 px-4  overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left Side: Chef Image & Floating Card */}
@@ -108,7 +104,10 @@ export default function FeatureSection() {
         {/* Bottom Stats Grid */}
         <div className="md:mt-24 mt-10 pt-12 border-t border-white/5 grid grid-cols-1 lg:grid-cols-4  gap-y-12 gap-x-6">
           {stats.map((stat) => (
-            <div key={stat.id} className="flex md:flex-row flex-col items-center justify-center gap-4 group">
+            <div
+              key={stat.id}
+              className="flex md:flex-row flex-col items-center justify-center gap-4 group"
+            >
               <div className="h-14 w-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#a3a380]/50 group-hover:bg-[#a3a380]/5 transition-all duration-500">
                 <stat.icon className="size-6 text-[#a3a380]" />
               </div>

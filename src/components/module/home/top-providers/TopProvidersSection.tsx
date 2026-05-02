@@ -12,7 +12,7 @@ export default async function TopProvidersSection() {
   if (!providers.length) return null;
 
   return (
-    <section className="py-24 bg-[#0d0d0b] text-white">
+    <section className="md:py-24 py-12 bg-[#0d0d0b] text-white">
       <div className="container mx-auto px-4">
         <div className="flex items-end justify-between mb-12">
           <div>

@@ -24,8 +24,8 @@ const whyUs = [
 
 export default function CtaSection() {
   return (
-    <section className="py-24 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0a0a0a] text-white">
-      <div className="container mx-auto px-4">
+    <section className="md:py-24 py-12 container mx-auto px-4 bg-linear-to-br from-[#0a0a0a] via-[#111] to-[#0a0a0a] text-white">
+      <div className="">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left */}
           <motion.div

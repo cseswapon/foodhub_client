@@ -82,7 +82,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="py-24 px-4">
+      <section className="md:py-24 py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -130,7 +130,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-[#0d0d0b] px-4">
+      <section className="md:py-24 py-12 bg-[#0d0d0b] px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-14">
             <span className="text-xs tracking-widest text-[#a3a380] uppercase font-semibold">
@@ -159,7 +159,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 text-center px-4">
+      <section className="md:py-24 py-12 text-center px-4">
         <div className="max-w-xl mx-auto">
           <Award className="w-12 h-12 text-[#a3a380] mx-auto mb-6" />
           <h2 className="text-3xl font-extrabold mb-4">

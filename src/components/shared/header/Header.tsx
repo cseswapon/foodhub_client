@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -330,15 +331,17 @@ export function Header({ className }: NavbarProps) {
                           value={item.title}
                           className="border-b-0"
                         >
-                          <Link
-                            href={item.url}
-                            className={cn(
-                              "block py-2 text-lg font-semibold",
-                              isActive ? "text-[#a3a380]" : "text-white",
-                            )}
-                          >
-                            {item.title}
-                          </Link>
+                          <SheetClose asChild>
+                            <Link
+                              href={item.url}
+                              className={cn(
+                                "block py-2 text-lg font-semibold",
+                                isActive ? "text-[#a3a380]" : "text-white",
+                              )}
+                            >
+                              {item.title}
+                            </Link>
+                          </SheetClose>
                         </AccordionItem>
                       );
                     })}
@@ -349,40 +352,73 @@ export function Header({ className }: NavbarProps) {
                   <div className="flex flex-col gap-3">
                     {isLoggedIn ? (
                       <>
-                        <Link
-                          href="/profile"
-                          className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
-                        >
-                          <User size={20} /> Profile
-                        </Link>
-                        <Link
-                          href="/order"
-                          className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
-                        >
-                          <ShoppingBag size={20} /> My Orders
-                        </Link>
-                        <Button
-                          onClick={() => handelSignout()}
-                          variant="default"
-                          className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                        >
-                          Logout
-                        </Button>
+                        {["admin", "provider"].includes(userRole as string) && (
+                          <SheetClose asChild>
+                            <Link
+                              href={
+                                userRole === "admin"
+                                  ? "/admin"
+                                  : "/provider/dashboard"
+                              }
+                              className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                            >
+                              <MdDashboard size={20} /> Dashboard
+                            </Link>
+                          </SheetClose>
+                        )}
+
+                        {["customer", "provider"].includes(
+                          userRole as string,
+                        ) && (
+                          <SheetClose asChild>
+                            <Link
+                              href="/profile"
+                              className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                            >
+                              <User size={20} /> Profile
+                            </Link>
+                          </SheetClose>
+                        )}
+
+                        {String(userRole || "").startsWith("customer") && (
+                          <SheetClose asChild>
+                            <Link
+                              href="/order"
+                              className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                            >
+                              <ShoppingBag size={20} /> My Orders
+                            </Link>
+                          </SheetClose>
+                        )}
+
+                        <SheetClose asChild>
+                          <Button
+                            onClick={() => handelSignout()}
+                            variant="default"
+                            className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
+                          >
+                            Logout
+                          </Button>
+                        </SheetClose>
                       </>
                     ) : (
                       <>
-                        <Button
-                          asChild
-                          className="border-white/10 hover:bg-white/5"
-                        >
-                          <Link href="/auth/login">Login</Link>
-                        </Button>
-                        <Button
-                          asChild
-                          className="bg-[#a3a380] text-[#1f2120] hover:bg-[#8e8e6f] font-bold"
-                        >
-                          <Link href="/auth/register">Sign up</Link>
-                        </Button>
+                        <SheetClose asChild>
+                          <Button
+                            asChild
+                            className="border-white/10 hover:bg-white/5"
+                          >
+                            <Link href="/auth/login">Login</Link>
+                          </Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Button
+                            asChild
+                            className="bg-[#a3a380] text-[#1f2120] hover:bg-[#8e8e6f] font-bold"
+                          >
+                            <Link href="/auth/register">Sign up</Link>
+                          </Button>
+                        </SheetClose>
                       </>
                     )}
                   </div>
