@@ -47,10 +47,10 @@ export default function OrdersTable({
   role: string;
 }) {
   return (
-    <div className="rounded-lg border  backdrop-blur-sm overflow-hidden">
+    <div className="overflow-hidden rounded-lg border border-border/60 bg-card/80 shadow-sm backdrop-blur-sm">
       <Table>
-        <TableHeader>
-          <TableRow className="border-white/5 hover:bg-transparent uppercase tracking-[0.2em] text-[10px] font-black">
+        <TableHeader className="bg-muted/40">
+          <TableRow className="border-border/60 hover:bg-transparent uppercase tracking-[0.2em] text-[10px] font-black">
             <TableHead className="py-6 pl-8">Order & Customer</TableHead>
             <TableHead>Restaurant</TableHead>
             <TableHead>Items</TableHead>
@@ -64,7 +64,10 @@ export default function OrdersTable({
         <TableBody>
           {orders?.length > 0 ? (
             orders?.map((order) => (
-              <TableRow key={order?.id} className="transition-all group">
+              <TableRow
+                key={order?.id}
+                className="group border-border/60 transition-all hover:bg-muted/40"
+              >
                 {/* Order ID & Customer Info */}
                 <TableCell className="py-6 pl-8">
                   <div className="space-y-1">
@@ -73,7 +76,7 @@ export default function OrdersTable({
                     </p>
                     <div className="flex items-center gap-1.5">
                       <HiOutlineUser size={12} />
-                      <span className="text-[11px] text-gray-300 font-medium">
+                      <span className="text-[11px] font-medium text-muted-foreground">
                         {order?.user?.name}
                       </span>
                     </div>
@@ -86,7 +89,7 @@ export default function OrdersTable({
                     <p className="text-sm text-gray-500 font-bold uppercase tracking-tight">
                       {order?.provider?.restaurant_name}
                     </p>
-                    <p className="text-[10px] text-gray-300 truncate max-w-37.5">
+                    <p className="max-w-37.5 truncate text-[10px] text-muted-foreground">
                       {order?.provider?.address}
                     </p>
                   </div>
@@ -95,14 +98,14 @@ export default function OrdersTable({
                 {/* Items Summary */}
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-[#a3a380]">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted text-[#a3a380]">
                       <HiOutlineClock size={16} />
                     </div>
                     <div className="text-xs">
                       <p className="text-gray-500 font-bold">
                         {order?.orderItems?.[0]?.meal.name}
                       </p>
-                      <p className="text-gray-300 font-medium">
+                      <p className="font-medium text-muted-foreground">
                         Qty: {order?.orderItems?.[0]?.quantity}
                       </p>
                     </div>
@@ -116,7 +119,7 @@ export default function OrdersTable({
                   </p>
                   <Badge
                     variant="secondary"
-                    className="bg-white/5 text-[9px] h-4 uppercase font-bold text-gray-500"
+                    className="h-4 bg-muted text-[9px] font-bold uppercase text-muted-foreground"
                   >
                     {order?.payment_method}
                   </Badge>
@@ -162,7 +165,7 @@ export default function OrdersTable({
                           asChild
                           variant="ghost"
                           size="icon"
-                          className="rounded-full hover:bg-white/10 text-gray-400 hover:text-white"
+                          className="rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
                         >
                           <Link href={`/provider/orders/update/${order?.id}`}>
                             <HiOutlineTruck size={18} />

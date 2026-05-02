@@ -17,8 +17,14 @@ export async function proxy(request: NextRequest) {
   const publicRoutes = [
     "/",
     "/terms",
+    "/privacy",
+    "/about",
+    "/contact",
+    "/faq",
+    "/meal",
+    /^\/meal\/[^\/]+$/,
     "/provider",
-    /^\/provider\/[^\/]+$/, 
+    /^\/provider\/[^\/]+$/,
     /^\/review$/,
   ];
 
@@ -44,11 +50,11 @@ export async function proxy(request: NextRequest) {
     "/provider/my-provider",
     "/provider/my-provider/add",
     "/provider/my-provider/update",
-    /^\/provider\/my-provider\/update\/[^\/]+$/, 
+    /^\/provider\/my-provider\/update\/[^\/]+$/,
     "/provider/orders",
-    /^\/provider\/orders\/[^\/]+$/, 
+    /^\/provider\/orders\/[^\/]+$/,
     "/provider/orders/update",
-    /^\/provider\/orders\/update\/[^\/]+$/, 
+    /^\/provider\/orders\/update\/[^\/]+$/,
   ];
 
   // Admin routes (only for admins)
@@ -58,6 +64,7 @@ export async function proxy(request: NextRequest) {
     "/admin/orders",
     "/admin/reviews",
     "/admin/users",
+    "/admin/ai-index",
     "/admin/users/edit",
     /^\/admin\/users\/edit\/[^\/]+$/, // /admin/users/edit/[id]
   ];

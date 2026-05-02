@@ -62,7 +62,7 @@ export default function CategoryList({ categories }: { categories: any[] }) {
   };
 
   return (
-    <main className="p-6 md:p-10 space-y-6 bg-[#0c0d0c] min-h-screen text-white">
+    <main className="min-h-screen space-y-6 bg-background p-6 text-foreground md:p-10">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight italic">
@@ -76,10 +76,10 @@ export default function CategoryList({ categories }: { categories: any[] }) {
         <CategoryModal mode="add" />
       </div>
 
-      <div className="rounded-lg border border-white/5 bg-white/5 backdrop-blur-sm overflow-hidden shadow">
+      <div className="overflow-hidden rounded-lg border border-border/60 bg-card/80 shadow-sm backdrop-blur-sm">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5 uppercase tracking-widest text-[10px] font-black">
+          <TableHeader className="bg-muted/40">
+            <TableRow className="border-border/60 uppercase tracking-widest text-[10px] font-black">
               <TableHead className="py-5 pl-8 text-muted-foreground">
                 Category Name
               </TableHead>
@@ -96,12 +96,12 @@ export default function CategoryList({ categories }: { categories: any[] }) {
               categories.map((cat) => (
                 <TableRow
                   key={cat.id}
-                  className="border-white/5 hover:bg-white/2 transition-colors"
+                  className="border-border/60 transition-colors hover:bg-muted/40"
                 >
                   <TableCell className="py-5 pl-8">
                     <div className="flex items-center gap-3">
                       <HiOutlineTag className="text-[#a3a380]" size={18} />
-                      <span className="font-bold text-white uppercase text-sm tracking-tight">
+                      <span className="text-sm font-bold uppercase tracking-tight text-foreground">
                         {cat.name}
                       </span>
                     </div>
@@ -205,14 +205,14 @@ function CategoryModal({
           <Button
             size="icon"
             variant="ghost"
-            className="size-8 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white"
+            className="size-8 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <HiOutlineEye size={16} />
           </Button>
         )}
       </DialogTrigger>
 
-      <DialogContent className="bg-[#0c0d0c] backdrop-blur-xl border-white/10 rounded-lg max-w-sm shadow-2xl text-white">
+      <DialogContent className="max-w-sm rounded-lg border-border/60 bg-background/95 text-foreground shadow-2xl backdrop-blur-xl">
         <DialogHeader>
           <DialogTitle className="font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
             {mode === "add" && <HiOutlinePlus className="text-[#a3a380]" />}
@@ -220,7 +220,7 @@ function CategoryModal({
               <HiOutlinePencilSquare className="text-[#a3a380]" />
             )}
             {mode === "view" && <HiOutlineEye className="text-[#a3a380]" />}
-            <span className="text-white">{mode} Category</span>
+            <span className="text-foreground">{mode} Category</span>
           </DialogTitle>
           <p className="text-[9px] text-gray-500 font-bold uppercase tracking-tighter">
             System Classification Entry
@@ -240,7 +240,7 @@ function CategoryModal({
               disabled={isView}
               required
               placeholder="e.g. Fats & Oils"
-              className="bg-white/5 border-white/10 h-12 text-white focus:ring-[#a3a380] rounded-lg font-bold placeholder:text-gray-700"
+              className="h-12 rounded-lg border-border/60 bg-muted/30 font-bold text-foreground placeholder:text-muted-foreground focus-visible:ring-[#a3a380]"
             />
           </div>
 

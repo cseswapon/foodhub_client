@@ -4,6 +4,7 @@ import {
   IconShoppingBag,
   IconCategory,
   IconStar,
+  IconBrain,
 } from "@tabler/icons-react";
 
 import { RouteItem } from "@/types";
@@ -33,5 +34,10 @@ export const adminRoute: RouteItem[] = [
     title: "Reviews",
     url: "/admin/reviews",
     icon: IconStar,
+  },
+  {
+    title: "AI Index",
+    url: "/admin/ai-index",
+    icon: IconBrain,
   },
 ];

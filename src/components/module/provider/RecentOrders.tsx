@@ -38,15 +38,15 @@ const statusConfig = {
 
 export function RecentOrders({ orders }: { orders: any[] }) {
   return (
-    <Card className=" border-white/5 overflow-hidden">
-      <CardHeader className="p-8 py-0 border-b border-white/5">
+    <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
+      <CardHeader className="border-b border-border/60 p-8 py-0">
         <CardTitle className="text-xl font-black uppercase tracking-tight">
           Recent <span className="text-[#a3a380]">Orders</span>
         </CardTitle>
       </CardHeader>
       <Table>
-        <TableHeader className="bg-white/2">
-          <TableRow className="border-white/5 hover:bg-transparent">
+        <TableHeader className="bg-muted/40">
+          <TableRow className="border-border/60 hover:bg-transparent">
             <TableHead className="text-[10px] uppercase font-black py-4 pl-8">
               Customer / Meal
             </TableHead>
@@ -67,10 +67,10 @@ export function RecentOrders({ orders }: { orders: any[] }) {
             {orders?.map((order) => (
               <TableRow
                 key={order?.id}
-                className="border-white/5 hover:bg-white/2 group transition-colors"
+                className="group border-border/60 transition-colors hover:bg-muted/40"
               >
                 <TableCell className="py-6 pl-8">
-                  <p className="font-bold text-white uppercase text-sm tracking-tight">
+                  <p className="text-sm font-bold uppercase tracking-tight text-foreground">
                     {order?.user?.name}
                   </p>
                   <p className="text-[10px] text-gray-500">
@@ -85,7 +85,7 @@ export function RecentOrders({ orders }: { orders: any[] }) {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <p className="font-black text-white italic">
+                  <p className="font-black italic text-foreground">
                     ৳{order?.total_price}
                   </p>
                   <p className="text-[9px] uppercase font-bold text-gray-600 tracking-tighter">

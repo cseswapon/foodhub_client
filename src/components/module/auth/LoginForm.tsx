@@ -25,6 +25,20 @@ import { Loader2, Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
+const DEMO_USERS = [
+  {
+    label: "Demo Customer",
+    email: "customer@foodhub.com",
+    password: "123456789",
+  },
+  { label: "Demo Admin", email: "admin@gmail.com", password: "Admin@123" },
+  {
+    label: "Demo Provider",
+    email: "provider@gmail.com",
+    password: "123456789",
+  },
+];
+
 export function LoginForm({
   className,
   ...props
@@ -65,6 +79,26 @@ export function LoginForm({
     },
   });
 
+  const handleDemoLogin = async (email: string, password: string) => {
+    form.setFieldValue("email", email);
+    form.setFieldValue("password", password);
+    const toastId = toast.loading("Logging in as demo user...");
+    try {
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+      if (error) {
+        toast.error(error.message, { id: toastId });
+      } else {
+        toast.success("Logged in as demo user!", { id: toastId });
+      }
+    } catch {
+      toast.error("Demo login failed", { id: toastId });
+    }
+  };
+
   return (
     <div
       className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)}
@@ -88,6 +122,25 @@ export function LoginForm({
           </CardHeader>
 
           <CardContent className="grid mt-4 px-8">
+            {/* Demo Login Buttons */}
+            <div className="mb-5 space-y-2">
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest text-center mb-3">
+                Quick Demo Login
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {DEMO_USERS.map((d) => (
+                  <button
+                    key={d.email}
+                    type="button"
+                    onClick={() => handleDemoLogin(d.email, d.password)}
+                    className="text-xs border border-white/10 bg-white/5 hover:bg-[#a3a380]/20 hover:border-[#a3a380]/30 text-gray-300 hover:text-white px-3 py-2 rounded-lg transition-colors"
+                  >
+                    {d.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <FieldGroup className="gap-5">
               {/* Email Field */}
               <form.Field

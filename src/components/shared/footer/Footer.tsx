@@ -65,18 +65,43 @@ const Footer = ({ className }: FooterProps) => {
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Products
+                <Link
+                  href="/meal"
+                  className="hover:text-white transition-colors"
+                >
+                  Browse Meals
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Resources
+                <Link
+                  href="/provider"
+                  className="hover:text-white transition-colors"
+                >
+                  Providers
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Pricing
+                <Link
+                  href="/about"
+                  className="hover:text-white transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="hover:text-white transition-colors"
+                >
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="hover:text-white transition-colors"
+                >
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -117,9 +142,12 @@ const Footer = ({ className }: FooterProps) => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-          <p>© {currentYear} Spicyhunt. All Rights Reserved.</p>
+          <p>© {currentYear} Food Hub. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link
+              href="/privacy"
+              className="hover:text-white transition-colors"
+            >
               Privacy Policy
             </Link>
             <Link href="/terms" className="hover:text-white transition-colors">

@@ -29,6 +29,13 @@ interface AllReviewsResponse {
   data: ReviewData[];
 }
 
+interface PublicReviewsResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: ReviewData[];
+}
+
 interface CreateReviewPayload {
   mealId: string;
   rating: number;
@@ -85,6 +92,32 @@ export class ReviewService {
       return await response.json();
     } catch (e) {
       console.error("Error in getAllReviews:", e);
+      return undefined;
+    }
+  };
+
+  getPublicReviews = async (
+    limit = 8,
+  ): Promise<PublicReviewsResponse | undefined> => {
+    try {
+      const response = await fetch(
+        `${this.API_URL}/api/review/public?limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          next: {
+            revalidate: 60,
+            tags: ["reviews"],
+          },
+        },
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch public reviews");
+
+      return await response.json();
+    } catch (e) {
       return undefined;
     }
   };

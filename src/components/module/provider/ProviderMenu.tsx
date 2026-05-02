@@ -63,10 +63,10 @@ export default function ProviderMenu({ meals }: { meals: any[] }) {
       </div>
 
       {/* Meals Table */}
-      <div className="rounded-lg border border-white/5 bg-card/40  overflow-hidden shadow">
+      <div className="overflow-hidden rounded-lg border border-border/60 bg-card/80 shadow-sm">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5 hover:bg-transparent uppercase tracking-widest text-[10px] font-black">
+          <TableHeader className="bg-muted/40">
+            <TableRow className="border-border/60 hover:bg-transparent uppercase tracking-widest text-[10px] font-black">
               <TableHead className="py-5 pl-8 text-muted-foreground">
                 Meal Details
               </TableHead>
@@ -85,12 +85,12 @@ export default function ProviderMenu({ meals }: { meals: any[] }) {
               meals?.map((meal) => (
                 <TableRow
                   key={meal?.id}
-                  className="border-white/5 hover:bg-white/2 transition-colors group"
+                  className="group border-border/60 transition-colors hover:bg-muted/40"
                 >
                   {/* Name & Description */}
                   <TableCell className="py-5 pl-8 max-w-75">
                     <div className="flex items-start gap-3">
-                      <div className="size-10 rounded-lg bg-white/5 flex items-center justify-center text-[#a3a380] shrink-0">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-[#a3a380]">
                         <HiOutlineCake size={20} />
                       </div>
                       <div className="space-y-1">
@@ -123,7 +123,7 @@ export default function ProviderMenu({ meals }: { meals: any[] }) {
 
                   {/* Price */}
                   <TableCell>
-                    <div className="flex items-center gap-1 font-black text-white italic">
+                    <div className="flex items-center gap-1 font-black italic text-foreground">
                       <HiOutlineCurrencyBangladeshi className="text-[#a3a380]" />
                       {meal?.price}
                     </div>

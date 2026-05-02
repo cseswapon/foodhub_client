@@ -35,6 +35,7 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import { IconStar } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
 import { MdDashboard } from "react-icons/md";
+import { useCart } from "@/hooks/useCart";
 
 interface MenuItem {
   title: string;
@@ -57,6 +58,9 @@ export function Header({ className }: NavbarProps) {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const { totalItems } = useCart();
+  const userRole = user?.data?.user?.role as string | undefined;
+  const showCart = userRole === "customer";
 
   useEffect(() => {
     (async () => {
@@ -92,6 +96,8 @@ export function Header({ className }: NavbarProps) {
     { title: "Home", url: "/" },
     { title: "Meal", url: "/meal" },
     { title: "Provider", url: "/provider" },
+    { title: "About", url: "/about" },
+    { title: "Contact", url: "/contact" },
   ];
 
   const handelSignout = async () => {
@@ -146,6 +152,20 @@ export function Header({ className }: NavbarProps) {
           </NavigationMenu>
 
           <div className="flex items-center gap-4">
+            {showCart && (
+              <Link
+                href="/cart"
+                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:bg-white/20 transition-colors"
+                aria-label="Cart"
+              >
+                <ShoppingBag size={18} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#a3a380] text-[#1f2120] text-[10px] font-black h-5 min-w-5 px-1 rounded-full flex items-center justify-center border border-[#1f2120]">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+            )}
             {isLoggedIn ? (
               /* Profile Dropdown when Logged In */
               <DropdownMenu>
@@ -267,92 +287,109 @@ export function Header({ className }: NavbarProps) {
             <span className="text-lg font-bold">Food Hub</span>
           </Link>
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost">
-                <Menu className="text-white" />
-              </Button>
-            </SheetTrigger>
+          <div className="flex items-center gap-2">
+            {showCart && (
+              <Link
+                href="/cart"
+                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:bg-white/20 transition-colors"
+                aria-label="Cart"
+              >
+                <ShoppingBag size={18} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#a3a380] text-[#1f2120] text-[10px] font-black h-5 min-w-5 px-1 rounded-full flex items-center justify-center border border-[#1f2120]">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+            )}
 
-            <SheetContent className="bg-[#1f2120] border-l-white/10 text-white">
-              <SheetHeader>
-                <SheetTitle>
-                  <Link href="/" className="flex items-center gap-2">
-                    <FaBowlFood size={30} className="text-[#a3a380]" />
-                  </Link>
-                </SheetTitle>
-              </SheetHeader>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost">
+                  <Menu className="text-white" />
+                </Button>
+              </SheetTrigger>
 
-              <div className="mt-6 flex flex-col gap-4 p-5">
-                <Accordion type="single" collapsible>
-                  {menu.map((item) => {
-                    const isActive = pathname === item.url;
+              <SheetContent className="bg-[#1f2120] border-l-white/10 text-white">
+                <SheetHeader>
+                  <SheetTitle>
+                    <Link href="/" className="flex items-center gap-2">
+                      <FaBowlFood size={30} className="text-[#a3a380]" />
+                    </Link>
+                  </SheetTitle>
+                </SheetHeader>
 
-                    return (
-                      <AccordionItem
-                        key={item.title}
-                        value={item.title}
-                        className="border-b-0"
-                      >
-                        <Link
-                          href={item.url}
-                          className={cn(
-                            "block py-2 text-lg font-semibold",
-                            isActive ? "text-[#a3a380]" : "text-white",
-                          )}
+                <div className="mt-6 flex flex-col gap-4 p-5">
+                  <Accordion type="single" collapsible>
+                    {menu.map((item) => {
+                      const isActive = pathname === item.url;
+
+                      return (
+                        <AccordionItem
+                          key={item.title}
+                          value={item.title}
+                          className="border-b-0"
                         >
-                          {item.title}
+                          <Link
+                            href={item.url}
+                            className={cn(
+                              "block py-2 text-lg font-semibold",
+                              isActive ? "text-[#a3a380]" : "text-white",
+                            )}
+                          >
+                            {item.title}
+                          </Link>
+                        </AccordionItem>
+                      );
+                    })}
+                  </Accordion>
+
+                  <Separator className="bg-white/5 my-2" />
+
+                  <div className="flex flex-col gap-3">
+                    {isLoggedIn ? (
+                      <>
+                        <Link
+                          href="/profile"
+                          className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                        >
+                          <User size={20} /> Profile
                         </Link>
-                      </AccordionItem>
-                    );
-                  })}
-                </Accordion>
-
-                <Separator className="bg-white/5 my-2" />
-
-                <div className="flex flex-col gap-3">
-                  {isLoggedIn ? (
-                    <>
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
-                      >
-                        <User size={20} /> Profile
-                      </Link>
-                      <Link
-                        href="/order"
-                        className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
-                      >
-                        <ShoppingBag size={20} /> My Orders
-                      </Link>
-                      <Button
-                        onClick={() => handelSignout()}
-                        variant="default"
-                        className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                      >
-                        Logout
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        asChild
-                        className="border-white/10 hover:bg-white/5"
-                      >
-                        <Link href="/auth/login">Login</Link>
-                      </Button>
-                      <Button
-                        asChild
-                        className="bg-[#a3a380] text-[#1f2120] hover:bg-[#8e8e6f] font-bold"
-                      >
-                        <Link href="/auth/register">Sign up</Link>
-                      </Button>
-                    </>
-                  )}
+                        <Link
+                          href="/order"
+                          className="flex items-center gap-3 py-2 text-gray-300 hover:text-[#a3a380]"
+                        >
+                          <ShoppingBag size={20} /> My Orders
+                        </Link>
+                        <Button
+                          onClick={() => handelSignout()}
+                          variant="default"
+                          className="mt-4 border-red-500/50 text-red-500 hover:bg-red-500/10"
+                        >
+                          Logout
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          asChild
+                          className="border-white/10 hover:bg-white/5"
+                        >
+                          <Link href="/auth/login">Login</Link>
+                        </Button>
+                        <Button
+                          asChild
+                          className="bg-[#a3a380] text-[#1f2120] hover:bg-[#8e8e6f] font-bold"
+                        >
+                          <Link href="/auth/register">Sign up</Link>
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </section>

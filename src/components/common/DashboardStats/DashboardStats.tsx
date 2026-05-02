@@ -2,17 +2,24 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+
 interface StatsProps {
   stats: any;
   role: "admin" | "provider" | "customer";
 }
+
+const chartConfig = {
+  total: {
+    label: "Total",
+    color: "#a3a380",
+  },
+} satisfies ChartConfig;
 
 export function DashboardStats({ stats, role }: StatsProps) {
   // Card data decide role-wise
@@ -129,38 +136,40 @@ export function DashboardStats({ stats, role }: StatsProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="h-75 w-full pt-4">
-          <ResponsiveContainer width="100%" height="100%">
+          <ChartContainer config={chartConfig} className="h-75 w-full">
             <BarChart data={chartData}>
+              <CartesianGrid vertical={false} stroke="#ffffff12" />
               <XAxis
                 dataKey="name"
-                stroke="#4b5563"
+                stroke="#6b7280"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
-                stroke="#4b5563"
+                stroke="#6b7280"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `${value}`}
               />
-              <Tooltip
-                cursor={{ fill: "#ffffff05" }}
-                contentStyle={{
-                  backgroundColor: "#1f2120",
-                  border: "1px solid #ffffff10",
-                  borderRadius: "12px",
-                }}
+              <ChartTooltip
+                cursor={{ fill: "#ffffff08" }}
+                content={
+                  <ChartTooltipContent
+                    className="bg-[#1f2120] border border-white/10"
+                    labelClassName="text-white"
+                  />
+                }
               />
               <Bar
                 dataKey="total"
-                fill="#a3a380"
+                fill="var(--color-total)"
                 radius={[6, 6, 0, 0]}
                 barSize={40}
               />
             </BarChart>
-          </ResponsiveContainer>
+          </ChartContainer>
         </CardContent>
       </Card>
     </div>

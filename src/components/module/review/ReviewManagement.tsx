@@ -63,7 +63,7 @@ export default function ReviewManagement({ reviews }: { reviews: any[] }) {
   };
 
   return (
-    <main className="p-6 md:p-10 space-y-6 bg-[#0c0d0c] min-h-screen text-white">
+    <main className="min-h-screen space-y-6 bg-background p-6 text-foreground md:p-10">
       <div className="space-y-1">
         <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight italic">
           Customer <span className="text-[#a3a380]">Reviews</span>
@@ -73,10 +73,10 @@ export default function ReviewManagement({ reviews }: { reviews: any[] }) {
         </p>
       </div>
 
-      <div className="rounded-lg border border-white/5 bg-white/5 backdrop-blur-sm overflow-hidden shadow">
+      <div className="overflow-hidden rounded-lg border border-border/60 bg-card/80 shadow-sm backdrop-blur-sm">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5 uppercase tracking-widest text-[10px] font-black">
+          <TableHeader className="bg-muted/40">
+            <TableRow className="border-border/60 uppercase tracking-widest text-[10px] font-black">
               <TableHead className="py-5 pl-8 text-muted-foreground">
                 User & Comment
               </TableHead>
@@ -92,11 +92,11 @@ export default function ReviewManagement({ reviews }: { reviews: any[] }) {
               {reviews?.map((rev) => (
                 <TableRow
                   key={rev?.id}
-                  className="border-white/5 hover:bg-white/2 transition-colors"
+                  className="border-border/60 transition-colors hover:bg-muted/40"
                 >
                   <TableCell className="py-5 pl-8">
                     <div className="flex items-center gap-3">
-                      <div className="size-9 rounded-full bg-white/5 flex items-center justify-center text-[#a3a380]">
+                      <div className="flex size-9 items-center justify-center rounded-full bg-muted text-[#a3a380]">
                         <HiOutlineUserCircle size={22} />
                       </div>
                       <div className="space-y-0.5">
@@ -211,23 +211,23 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
           <Button
             size="icon"
             variant="ghost"
-            className="size-8 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white"
+            className="size-8 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <HiOutlineEye size={16} />
           </Button>
         )}
       </DialogTrigger>
 
-      <DialogContent className="bg-[#0c0d0c] border-white/10 rounded-lg max-w-md shadow text-white">
-        <DialogHeader className="border-b border-white/5 pb-4">
-          <DialogTitle className="text-white font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
+      <DialogContent className="max-w-md rounded-lg border-border/60 bg-background/95 text-foreground shadow backdrop-blur-xl">
+        <DialogHeader className="border-b border-border/60 pb-4">
+          <DialogTitle className="text-foreground font-black uppercase tracking-widest text-sm italic flex items-center gap-2">
             <HiOutlineChatBubbleLeftRight className="text-[#a3a380]" />
             Review {mode}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleUpdate} className="space-y-6 pt-6">
-          <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/5">
+          <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/40 p-4">
             <div className="space-y-0.5">
               <Label className="text-[11px] font-black uppercase tracking-widest text-gray-400">
                 Public Visibility
@@ -253,7 +253,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
               <Input
                 defaultValue={data.user.name}
                 disabled
-                className="bg-white/5 border-white/10 rounded-lg text-white"
+                className="rounded-lg border-border/60 bg-muted/30 text-foreground"
               />
             </div>
             <div className="space-y-2">
@@ -264,7 +264,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
                 name="rating"
                 defaultValue={data.rating}
                 disabled={isView}
-                className="bg-white/5 border-white/10 rounded-lg font-black italic text-white"
+                className="rounded-lg border-border/60 bg-muted/30 font-black italic text-foreground"
               />
             </div>
           </div>
@@ -277,7 +277,7 @@ function ReviewModal({ mode, data }: { mode: "edit" | "view"; data: any }) {
               name="comment"
               defaultValue={data.comment}
               disabled={isView}
-              className="bg-white/5 border-white/10 min-h-25 rounded-lg italic text-white"
+              className="min-h-25 rounded-lg border-border/60 bg-muted/30 italic text-foreground"
             />
           </div>
 

@@ -21,7 +21,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-linear-to-r from-black/10 via-black/70 to-transparent" />
       </div>
 
-      <div className="container relative z-10 mx-auto grid min-h-[90vh] grid-cols-1 items-center gap-12 px-4 lg:grid-cols-2">
+      <div className="container relative z-10 mx-auto grid md:min-h-[90vh] min-h-[70vh] grid-cols-1 items-center gap-12 px-4 lg:grid-cols-2">
         {/* Left Content */}
         <div className="flex flex-col items-start gap-6">
           <div className="flex items-center gap-2 bg-white/10 md:bg-black/70 px-4 py-2 rounded-full">

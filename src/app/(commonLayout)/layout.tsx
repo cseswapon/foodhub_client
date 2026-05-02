@@ -1,4 +1,4 @@
-import Cart from "@/components/common/cart/Cart";
+import ChatBot from "@/components/common/chat/ChatBot";
 // import CustomCursor from "@/components/common/cursor/CustomCursor";
 import { Footer } from "@/components/shared/footer/Footer";
 import { Header } from "@/components/shared/header/Header";
@@ -13,9 +13,7 @@ export default function CommonLayout({
     <>
       <CartProvider>
         {/* <CustomCursor /> */}
-        <div className="fixed bottom-10 right-10 z-100">
-          <Cart />
-        </div>
+        <ChatBot />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-[#a3a380]/5 rounded-full blur-[120px]" />
         </div>
