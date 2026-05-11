@@ -77,7 +77,7 @@ export default function StatsSection() {
   return (
     <section className="py-20 bg-[#0d0d0b] border-y border-white/5">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <StatItem key={s.label} {...s} delay={i * 0.1} />
           ))}
