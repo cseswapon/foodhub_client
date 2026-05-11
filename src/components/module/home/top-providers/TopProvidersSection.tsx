@@ -36,8 +36,8 @@ export default async function TopProvidersSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {providers.map((provider: any) => (
-            <ProviderCard key={provider.id} provider={provider} />
+          {providers.map((provider: any, index: number) => (
+            <ProviderCard key={provider.id} provider={provider} index={index} />
           ))}
         </div>
 

@@ -18,7 +18,7 @@ interface Meal {
   provider_id: string;
 }
 
-export function MealCard({ meal }: { meal: Meal }) {
+export function MealCard({ meal, index }: { meal: Meal; index: number }) {
   const { addToCart } = useCart();
   const router = useRouter();
 
@@ -42,7 +42,12 @@ export function MealCard({ meal }: { meal: Meal }) {
   return (
     <Card className="group bg-[#1f2120] border-white/5 overflow-hidden transition-all hover:border-[#a3a380]/50 hover:cursor-default py-0 gap-0">
       <div className="relative">
-        <Image src="/no-image.png" alt={meal.name} width={500} height={500} />
+        <Image
+          src={`/food-${index + 1}.jpeg` || "/no-image.png"}
+          alt={meal.name}
+          width={500}
+          height={500}
+        />
         <Badge className="absolute top-3 right-3 bg-[#a3a380] text-[#1f2120] hover:bg-[#a3a380]">
           {meal.dietary_type === "non_veg" ? "Non-Veg" : "Veg"}
         </Badge>

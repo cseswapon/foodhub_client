@@ -41,6 +41,8 @@ export default async function MealDetails({
   const meal = await mealService.getMealDetails(id);
 
   // console.log(meal);
+  // eslint-disable-next-line react-hooks/purity
+  const randomNum = Math.floor(Math.random() * 5) + 1;
 
   return (
     <div className="bg-[#0c0d0c] pt-30 pb-20 px-4 min-h-screen">
@@ -49,7 +51,7 @@ export default async function MealDetails({
           {/* Left Side: Product Image */}
           <div className="relative rounded-lg overflow-hidden border border-white/5 shadow-2xl">
             <Image
-              src="/no-image.png"
+              src={`/food-${randomNum}.jpeg` || "/no-image.png"}
               alt={meal?.data?.name || "Product Image"}
               width={600}
               height={600}

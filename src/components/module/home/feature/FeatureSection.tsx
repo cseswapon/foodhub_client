@@ -95,7 +95,7 @@ export default function FeatureSection() {
             </div>
 
             <Button className="bg-[#a3a380] hover:bg-[#b5b592] text-[#1f2120] font-black uppercase tracking-wider rounded-full px-10 h-14 transition-all group">
-              Book Table
+              Our meals
               <HiOutlineChevronRight className="ml-2 size-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>

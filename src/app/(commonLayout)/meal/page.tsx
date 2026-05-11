@@ -90,7 +90,9 @@ export default async function MealsPage({
           <section className="lg:col-span-9">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {meals?.data && meals.data.length > 0 ? (
-                meals.data.map((meal) => <MealCard key={meal.id} meal={meal} />)
+                meals.data.map((meal, index) => (
+                  <MealCard key={meal.id} meal={meal} index={index} />
+                ))
               ) : (
                 <div className="col-span-full py-20 text-center text-gray-500 italic">
                   No meals found matching your filters.

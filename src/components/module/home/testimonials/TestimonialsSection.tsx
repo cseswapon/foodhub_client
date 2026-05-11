@@ -1,6 +1,4 @@
 "use client";
-
-import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { ReviewData } from "@/services/review.service";
 
@@ -66,12 +64,7 @@ export default function TestimonialsSection({
   return (
     <section className="md:py-24 py-12 bg-[#0d0d0b] text-white">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
+        <div className="text-center mb-14">
           <span className="text-xs tracking-widest text-[#a3a380] uppercase font-semibold">
             What They Say
           </span>
@@ -82,16 +75,12 @@ export default function TestimonialsSection({
             Don{"'"}t just take our word for it — here{"'"}s what our community
             has to say.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {dynamicTestimonials.map((t, i) => (
-            <motion.div
+            <div
               key={`${t.name}-${i}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
               className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4 hover:border-[#a3a380]/30 transition-colors"
             >
               <Quote className="w-6 h-6 text-[#a3a380]/50" />
@@ -115,7 +104,7 @@ export default function TestimonialsSection({
                   <p className="text-xs text-gray-500">{t.role}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

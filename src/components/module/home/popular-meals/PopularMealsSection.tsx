@@ -36,8 +36,8 @@ export default async function PopularMealsSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {meals.map((meal) => (
-            <MealCard key={meal.id} meal={meal} />
+          {meals.map((meal, i) => (
+            <MealCard key={meal.id} meal={meal} index={i} />
           ))}
         </div>
 

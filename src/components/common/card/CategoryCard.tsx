@@ -3,13 +3,18 @@ import { cn } from "@/lib/utils";
 import { HiOutlineClock } from "react-icons/hi2";
 
 interface CategoryCardProps {
+  index: number;
   name: string;
-  created:string,
+  created: string;
   className?: string;
 }
 
-export function CategoryCard({ name,className,created }: CategoryCardProps) {
- 
+export function CategoryCard({
+  name,
+  className,
+  created,
+  index,
+}: CategoryCardProps) {
   return (
     <div
       className={cn(
@@ -20,7 +25,7 @@ export function CategoryCard({ name,className,created }: CategoryCardProps) {
       <div className="relative w-full h-48  mb-3 overflow-hidden rounded-lg border border-muted">
         <Image
           draggable={false}
-          src="/no-image.png"
+          src={`/food-${index + 1}.jpeg` || "/no-image.png"}
           alt={name}
           fill
           className="object-cover"

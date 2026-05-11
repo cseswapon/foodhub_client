@@ -117,12 +117,12 @@ export default async function ProviderDetailsPage({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {meals.length > 0 ? (
-                  meals.map((meal: any) => (
+                  meals.map((meal: any, index: number) => (
                     <div
                       key={meal.id}
                       className="transition-transform hover:scale-[1.02] duration-500"
                     >
-                      <MealCard meal={meal} />
+                      <MealCard meal={meal} index={index} />
                     </div>
                   ))
                 ) : (

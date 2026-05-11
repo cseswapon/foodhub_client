@@ -34,11 +34,15 @@ export default async function Category() {
 
         <div className="grid md:grid-cols-4 container mx-auto">
           {categories?.data?.map(
-            (item: { name: string; id: string; created_at: string }) => (
+            (
+              item: { name: string; id: string; created_at: string },
+              index: number,
+            ) => (
               <CategoryCard
                 key={item.id}
                 name={item?.name}
                 created={item?.created_at}
+                index={index}
               />
             ),
           )}

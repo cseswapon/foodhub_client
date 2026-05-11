@@ -21,8 +21,12 @@ export default async function ProvidersPage() {
         {/* Provider List Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {providers?.data && providers?.data.length > 0 ? (
-            providers?.data.map((provider: any) => (
-              <ProviderCard key={provider?.id} provider={provider} />
+            providers?.data.map((provider: any, index: number) => (
+              <ProviderCard
+                key={provider?.id}
+                provider={provider}
+                index={index}
+              />
             ))
           ) : (
             <div className="col-span-full py-20 text-center border border-dashed border-white/10 rounded-3xl">

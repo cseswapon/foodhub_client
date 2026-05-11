@@ -1,12 +1,65 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { MoveRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Typewriter from "typewriter-effect";
+import { toast } from "sonner";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
 
 const Hero = () => {
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setDeferredPrompt(event as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setDeferredPrompt(null);
+      toast.success("Food Hub app installed successfully.");
+    };
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      handleBeforeInstallPrompt as EventListener,
+    );
+    window.addEventListener("appinstalled", handleAppInstalled);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt as EventListener,
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      toast.info(
+        "Install option is not available right now. Open this site in Chrome/Edge and use Add to Home Screen.",
+      );
+      return;
+    }
+
+    await deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+      toast.success("Install started. Check your device/app drawer.");
+    }
+
+    setDeferredPrompt(null);
+  };
+
   return (
     <section className="relative min-h-100vh w-full overflow-hidden bg-black text-white md:py-10">
       {/* Main Background Image with Overlay */}
@@ -32,7 +85,7 @@ const Hero = () => {
           </div>
 
           {/* Typewriter Effect Applied Here */}
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tighter md:text-6xl md:my-5">
+          <h1 className="text-2xl font-extrabold leading-tight tracking-tighter md:text-6xl md:my-5">
             <span>DINING REDEFINED</span>
             <Typewriter
               options={{
@@ -65,19 +118,20 @@ const Hero = () => {
 
           <div className="flex flex-wrap items-center gap-6 mt-4">
             <Button className="group bg-[#a3a380] text-black hover:bg-[#8e8e6d] rounded-full px-8 py-6 text-sm font-bold transition-all">
-              Book A Table
+              Explore Meals
               <MoveRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
 
-            <Link
-              href="#"
+            <button
+              type="button"
+              onClick={handleInstallClick}
               className="flex items-center gap-2 text-sm font-semibold hover:text-[#a3a380] transition-colors"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10">
                 <Play className="fill-white h-3 w-3" />
               </span>
               Download App
-            </Link>
+            </button>
           </div>
         </div>
 
